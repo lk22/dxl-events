@@ -1,0 +1,15 @@
+{
+    "name": "leoknudsen/dxl-events",
+    "autoload": {
+        "psr-4": {
+            "DxlEvents\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Leo Knudsen",
+            "email": "knudsenudvikling@gmail.com"
+        }
+    ],
+    "require": {}
+}
