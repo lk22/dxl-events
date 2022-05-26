@@ -1,5 +1,5 @@
 <?php 
-    // var_dump($event);
+    var_dump($event);
 ?>
 
 <div class="event event-details-container lan-event">

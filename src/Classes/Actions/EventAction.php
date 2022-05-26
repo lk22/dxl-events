@@ -12,6 +12,7 @@ use DxlEvents\Classes\Repositories\LanRepository;
 use DxlEvents\Classes\Repositories\TrainingRepository;
 use DxlEvents\Classes\Repositories\ParticipantRepository;
 use DxlEvents\Classes\Repositories\LanParticipantRepository;
+use DxlEvents\Classes\Repositories\LanSettingsRepository;
 use DxlMembership\Classes\Repositories\MemberRepository;
 
 if( !class_exists('EventAction')) 
@@ -68,6 +69,13 @@ if( !class_exists('EventAction'))
         public $lanParticipantRepository;
 
         /**
+         * LAN settings repository;
+         *
+         * @var DxlEvents\Classes\Repositories\LanSettingsRepository;
+         */
+        public $lanSettingsRepository;
+
+        /**
          * Training events repository
          *
          * @var \DxlEvents\Classes\Repositories\TrainingRepository;
@@ -93,6 +101,7 @@ if( !class_exists('EventAction'))
             $this->gameModeRepository = new GameModeRepository();
             $this->memberRepository = new MemberRepository();
             $this->lanParticipantRepository = new LanParticipantRepository();
+            $this->lanSettingsRepository = new LanSettingsRepository();
             $this->registerAdminActions();
             $this->registerGuestActions();
         }
