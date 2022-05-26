@@ -1,5 +1,5 @@
 <?php 
-    var_dump($settings);
+    // var_dump($settings);
 ?>
 
 <div class="event lan-event">
