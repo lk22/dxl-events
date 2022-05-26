@@ -44,8 +44,43 @@
         </div>
     </div>
     <div class="details-body">
-        <div class="descriptions">
-            <h2>Beskrivelse</h2>
+        <h2>Begivenheds information</h2>
+        <div class="event-details">
+            <div class="descriptions info-field">
+                <h2>Beskrivelse</h2>
+                <?php 
+                    echo $event->description;
+                ?>
+            </div>
+    
+            <div class="extra-information info-field">
+                <h2>Huskeliste</h2>
+                <p>
+                    <?php echo $event->extra_description; ?>
+                </p>
+            </div>
+    
+            <div class="event-food-details info-field">
+                <h4>Mad priser</h4>
+                <p>
+                    Fredag (Aftensmad): <?php echo $settings->breakfast_friday_price; ?>
+                </p>
+                <p>
+                    Lørdag:
+                    <ul>
+                        <li>
+                            Morgenmad: <?php echo $settings->breakfast_saturday_price; ?>
+                        </li>
+                        <li>
+                            Frokost: <?php echo $settings->lunch_saturday_price; ?>
+                        </li>
+                        <li>
+                            Morgenmad: <?php echo $settings->dinner_saturday_price; ?>
+                        </li>
+                    </ul>
+                </p>
+                <p>Søndag (Morgenmad): <?php echo $settings->breakfast_sunday_price ?></p>
+            </div>
         </div>
     </div>
     <div class="details-footer">
