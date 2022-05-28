@@ -182,11 +182,17 @@ if( !class_exists('EventAction'))
             
             if( $lan > 0 ) {
                 foreach($lan as $l => $event) {
+                    $settings = $this->lanRepository->settings()->find($event->id);
                     $events["lan"][$l] = [
                         "title" => $event->title,
                         "startdate" => $event->start,
                         "enddate" => $event->end,
+                        "starttime" => $settings->start_at,
+                        "endtime" => $settings->end_at,
+                        "tournaments_count" => $event->tournaments_count,
                         "participants_count" => $event->participants_count,
+                        "available_seats" => $event->seats_available,
+                        "latest_participation_date" => $settings->latest_participation_date,
                         "link" => "?action=details&type=lan&event=" . $event->id,
                         "type" => "LAN"
                     ];
@@ -216,7 +222,7 @@ if( !class_exists('EventAction'))
                     $participants_count = $this->participantRepository->findByEvent($event->id);
                     $events["training"][$t] = [
                         "title" => $event->name,
-                        "startdate" => $event->start_date,
+                        "startdate" => date("d F Y", $event->start_date),
                         "event_day" => $event->event_day,
                         "is_recurring" => $event->is_recurring,
                         "participants_count" => count($participants_count),

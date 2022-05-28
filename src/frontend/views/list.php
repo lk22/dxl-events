@@ -1,32 +1,50 @@
 <?php 
     // var_dump($events);
 ?>
-<div class="dxl dxl-frontend-events-list-container">
+<div class="dxl dxl-frontend-events">
     <h1>DXL EVENTS</h1>
-    <div class="events-cards">
+    <div class="event__list">
         <?php
             foreach($events["lan"] as $event) {
                 ?>
                     <a href="<?php echo $event["link"]; ?>">
-                        <div class="card event lan-event">
-                            <div class="card-header">
-                                <h5>
-                                    <?php echo $event["title"]; ?>
-                                </h5>
-                                <p><?php echo $event["type"]; ?></p>
+                        <div class="event" data-event-type="<?php echo $event["type"]; ?>">
+                            <div class="event__datetime">
+                                <div class="event__datetime--date">
+                                    <p>
+                                        <?php echo date("d", $event["startdate"]); ?> - <?php echo date("d F", $event["enddate"]); ?>
+                                    </p>
+                                </div>
+                                <div class="event__datetime--time">
+                                    <div class="starttime">
+                                        <p>Starter kl. <?php echo date("H:i", $event["starttime"]);?></p>
+                                    </div>
+                                    <div class="endtime">
+                                        <p>Slutter kl. <?php echo date("H:i", $event["endtime"]);?></p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <p>
-                                    Dato:
-                                    <span class="start-date">
-                                        <?php echo date("d", $event["startdate"]); ?>
-                                    </span> - 
-                                    <span class="end-date">
-                                        <?php echo date("d F", $event["enddate"]); ?>
-                                    </span>
-                                </p>
-                                
-                                <p><?php echo $event["participants_count"]; ?> Deltagere</p>
+                            <div class="event__meta">
+                                <div class="event__meta--title">
+                                    <h5 class="heading"><?php echo $event["title"]; ?></h5>
+                                    <div class="event__meta--title-tags">
+                                        <span class="type"><?php echo $event["type"]?></span>
+                                    </div>
+                                </div>
+                                <div class="event__meta--body">
+                                    <div class="event__meta--body__field">
+                                        <p><?php echo $event["tournaments_count"]; ?> turneringer</p>
+                                    </div>
+                                    <div class="event__meta--body__field">
+                                        <p><?php echo $event["participants_count"]; ?> deltagere</p>
+                                    </div>
+                                    <div class="event__meta--body__field">
+                                        <p><?php echo $event["available_seats"]; ?> Ledige pladser</p>
+                                    </div>
+                                    <div class="event__meta--body__field">
+                                        <p>Seneste tilmeldingsfrist - <?php echo date("d F Y", $event["latest_participation_date"]);?></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </a>
@@ -36,18 +54,32 @@
             foreach($events["training"] as $event) {
                 ?>
                     <a href="<?php echo $event["link"]; ?>">
-                        <div class="card event training-event">
-                            <div class="card-header">
-                                <h5>
-                                    <?php echo $event["title"]; ?>
-                                </h5>
-                                <p><?php echo $event["type"]; ?></p>
+
+                        <div class="event" data-event-type="<?php echo $event["type"]; ?>">
+                            <div class="event__datetime">
+                                <div class="event__datetime--date">
+                                    <p>
+                                        Hver <?php echo $event["event_day"] ?? ""; ?>
+                                    </p>
+                                </div>
+                                <div class="event__datetime--time">
+                                    <div class="startdate">
+                                        <p><?php echo $event["startdate"] ?? "";?></p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <p>
-                                    Hver <?php echo $event["event_day"]; ?>
-                                </p>
-                                <p><?php echo $event["participants_count"]; ?> Deltagere</p>
+                            <div class="event__meta">
+                                <div class="event__meta--title">
+                                    <h5 class="heading"><?php echo $event["title"]; ?></h5>
+                                    <div class="event__meta--title-tags">
+                                        <span class="type"><?php echo $event["type"] ?? ""; ?></span>
+                                    </div>
+                                </div>
+                                <div class="event__meta--body">
+                                    <div class="event__meta--body__field">
+                                        <p><?php echo $event["participants_count"]; ?> deltagere</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </a>
@@ -57,24 +89,35 @@
             foreach($events["tournaments"] as $event) {
                 ?>
                     <a href="<?php echo $event["link"]; ?>">
-                        <div class="card event training-event">
-                            <div class="card-header">
-                                <h5>
-                                    <?php echo $event["title"]; ?>
-                                </h5>
-                                <p><?php echo $event["type"]; ?></p>
+
+                        <div class="event" data-event-type="<?php echo $event["type"]; ?>">
+                            <div class="event__datetime">
+                                <div class="event__datetime--date">
+                                    <p>
+                                        <?php echo date("d", $event["startdate"]); ?> - <?php echo date("d F", $event["enddate"]); ?>
+                                    </p>
+                                </div>
+                                <div class="event__datetime--time">
+                                    <div class="starttime">
+                                        <p>Starter kl. <?php echo $event["starttime"];?></p>
+                                    </div>
+                                    <div class="endtime">
+                                        <p>Slutter kl. <?php echo $event["endtime"];?></p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <p>
-                                    Dato:
-                                    <span class="start-date">
-                                        <?php echo date("d", $event["startdate"]); ?>
-                                    </span> - 
-                                    <span class="end-date">
-                                        <?php echo date("d F", $event["enddate"]); ?>
-                                    </span>
-                                </p>
-                                <p><?php echo $event["participants_count"]; ?> Deltagere</p>
+                            <div class="event__meta">
+                                <div class="event__meta--title">
+                                    <h5 class="heading"><?php echo $event["title"]; ?></h5>
+                                    <div class="event__meta--title-tags">
+                                        <span class="type"><?php echo $event["type"]?></span>
+                                    </div>
+                                </div>
+                                <div class="event__meta--body">
+                                    <div class="event__meta--body__field">
+                                        <p><?php echo $event["participants_count"]; ?> deltagere</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </a>

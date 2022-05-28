@@ -37,7 +37,17 @@
                 </div>
             </div>
             <div class="event__header--actions">
-                <button>Deltag</button>
+                <?php 
+                    if( $member && !$participated ) {
+                        ?>
+                            <button>Deltag</button>
+                        <?php
+                    } else if ( $member && $participated) {
+                        ?>
+                            <button>Afmeld</button>
+                        <?php
+                    }
+                ?>
                 <button class="modal-button" data-modal="#lanEventParticipantsModal">Deltagerliste</button>
                 <button>Turneringer</button>
             </div>
