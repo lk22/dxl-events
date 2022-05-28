@@ -74,8 +74,18 @@ if( !class_exists('EventAction'))
          */
         public $trainingRepository;
 
+        /**
+         * Gamer Mode Repository
+         *
+         * @var DxlEvents\Classes\Repositories\GameModeRepository
+         */
         public $gameModeRepository;
 
+        /**
+         * Member repository
+         *
+         * @var DxlMembership\Classes\Repositories\MemberRepository
+         */
         public $memberRepository;
 
         /**
