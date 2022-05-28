@@ -2,7 +2,34 @@
     // var_dump($events);
 ?>
 <div class="dxl dxl-frontend-events">
-    <h1>DXL EVENTS</h1>
+    <div class="sidebar">
+        <div class="sidebar__heading">
+            <h3>Filtrering</h3>
+        </div>
+
+        <div class="sidebar__filter--form">
+            <form action="#">
+                <div class="form-group">
+                    <input type="text" name="event-name" class="form-control" placeholder="Angiv begivenheds navn">
+                </div>
+                <div class="form-group">
+                    <p>Begivenheds typer</p>
+                    <div class="type">
+                        <input type="checkbox" name="type" id="lan-type">
+                        <label for="lan-type">LAN</label>
+                    </div>
+                    <div class="type">
+                        <input type="checkbox" name="type" id="lan-type">
+                        <label for="lan-type">Træning</label>
+                    </div>
+                    <div class="type">
+                        <input type="checkbox" name="type" id="lan-type">
+                        <label for="lan-type">Turneringer</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="event__list">
         <?php
             foreach($events["lan"] as $event) {
@@ -41,9 +68,6 @@
                                     <div class="event__meta--body__field">
                                         <p><?php echo $event["available_seats"]; ?> Ledige pladser</p>
                                     </div>
-                                    <div class="event__meta--body__field">
-                                        <p>Seneste tilmeldingsfrist - <?php echo date("d F Y", $event["latest_participation_date"]);?></p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -62,11 +86,6 @@
                                         Hver <?php echo $event["event_day"] ?? ""; ?>
                                     </p>
                                 </div>
-                                <div class="event__datetime--time">
-                                    <div class="startdate">
-                                        <p><?php echo $event["startdate"] ?? "";?></p>
-                                    </div>
-                                </div>
                             </div>
                             <div class="event__meta">
                                 <div class="event__meta--title">
@@ -78,6 +97,9 @@
                                 <div class="event__meta--body">
                                     <div class="event__meta--body__field">
                                         <p><?php echo $event["participants_count"]; ?> deltagere</p>
+                                    </div>
+                                    <div class="event__meta--body__field">
+                                        <p>Starter d. <?php echo $event["startdate"] ?? "";?></p>
                                     </div>
                                 </div>
                             </div>
