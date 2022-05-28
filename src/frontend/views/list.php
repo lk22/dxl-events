@@ -4,7 +4,7 @@
 <div class="dxl dxl-frontend-events">
     <div class="sidebar">
         <div class="sidebar__heading">
-            <h3>Filtrering</h3>
+            <h4>SØG BEGIVENHEDER</h4>
         </div>
 
         <div class="sidebar__filter--form">
