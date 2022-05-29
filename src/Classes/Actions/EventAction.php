@@ -259,6 +259,12 @@ if( !class_exists('EventAction'))
                     // var_dump($event);
                     $settings = $this->lanRepository->settings()->find($event->id);
                     $participants = $this->lanRepository->getParticipants($event->id);
+                    $tournaments = $this->tournamentRepository
+                        ->select()
+                        ->where('has_lan', 1)
+                        ->whereAnd('lan_id', $event->id)
+                        ->get();
+                    
                     $participated = ($member) 
                         ? $this->lanParticipantRepository->findByEvent($event->id)
                         : false;

@@ -91,6 +91,33 @@
                 </p>
                 <p>Søndag (Morgenmad): <?php echo $settings->breakfast_sunday_price ?>,-</p>
             </div>
+            <div class="info-field">
+                <h2>Turneringer</h2>
+                <div class="tournaments">
+                    <?php 
+                        foreach($tournaments as $tournament) {
+                            ?>
+                                <div class="tournament">
+                                    <div class="tournament__title">
+                                        <?php echo $tournament->title; ?>
+                                    </div>
+                                    <div class="tournament__meta">
+                                        <div class="tournament__meta--field">
+                                            <p>Antal deltagere: <?php echo $tournament->participants_count; ?></p>
+                                        </div>
+                                        <div class="tournament__meta--field">
+                                            <p>Starter D. <?php echo date("d F, H:i");?></p>
+                                        </div>
+                                        <div class="tournament__meta--field">
+                                            <button class="button-primary modal-button" data-modal="#lanTournamentModal">Se mere</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php
+                        }
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
     <div class="details-footer">
@@ -120,6 +147,21 @@
                     }
                 ?>
             </div>
+        </div>
+        <div class="modal-footer">
+            <button class="close-modal button-primary">Luk</button>
+        </div>
+    </div>
+</div>
+
+<!-- modal for showing information about a tournament event attached to LAN event -->
+<div class="modal" id="lanTournamentModal">
+    <div class="modal-inner">
+        <div class="modal-header">
+
+        </div>
+        <div class="modal-body">
+
         </div>
         <div class="modal-footer">
             <button class="close-modal button-primary">Luk</button>
