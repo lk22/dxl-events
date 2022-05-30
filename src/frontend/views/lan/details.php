@@ -97,7 +97,7 @@
                     <?php 
                         foreach($tournaments as $tournament) {
                             ?>
-                                <div class="tournament">
+                                <div class="tournament lan-tournament">
                                     <div class="tournament__title">
                                         <?php echo $tournament->title; ?>
                                     </div>
@@ -109,7 +109,12 @@
                                             <p>Starter D. <?php echo date("d F, H:i");?></p>
                                         </div>
                                         <div class="tournament__meta--field">
-                                            <button class="button-primary modal-button" data-modal="#lanTournamentModal">Se mere</button>
+                                            <button
+                                                class="button-primary modal-button tournament-button" 
+                                                data-modal="#lanTournamentModal"
+                                                data-event="<?php echo $event->id; ?>"
+                                                data-tournament="<?php echo $tournament->id; ?>"
+                                                >Se mere</button>
                                         </div>
                                     </div>
                                 </div>
@@ -165,6 +170,16 @@
         </div>
         <div class="modal-footer">
             <button class="close-modal button-primary">Luk</button>
+            <?php 
+                if( $participated ) {
+                    ?>
+                        <button
+                            class="participate-tournament-btn button-success"
+                            data-member="<?php echo $member->id; ?>"
+                        >Tilmeld</button>
+                    <?php
+                }
+            ?>
         </div>
     </div>
 </div>

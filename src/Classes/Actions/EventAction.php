@@ -245,8 +245,7 @@ if( !class_exists('EventAction'))
         public function renderEventDetails($type, $identifier) 
         {
             global $current_user;
-            // var_dump($current_user->ID);
-            // wp_die();
+            
             if( $current_user->ID !== 0 ) {
                 $member = $this->memberRepository->select(["id", "email", "gamertag"])->where('user_id', $current_user->ID)->getRow();
             } else {
