@@ -31,17 +31,17 @@
             </div>
         </div>
     </div>
-    <div class="container py-5 overflow-hidden">
-        <div class="row gx-4 tournaments">
-            <div class="col-xl-7 p-5 text-white bg-dark rounded rounded-md">
-            <div class="descriptions info-field mb-4">
+    <div class="container py-5 px-4 my-5 overflow-hidden rounded rounded-md">
+        <div class="row gx-5 gy-5 tournaments">
+            <div class="col col-xl-7 p-5 rounded rounded-md">
+            <div class="descriptions info-field mb-5">
                 <h2>Beskrivelse</h2>
                 <?php 
                     echo $event->description;
                 ?>
             </div>
     
-            <div class="extra-information info-field mb-4">
+            <div class="extra-information info-field mb-5">
                 <h2>Huskeliste</h2>
                 <p>
                     <?php echo $event->extra_description; ?>
@@ -70,11 +70,11 @@
                 <p>Søndag (Morgenmad): <?php echo $settings->breakfast_sunday_price ?>,-</p>
             </div>
             </div>
-            <div class="col-xl-5 p-4 bg-dark rounded rounded-md">
+            <div class="col col-xl-5 p-4 rounded rounded-md">
                 <?php 
                     foreach( $tournaments as $t => $tournament) {
                         ?>
-                            <div class="col-12 text-white p-4  rounded rounded-2xl tournament">
+                            <div class="col-12  p-4  rounded rounded-2xl tournament">
                                 <div class="tournament__title">
                                     <?php echo $tournament->title; ?>
                                 </div>
