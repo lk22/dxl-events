@@ -29,7 +29,7 @@ if( !class_exists('TrainingAction') )
          */
         public function getEvents()
         {
-            return $this->trainingRepository->all();
+            return $this->trainingRepository->select()->where('is_draft', 0)->get();
         }
     }
 }

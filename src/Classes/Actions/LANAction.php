@@ -308,7 +308,7 @@ if( !class_exists('LANAction') )
          */
         public function getEvents()
         {
-            return $this->lanRepository->select()->limit(5)->get();
+            return $this->lanRepository->select()->where('is_draft', 0)->limit(5)->get();
         }
 
         /**

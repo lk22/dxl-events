@@ -36,6 +36,13 @@
                 <div class="row">
                     <div class="col-6">
                         <button class="btn btn-success modal-button" data-bs-toggle="modal" data-bs-target="#lanEventParticipantsModal">Deltagerliste</button>
+                        <?php 
+                            if( $member && !$participated ) {
+                                ?>
+                                    <a href="/participate" class="btn btn-success">Deltag</a>
+                                <?php
+                            }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -85,8 +92,8 @@
                     foreach( $tournaments as $t => $tournament) {
                         ?>
                             <div class="col-12 p-4 rounded rounded-2xl tournament">
-                                <div class="tournament__title">
-                                    <?php echo $tournament->title; ?>
+                                <div class="tournament__title fw-bold text-success text-uppercase">
+                                    <h3 class="fw-bold"><?php echo $tournament->title; ?></h3>
                                 </div>
                                 <div class="tournament__meta">
                                     <div class="tournament__meta--field">
