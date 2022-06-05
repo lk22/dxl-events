@@ -3,9 +3,9 @@
 ?>
 
 <div class="container-fluid event lan-event h-100"">
-    <div class="row event-header p-5 align-items-end" style="height: 600px;">
-        <div class="container">
-            <div class="col-5 text-white">
+    <div class="row event-header p-5 align-items-end" style="height: 800px;">
+        <div class="container pb-5">
+            <div class="col-lg-5 col-xl-5 text-white">
                 <div class="row title mb-5">
                     <h1 class="text-white display-5 fw-bold"><?php echo strtoupper($event->title); ?></h1>
                 </div>
@@ -22,6 +22,16 @@
                     <div class="col-12 end-date">
                         <p>Slut dato: <?php echo date("j F Y", $event->end); ?></p>
                     </div>
+                    <div class="participation-start meta__field">
+                    <p>
+                        Tilmelding åbner: <?php echo date("j F Y", $settings->participation_opening_date); ?>
+                    </p>
+                </div>
+                <div class="latest-participation-date meta__field">
+                    <p>
+                        Seneste tilmeldings frist: <?php echo date("j F Y", $settings->latest_participation_date); ?>
+                    </p>
+                </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
@@ -74,7 +84,7 @@
                 <?php 
                     foreach( $tournaments as $t => $tournament) {
                         ?>
-                            <div class="col-12  p-4  rounded rounded-2xl tournament">
+                            <div class="col-12 p-4 rounded rounded-2xl tournament">
                                 <div class="tournament__title">
                                     <?php echo $tournament->title; ?>
                                 </div>
@@ -92,7 +102,9 @@
                                             data-bs-target="#lanTournamentModal"
                                             data-event="<?php echo $event->id; ?>"
                                             data-tournament="<?php echo $tournament->id; ?>"
-                                            >Se mere</button>
+                                        >
+                                            Se mere
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -101,129 +113,6 @@
                 ?>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="event lan-event">
-    <div class="event__header">
-        <div class="inner">
-            <div class="event__header--title">
-                <h1><?php echo strtoupper($event->title); ?></h1>
-            </div>
-            <div class="event__heading--meta">
-                <div class="start-date meta__field">
-                    <p>Start dato: <?php echo date("j F Y", $event->start); ?></p>
-                </div>
-                <div class="end-date meta__field">
-                    <p>Slut dato: <?php echo date("j F Y", $event->end); ?></p>
-                </div>
-                <div class="start-time meta__field">
-                    <p>
-                        Dørene åbner kl. <?php echo date("H:i", $settings->start_at); ?>
-                    </p>
-                </div>
-                <div class="end-time meta__field">
-                    <p>
-                        Slutter kl. <?php echo date("H:i", $settings->end_at); ?> 
-                    </p>
-                </div>
-                <div class="participation-start meta__field">
-                    <p>
-                        Tilmelding åbner: <?php echo date("j F Y", $settings->participation_opening_date); ?>
-                    </p>
-                </div>
-                <div class="latest-participation-date meta__field">
-                    <p>
-                        Seneste tilmeldings frist: <?php echo date("j F Y", $settings->latest_participation_date); ?>
-                    </p>
-                </div>
-            </div>
-            <div class="event__header--actions">
-                <?php 
-                    if( $member && !$participated ) {
-                        ?>
-                            <button>Deltag</button>
-                        <?php
-                    } else if ( $member && $participated) {
-                        ?>
-                            <button>Afmeld</button>
-                        <?php
-                    }
-                ?>
-                <button class="modal-button" data-bs-toggle="modal" data-bs-target="#lanEventParticipantsModal">Deltagerliste</button>
-                <button>Turneringer</button>
-            </div>
-        </div>
-    </div>
-    <div class="details-body">
-        <h2>Begivenheds information</h2>
-        <div class="event-details">
-            <div class="descriptions info-field">
-                <h2>Beskrivelse</h2>
-                <?php 
-                    echo $event->description;
-                ?>
-            </div>
-    
-            <div class="extra-information info-field">
-                <h2>Huskeliste</h2>
-                <p>
-                    <?php echo $event->extra_description; ?>
-                </p>
-            </div>
-    
-            <div class="event-food-details info-field">
-                <h4>Mad priser</h4>
-                <p>
-                    Fredag (Aftensmad): <?php echo $settings->breakfast_friday_price; ?>,-
-                </p>
-                <p>
-                    Lørdag:
-                    <ul>
-                        <li>
-                            Morgenmad: <?php echo $settings->breakfast_saturday_price; ?>,-
-                        </li>
-                        <li>
-                            Frokost: <?php echo $settings->lunch_saturday_price; ?>,-
-                        </li>
-                        <li>
-                            Morgenmad: <?php echo $settings->dinner_saturday_price; ?>,-
-                        </li>
-                    </ul>
-                </p>
-                <p>Søndag (Morgenmad): <?php echo $settings->breakfast_sunday_price ?>,-</p>
-            </div>
-            <div class="info-field">
-                <h2>Turneringer</h2>
-                <div class="tournaments">
-                    <?php 
-                        foreach($tournaments as $tournament) {
-                            ?>
-                                <div class="tournament lan-tournament">
-                                    <div class="tournament__title">
-                                        <?php echo $tournament->title; ?>
-                                    </div>
-                                    <div class="tournament__meta">
-                                        <div class="tournament__meta--field">
-                                            <p>Antal deltagere: <?php echo $tournament->participants_count; ?></p>
-                                        </div>
-                                        <div class="tournament__meta--field">
-                                            <p>Starter D. <?php echo date("d F, H:i");?></p>
-                                        </div>
-                                        <div class="tournament__meta--field">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php
-                        }
-                    ?>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="details-footer">
-
     </div>
 </div>
 
@@ -260,7 +149,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="close-modal button-primary" data-bs-dismiss="modal">Luk</button>
+                <button class="close-modal button-primary btn btn-cancel" data-bs-dismiss="modal">Luk</button>
             </div>
         </div>
     </div>
