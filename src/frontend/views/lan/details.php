@@ -172,13 +172,12 @@
 
             </div>
             <div class="modal-footer">
-                <button class="close-modal button-primary" data-bs-dismiss="modal">Luk</button>
+                <button class="close-modal btn btn-danger" data-bs-dismiss="modal">Luk</button>
                 <?php 
                     if( $participated ) {
                         ?>
                             <button
-                                data-bs-dismiss="modal"
-                                class="participate-tournament-btn button-success"
+                                class="participate-tournament-btn btn btn-success"
                                 data-member="<?php echo $member->id; ?>"
                             >Tilmeld</button>
                         <?php
