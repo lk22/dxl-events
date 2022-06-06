@@ -45,11 +45,25 @@
                         <input class="form-check-input" type="checkbox" role="switch" id="participant-dinner-sunday" checked>
                         <label class="form-check-label" for="flexSwitchCheckChecked">Aftensmad (Søndag)</label>
                     </div>
-                    
 
-                    <div class="form-floating">
+                    <label">Hvem ønsker du at sidde sammen med</label>
+                    <select class="form-select member-select mb-4" multiple aria-label="Vælg medlmmer">
+                        <?php 
+                            foreach($members as $member) {
+                                ?>
+                                    <option value="<?php echo $member->gamertag ?>"><?php echo $member->gamertag; ?></option>
+                                <?php
+                            }
+                        ?>
+                    </select>
+
+                    <div class="form-floating mt-4">
                         <textarea class="form-control" placeholder="Noget vi særligt skal være opmærksom på?" id="floatingTextarea2 participant-message" style="height: 300px"></textarea>
                         <label for="floatingTextarea2">Noget vi særligt skal være opmærksom på?</label>
+                    </div>
+
+                    <div class="form-group my-4">
+                        <input type="button" class="btn btn-success" value="Tilmeld mig">
                     </div>
                 </form>
             </div>

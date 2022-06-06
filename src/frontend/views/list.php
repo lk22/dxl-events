@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="event__meta">
+                            <div class="event__meta mt-4">
                                 <div class="event__meta--title">
                                     <h5 class="heading"><?php echo $event["title"]; ?></h5>
                                     <div class="event__meta--title-tags">
@@ -87,7 +87,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="event__meta">
+                            <div class="event__meta mt-4">
                                 <div class="event__meta--title">
                                     <h5 class="heading"><?php echo $event["title"]; ?></h5>
                                     <div class="event__meta--title-tags">
@@ -111,7 +111,6 @@
             foreach($events["tournaments"] as $event) {
                 ?>
                     <a href="<?php echo $event["link"]; ?>">
-
                         <div class="event" data-event-type="<?php echo $event["type"]; ?>">
                             <div class="event__datetime">
                                 <div class="event__datetime--date">
@@ -128,7 +127,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="event__meta">
+                            <div class="event__meta mt-4">
                                 <div class="event__meta--title">
                                     <h5 class="heading"><?php echo $event["title"]; ?></h5>
                                     <div class="event__meta--title-tags">
