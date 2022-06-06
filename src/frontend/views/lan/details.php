@@ -36,10 +36,10 @@
                 <div class="row">
                     <div class="col-6">
                         <button class="btn btn-success modal-button" data-bs-toggle="modal" data-bs-target="#lanEventParticipantsModal">Deltagerliste</button>
+                        <a href="events/?action=participate&event=<?php echo $event->id; ?>" class="btn btn-success">Deltag</a>
                         <?php 
-                            if( $member && !$participated ) {
+                            if( $member ) {
                                 ?>
-                                    <a href="/participate" class="btn btn-success">Deltag</a>
                                 <?php
                             }
                         ?>

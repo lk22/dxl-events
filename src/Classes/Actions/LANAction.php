@@ -295,6 +295,10 @@ if( !class_exists('LANAction') )
                     case 'details': 
                         $this->details();
                         break;
+
+                    case 'participate':
+                        $this->participate();
+                        break;
                 }
             } else {
                 $this->list();

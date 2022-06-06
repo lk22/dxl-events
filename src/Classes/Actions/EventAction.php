@@ -158,7 +158,7 @@ if( !class_exists('EventAction'))
                     break;
 
                 case "participate": 
-                    $this->renderEventParticipate($type, $event);
+                    $this->renderEventParticipate($event);
                     break;
 
                 default:
@@ -275,6 +275,7 @@ if( !class_exists('EventAction'))
                     $event = $this->tournamentRepository->find($identifier);
                     $settings = $this->tournamentSettingsRepository->find($event->id);
                     $participants = $this->participantRepository->findByEvent($event->id);
+                    require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/details.php";
                     break;
 
                 case "training": 
@@ -290,6 +291,34 @@ if( !class_exists('EventAction'))
             }
 
             // require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/details.php";
+        }
+
+        /**
+         * Rendering participate view
+         *
+         * @param [type] $event
+         * @return void
+         */
+        public function renderEventParticipate($event)
+        {
+            global $current_user;
+
+            $details = $this->lanRepository->select(["title", "seats_available", "extra_description"])->getRow();
+
+            $member = $this->memberRepository
+                ->select()
+                ->where('user_id', $current_user->ID)
+                ->getRow();
+
+            $members = $this->memberRepository->all();
+
+            $tournaments = $this->tournamentRepository
+                ->select()
+                ->where('has_lan', 1)
+                ->whereAnd('lan_id', $event)
+                ->get();
+
+            require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/lan/participate.php";
         }
     }
 }
