@@ -67,7 +67,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-lg-5 col-xl-5 offset-lg-1 offset-xl-1 bg-dark text-white p-4 rounded rounded-md">
+            <div class="col-lg-5 col-xl-5 offset-lg-1 offset-xl-1 p-4 rounded rounded-md">
                 <h2 class="border-bottom border-white pb-2">Yderligere info</h2>
                 <p class="lead">Vær opmærksom på følgende</p>
                 <ul>
