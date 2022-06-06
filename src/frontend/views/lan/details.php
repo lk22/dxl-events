@@ -172,7 +172,7 @@
 
             </div>
             <div class="modal-footer">
-                <button class="close-modal btn btn-danger" data-bs-dismiss="modal">Luk</button>
+                <button class="close-modal btn" data-bs-dismiss="modal">Luk</button>
                 <?php 
                     if( $participated ) {
                         ?>
