@@ -104,7 +104,7 @@
                                     </div>
                                     <div class="tournament__meta--field">
                                         <button
-                                            class="btn btn-light tournament-button" 
+                                            class="btn btn-success tournament-button" 
                                             data-bs-toggle="modal"
                                             data-bs-target="#lanTournamentModal"
                                             data-event="<?php echo $event->id; ?>"
@@ -172,7 +172,7 @@
 
             </div>
             <div class="modal-footer">
-                <button class="close-modal btn" data-bs-dismiss="modal">Luk</button>
+                <button class="close-modal btn btn-success" data-bs-dismiss="modal">Luk</button>
                 <?php 
                     if( $participated ) {
                         ?>
