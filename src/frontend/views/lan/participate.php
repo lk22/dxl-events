@@ -4,8 +4,15 @@
 
 <div class="event lan-participate my-5">
     <div class="container">
-        <h3>Tilmelding <?php echo $details->title ?></h3>
-        <p class="lead">Der er <?php echo $details->seats_available?> pladser tilbage</p>
+        <div class="row">
+            <div class="col-10">
+                <h3>Tilmelding <?php echo $details->title ?></h3>
+                <p class="lead">Der er <?php echo $details->seats_available?> pladser tilbage</p>
+            </div>
+            <div class="col-2">
+                <a href="events/?action=details&type=lan&event=<?php echo $_GET["event"]; ?>" class="btn btn-success">Gå tilbage</a>
+            </div>
+        </div>
     </div>
     <div class="container">
         <div class="row">
@@ -81,6 +88,45 @@
                 </ul>
                 <h3 class="border-bottom border-white pb-2">Huskeliste</h3>
                 <p><?php echo $details->extra_description; ?></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-lg fade fadeInUp" id="lanParticipateTournamentModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Tilmelding turneringer</h3>
+            </div>
+            <div class="modal-body">
+                <p>Fedt, du er nu tilmeldt <?php echo $details->title; ?>, vi glæder os til at se dig</p>
+                <p>Kunne du tænke dig at være med i nogle af vores LAN turneringer, skal du trykke tilmeld under hver turnering vi viser</p>
+                <?php
+                    foreach($tournaments as $tournament) {
+                        ?>
+                            <div class="tournament d-flex justify-content-between my-4">
+                                <div class="title">
+                                    <h3><?php echo $tournament->title; ?></h3>
+                                </div>
+                                <div class="participants-count">
+                                    <p><?php echo $tournament->participants_count; ?></p>
+                                </div>
+                                <div class="action">
+                                    <button
+                                        class="btn btn-success"
+                                        data-tournament="<?php echo $tournament->id ?>"
+                                    >
+                                        Tilmeld
+                                    </button>
+                                </div>
+                            </div>
+                        <?php
+                    }
+                ?>
+            </div>
+            <div class="modal-footer">
+                <button class="close-modal btn btn-success" data-bs-dismiss="modal">Luk</button>
             </div>
         </div>
     </div>
