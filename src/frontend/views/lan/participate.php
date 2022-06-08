@@ -110,12 +110,14 @@
                                     <h3><?php echo $tournament->title; ?></h3>
                                 </div>
                                 <div class="participants-count">
-                                    <p><?php echo $tournament->participants_count; ?></p>
+                                    <p><?php echo $tournament->participants_count; ?> deltagere</p>
                                 </div>
                                 <div class="action">
                                     <button
-                                        class="btn btn-success"
-                                        data-tournament="<?php echo $tournament->id ?>"
+                                        class="btn btn-success participate-tournament-btn"
+                                        data-tournament="<?php echo $tournament->id; ?>"
+                                        data-member="<?php echo $member->id; ?>"
+                                        data-event="<?php echo $_GET["event"]; ?>"
                                     >
                                         Tilmeld
                                     </button>

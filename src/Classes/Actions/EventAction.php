@@ -265,7 +265,7 @@ if( !class_exists('EventAction'))
                         ->get();
                     
                     $participated = ($member) 
-                        ? $this->lanParticipantRepository->findByEvent($event->id)
+                        ? $this->lanParticipantRepository->select()->where('event_id', $event->id)->whereAnd('gamertag', '"$member->gamertag"')->getRow()
                         : false;
 
                         require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/lan/details.php";
@@ -302,6 +302,7 @@ if( !class_exists('EventAction'))
         public function renderEventParticipate($event)
         {
             global $current_user;
+            // var_dump($current_user);
 
             $details = $this->lanRepository->select(["title", "seats_available", "extra_description"])->getRow();
 
