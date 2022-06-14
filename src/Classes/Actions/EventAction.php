@@ -263,10 +263,18 @@ if( !class_exists('EventAction'))
                         ->where('has_lan', 1)
                         ->whereAnd('lan_id', $event->id)
                         ->get();
-                    
-                    $participated = ($member) 
-                        ? $this->lanParticipantRepository->select()->where('event_id', $event->id)->whereAnd('gamertag', '"$member->gamertag"')->getRow()
+
+                    $participant = $this->lanParticipantRepository
+                        ->select()
+                        ->where('event_id', $event->id)
+                        ->whereAnd('member_id', $member->id)
+                        ->getRow();
+
+                    $participated = ($participant) 
+                        ? true
                         : false;
+
+                        // var_dump($participant);
 
                         require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/lan/details.php";
                     break;

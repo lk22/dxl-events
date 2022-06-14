@@ -1,5 +1,5 @@
 <?php
-
+var_dump($current_user->ID);
 ?>
 
 <div class="event lan-participate my-5">
@@ -116,7 +116,7 @@
                                     <button
                                         class="btn btn-success participate-tournament-btn"
                                         data-tournament="<?php echo $tournament->id; ?>"
-                                        data-member="<?php echo $member->id; ?>"
+                                        data-member="<?php echo $current_user->ID; ?>"
                                         data-event="<?php echo $_GET["event"]; ?>"
                                     >
                                         Tilmeld
