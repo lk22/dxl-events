@@ -39,7 +39,8 @@
                         <?php 
                             if( $participated ) {
                                 ?>
-                                    <a href="events/?action=unparticipate&event=<?php echo $event->id; ?>" class="btn btn-success">Afmeld</a>
+                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#lanUnparticipateModal">Afmeld</button>
+                                    <!-- <a href="events/?action=unparticipate&event=<?php echo $event->id; ?>" class="btn btn-success">Afmeld</a> -->
                                 <?php
                             } else {
                                 ?>
@@ -187,6 +188,33 @@
                         <?php
                     }
                 ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-lg fade fadeInUp" id="lanUnparticipateModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Ønsker du at afmelde dig <?php echo $event->title; ?></h2>
+            </div>
+            <div class="modal-body">
+                <p>Ønsker du og fortælle os hvorfor du ikke kan deltage, er du velkommen til at udfylde feltet nedenfor</p>
+                <form action="#" class="unparticipate-lan-form">
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Noget vi særligt skal være opmærksom på?" name="participant-message"  id="floatingTextarea2 participant-message" style="height: 300px"></textarea>
+                        <label for="floatingTextarea2">Udfyld besked</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="close-modal btn btn-success" data-bs-dismiss="modal">Luk</button>
+                <button
+                    class="participate-lan-btn btn btn-success"
+                    data-member="<?php echo $member->id; ?>"
+                    data-event="<?php echo $event->id; ?>"
+                >Tilmeld</button>
             </div>
         </div>
     </div>
