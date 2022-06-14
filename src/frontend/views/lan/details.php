@@ -211,10 +211,10 @@
             <div class="modal-footer">
                 <button class="close-modal btn btn-success" data-bs-dismiss="modal">Luk</button>
                 <button
-                    class="participate-lan-btn btn btn-success"
+                    class="unparticipate-lan-btn btn btn-success"
                     data-member="<?php echo $member->id; ?>"
                     data-event="<?php echo $event->id; ?>"
-                >Tilmeld</button>
+                >Afmeld</button>
             </div>
         </div>
     </div>
