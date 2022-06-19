@@ -26,17 +26,38 @@
              */
             public $event;
 
+            /**
+             * Lan Participant repository
+             *
+             * @var \DxlEvents\Classes\Repositories\LanParticipantRepository;
+             */
             public $lanParticipantRepository;
+
+            /**
+             * Other participating members
+             *
+             * @var array
+             */
+            public $seatedMembers;
+
+            /**
+             * Participant notice message
+             *
+             * @var string
+             */
+            public $notice;
 
             /**
              * Constructor
              *
              * @param [type] $participant
              */
-            public function __construct($participant, $event)
+            public function __construct($participant, $event, $seatedMembers = [], $notice = "")
             {
                 $this->participant = $participant;
                 $this->event = $event;
+                $this->seatedMembers = $seatedMembers;
+                $this->notice = $notice;
                 $this->lanParticipantRepository = new LanParticipantRepository();
             }
 
@@ -83,7 +104,22 @@
                     $template .= "<li>Ønsker aftensmad (Lørdag): ja</li>";
                 }
 
-                $template .= "</ul>";
+                $template .= "</ul>\n\n";
+
+                if( count($this->seatedMembers) ) {
+                    $template .= "<h3>Ønsker og sidde sammen med følgende: </h3>";
+                    $template .= "<ul>";
+                    foreach( $this->seatedMembers as $member ) {
+                        $template .= "<li>" . $member . "</li>";
+                    }
+                    $template .= "</ul>\n\n";
+                }
+
+                if( strlen($this->notice) ) {
+                    $template .= "<h3>Bemærkning: </h3>\n";
+                    $template .= "<p>" . $this->notice . "</p>";
+                }
+
                 return $template;
             }
 

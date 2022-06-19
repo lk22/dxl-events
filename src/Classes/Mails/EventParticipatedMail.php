@@ -26,14 +26,30 @@
             public $event;
 
             /**
+             * Other participating seated members
+             *
+             * @var array
+             */
+            public $seatedMembers;
+
+            /**
+             * Participant notice message
+             *
+             * @var string
+             */
+            public $notice;
+
+            /**
              * Constructor
              *
              * @param [type] $participant
              */
-            public function __construct($participant, $event)
+            public function __construct($participant, $event, $seatedMembers = [], $notice)
             {
                 $this->participant = $participant;
                 $this->event = $event;
+                $this->seatedMembers = $seatedMembers;
+                $this->notice = $notice;
             }
 
             /**
@@ -61,6 +77,20 @@
                 $template .= "<p>Vi har modtaget din tilmelding til " . $this->event->title . ",</p>\n";
                 $template .= "<p>Du vil inden længe modtage en faktura</p>\n\n";
                 $template .= "<p>OBS: vær opmærksom på prisen kan variere efter madvalg</p>\n\n";
+
+                if( count($this->seatedMembers) ) {
+                    $template .= "<p>Vi har noteret os du gerne vil sidde sammen med følgende:</p>\n";
+                    $template .= "<ul>";
+                    foreach( $this->seatedMembers as $member ) {
+                        $template .= "<li>" . $member . "</li>";
+                    }
+                    $template .= "</ul>\n";
+                }
+
+                if( !empty($this->notice) ) {
+                    $template .= "<p>Vi har noteret din bemærkning</p>\n";
+                    $template .= "<p>" . $this->notice . "</p>";
+                }
                 $template .= "<p>Vl glæder os til at se dig</p>";
                 return $template;
             }   
