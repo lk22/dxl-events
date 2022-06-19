@@ -178,7 +178,6 @@ if( !class_exists('EventAction'))
             $lan = $this->lanRepository->all();
             $tournaments = $this->tournamentRepository->all();
             $training = $this->trainingRepository->all();
-            // var_dump($tournaments);
             
             if( $lan > 0 ) {
                 foreach($lan as $l => $event) {
@@ -255,7 +254,6 @@ if( !class_exists('EventAction'))
             switch($type) {
                 case "lan":
                     $event = $this->lanRepository->find($identifier);
-                    // var_dump($event);
                     $settings = $this->lanRepository->settings()->find($event->id);
                     $participants = $this->lanRepository->getParticipants($event->id);
                     $tournaments = $this->tournamentRepository
@@ -273,8 +271,6 @@ if( !class_exists('EventAction'))
                     $participated = ($participant) 
                         ? true
                         : false;
-
-                        // var_dump($participant);
 
                         require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/lan/details.php";
                     break;
@@ -310,7 +306,6 @@ if( !class_exists('EventAction'))
         public function renderEventParticipate($event)
         {
             global $current_user;
-            // var_dump($current_user);
 
             $details = $this->lanRepository->select(["title", "seats_available", "extra_description"])->getRow();
 

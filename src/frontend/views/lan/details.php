@@ -1,7 +1,3 @@
-<?php 
-    // var_dump($settings);
-?>
-
 <div class="container-fluid event lan-event h-100"">
     <div class="row event-header p-5 align-items-end" style="height: 800px;">
         <div class="container pb-5">

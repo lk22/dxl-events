@@ -1,7 +1,3 @@
-<?php
-var_dump($current_user->ID);
-?>
-
 <div class="event lan-participate my-5">
     <div class="container">
         <div class="row">
