@@ -14,14 +14,14 @@
             /**
              * Participant
              *
-             * @var array
+             * @var object
              */
             public $participant;
 
             /**
              * Participated event
              *
-             * @var [type]
+             * @var object]
              */
             public $event;
 
