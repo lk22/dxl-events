@@ -262,11 +262,11 @@ if( !class_exists('EventAction'))
                         ->whereAnd('lan_id', $event->id)
                         ->get();
 
-                    $participant = $this->lanParticipantRepository
-                        ->select()
-                        ->where('event_id', $event->id)
-                        ->whereAnd('member_id', $member->id)
-                        ->getRow();
+                        $participant = ($member) ? $this->lanParticipantRepository
+                            ->select()
+                            ->where('event_id', $event->id)
+                            ->whereAnd('member_id', $member->id)
+                            ->getRow() : [];
 
                     $participated = ($participant) 
                         ? true
