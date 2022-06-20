@@ -38,7 +38,7 @@
                                     <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#lanUnparticipateModal">Afmeld</button>
                                     <!-- <a href="events/?action=unparticipate&event=<?php echo $event->id; ?>" class="btn btn-success">Afmeld</a> -->
                                 <?php
-                            } else {
+                            } else if( !$participated && $member ) {
                                 ?>
                                     <a href="events/?action=participate&event=<?php echo $event->id; ?>" class="btn btn-success">Deltag</a>
                                 <?php
