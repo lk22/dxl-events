@@ -215,28 +215,3 @@
         </div>
     </div>
 </div>
-
-<!-- modal for showing information about a tournament event attached to LAN event -->
-<!-- <div class="modal" id="lanTournamentModal">
-    <div class="modal-inner">
-        <div class="modal-header">
-
-        </div>
-        <div class="modal-body">
-
-        </div>
-        <div class="modal-footer">
-            <button class="close-modal button-primary">Luk</button>
-            <?php 
-                if( $participated ) {
-                    ?>
-                        <button
-                            class="participate-tournament-btn button-success"
-                            data-member="<?php echo $member->id; ?>"
-                        >Tilmeld</button>
-                    <?php
-                }
-            ?>
-        </div>
-    </div>
-</div> -->
