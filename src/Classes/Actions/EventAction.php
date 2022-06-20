@@ -293,8 +293,6 @@ if( !class_exists('EventAction'))
                     break;
                     
             }
-
-            // require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/details.php";
         }
 
         /**
