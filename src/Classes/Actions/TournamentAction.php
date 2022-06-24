@@ -121,6 +121,7 @@ if( ! class_exists('TournamentAction') )
         {
 
         }
+        
 
         /**
          * manage tournemnt views

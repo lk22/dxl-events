@@ -123,6 +123,7 @@
                 return $template;
             }
 
+
             /**
              * Get participant details
              *
