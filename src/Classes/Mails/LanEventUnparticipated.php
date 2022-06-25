@@ -21,15 +21,23 @@
             public $participant;
 
             /**
+             * participant message
+             *
+             * @var string
+             */
+            protected $message;
+
+            /**
              * Mail constructor
              *
              * @param [type] $event
              * @param [type] $participant
              */
-            public function __construct($event, $participant) 
+            public function __construct($event, $participant, string $message) 
             {
                 $this->event = $event;
                 $this->participant = $participant;
+                $this->message = $message;
             }
 
             /**
@@ -51,10 +59,13 @@
              */
             protected function template()
             {
-                ?>
-                    <h2>Test</h2>;
-                <?php
-                return true;
+                $template = "<h3>Ny afmelding</h3>";
+                $template .= "<p>Der er kommet en ny afmelding fra følgende medlem</p> \n\n";
+                $template .= "<p>Navn: " . $this->participant->name . "</p>";
+                $template .= "<p>Email: " . $this->participant->email . "</p>";
+                $template .= "<p>Telefon: " . $this->participant->phone . "</p>";
+                $template .= "<p>Besked: " . $this->message . "</p> \n\n";
+                return $template;
             }
         }
     }

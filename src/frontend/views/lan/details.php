@@ -196,13 +196,23 @@
                 <h2>Ønsker du at afmelde dig <?php echo $event->title; ?></h2>
             </div>
             <div class="modal-body">
-                <p>Ønsker du og fortælle os hvorfor du ikke kan deltage, er du velkommen til at udfylde feltet nedenfor</p>
-                <form action="#" class="unparticipate-lan-form">
-                    <div class="form-floating">
-                        <textarea class="form-control" placeholder="Noget vi særligt skal være opmærksom på?" name="participant-message"  id="floatingTextarea2 participant-message" style="height: 300px"></textarea>
-                        <label for="floatingTextarea2">Udfyld besked</label>
-                    </div>
-                </form>
+                <div class="form-container">
+                    <p>Ønsker du og fortælle os hvorfor du ikke kan deltage, er du velkommen til at udfylde feltet nedenfor</p>
+                    <form action="#" class="unparticipate-lan-form">
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Noget vi særligt skal være opmærksom på?" name="participant-message"  id="floatingTextarea2 participant-message" style="height: 300px"></textarea>
+                            <label for="floatingTextarea2">Udfyld besked</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="unparticipated" style="display:none;">
+                    <h3 class="text-center text-success">
+                        Du er nu afmeldt <?php echo $event->title; ?>
+                    </h3>
+                    <p>Du modtager en mail med din afmeldelses bekræftelse inden for kort.</p>
+                    <p>Vi er kede af du ikke kan deltage alligevel</p>
+                    <p>vi håber på at se dig næste gang!</p>
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="close-modal btn btn-success" data-bs-dismiss="modal">Luk</button>
