@@ -50,6 +50,11 @@ if( ! class_exists('GameRepository') )
             return (new GameTypeRepository())->find($gameType);
         }
 
+        /**
+         * Use Game Mode Repository as shortcut to the game mode repository
+         *
+         * @return void
+         */
         public function gameMode()
         {
             return new GameModeRepository();

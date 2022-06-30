@@ -71,13 +71,13 @@
                 <?php
             }
 
-            if( isset($event->author) ) {
+            if( isset($author) ) {
                 ?>
-                    <div class="event-author">
+                    <div class="event-author mt-2">
                         <h5>Arrangør</h5>
                         <h6>
                             <?php 
-                                echo $member->gamertag ?? "";
+                                echo $author->gamertag ?? "";
                             ?>
                         </h6>
                     </div>
