@@ -18,7 +18,7 @@
             </div>
             <div class="event-actions">
                 <?php 
-                    if( $participated ) {
+                    if( isset($participated) && $participated ) {
                         ?>
                             <button class="button-primary modal-button" data-bs-toggle="modal" data-bs-target="#eventUnparticipantModal">Afmeld</button>
                         <?php
