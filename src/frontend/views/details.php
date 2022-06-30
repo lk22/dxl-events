@@ -71,7 +71,7 @@
                 <?php
             }
 
-            if( $event->author ) {
+            if( isset($event->author) ) {
                 ?>
                     <div class="event-author">
                         <h5>Arrangør</h5>
@@ -85,19 +85,21 @@
             }
         ?>
             <div class="event-gaem">
-                <div class="game-title">
-                    <h5>Spil</h5>
-                    <?php 
-                        echo (isset($game->name)) ? "Valgt spil: " . $game->name : "";
-                    ?>
-                </div>
-                <div class="game-mode">
-                    <h5>Spil tilstand</h5>
-                    <?php
-                        echo $gameMode->name ?? "";
-                        // echo (isset($gameMode)) ? "Spilletilstand: " . $gameType->name : "";
-                    ?>
-                </div>
+                <?php 
+                    if( isset($gameMode->name) ) {
+                        ?>
+                            <div class="game-mode">
+                                <h5>Spil</h5>
+                                <h6>
+                                    <?php 
+                                        echo $gameMode->name ?? "";
+                                        // echo (isset($gameMode)) ? "Spilletilstand: " . $gameType->name : "";
+                                    ?>
+                                </h6>
+                            </div>
+                        <?php
+                    }
+                ?>
             </div>
         </div>
         <div class="right-details">
