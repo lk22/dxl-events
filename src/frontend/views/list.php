@@ -15,15 +15,15 @@
                 <div class="form-group">
                     <p>Begivenheds typer</p>
                     <div class="type">
-                        <input type="checkbox" name="type" id="lan-type">
+                        <input type="checkbox" name="type" id="lan-type" value="lan">
                         <label for="lan-type">LAN</label>
                     </div>
                     <div class="type">
-                        <input type="checkbox" name="type" id="lan-type">
+                        <input type="checkbox" name="type" id="lan-type" value="training">
                         <label for="lan-type">Træning</label>
                     </div>
                     <div class="type">
-                        <input type="checkbox" name="type" id="lan-type">
+                        <input type="checkbox" name="type" id="lan-type" value="tournaments">
                         <label for="lan-type">Turneringer</label>
                     </div>
                 </div>
