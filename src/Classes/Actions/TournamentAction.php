@@ -450,6 +450,16 @@ if( ! class_exists('TournamentAction') )
                         "game_id" => (int) $game["id"]
                     ], $event);
 
+                    if( ! $attached ) {
+                        $this->dxl->response('event', [
+                            "error" => true,
+                            "response" => "Noget gik galt, kunne ikke tilknytte spillet til turneringen",
+                            "data" => $this->get('event')
+                        ]);
+                        $logger->log("failed to perform event " . $event["action"] . "  " . __METHOD__, 'events');
+                        wp_die();
+                    }
+
                     $this->dxl->response('event', ["response" => $event]);
 
                     wp_die();
@@ -457,18 +467,39 @@ if( ! class_exists('TournamentAction') )
 
                 case 'publish-tournament':
 
-                    $this->tournamentRepository->update([
+                    $published = $this->tournamentRepository->update([
                         "is_draft" => 0 
-                    ], $event);
+                    ], $tournament->id);
+
+                    if( ! $published ) {
+                        $this->dxl->response('event', [
+                            "error" => true,
+                            "response" => "Noget gik galt, kunne ikke offentliggøre turneringen",
+                            "data" => $this->get("event")
+                        ]);
+                        $logger->log("failed to perform event " . $event["action"] . "  " . __METHOD__, 'events');
+                    }
+
                     $this->dxl->response('eevnt', ['response' => $event]);
                     wp_die();
                     break;
 
                 case 'unpublish-tournament':
-                    $this->tournamentRepository->update([
+                    $unpublished = $this->tournamentRepository->update([
                         'is_draft' => 1
-                    ], $event);
+                    ], $tournament->id);
+
+                    if( ! $unpublished ) {
+                        $this->dxl-response('event', [
+                            'error' => true,
+                            "response" => "Noget gik galt, kunne ikke skjule turneringen",
+                            "data" => $this->get('event')
+                        ]);
+                        $logger->log("failed to perform event " . $event["action"] . "  " . __METHOD__, 'events');
+                        wp_die();
+                    }
                     $this->dxl-response('event', ["response" => $event]);
+                    wp_die();
                     break;
             }
         }
