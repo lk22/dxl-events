@@ -360,7 +360,7 @@ if( ! class_exists('TournamentAction') )
 
             $verified = $this->verify_nonce();
             if( ! $verified ) {
-                $this->dxx->forbiddenRequest('event');
+                $this->dxl->forbiddenRequest('event');
                 $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
                 wp_die();
             }
@@ -453,6 +453,22 @@ if( ! class_exists('TournamentAction') )
                     $this->dxl->response('event', ["response" => $event]);
 
                     wp_die();
+                    break;
+
+                case 'publish-tournament':
+
+                    $this->tournamentRepository->update([
+                        "is_draft" => 0 
+                    ], $event);
+                    $this->dxl->response('eevnt', ['response' => $event]);
+                    wp_die();
+                    break;
+
+                case 'unpublish-tournament':
+                    $this->tournamentRepository->update([
+                        'is_draft' => 1
+                    ], $event);
+                    $this->dxl-response('event', ["response" => $event]);
                     break;
             }
         }

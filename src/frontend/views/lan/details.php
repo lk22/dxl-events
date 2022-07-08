@@ -157,7 +157,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="close-modal button-primary btn btn-cancel" data-bs-dismiss="modal">Luk</button>
+                <button class="close-modal button-primary btn btn-cancel text-white" data-bs-dismiss="modal">Luk</button>
             </div>
         </div>
     </div>

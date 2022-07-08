@@ -20,30 +20,6 @@ jQuery(function($) {
          initializeActions: function() {
             const self = this;
 
-            self.container.find('.modal-button').click(function(e) {
-                
-                e.preventDefault();
-                
-                const modal = e.target.dataset.modal;
-                
-                self.dxl.openModal(modal);
-
-                $(modal).find('.close-modal').click(() => self.dxl.closeModal());
-
-                if( modal == "#tournamentParticipantListModal" ) {
-                    self.fetchTournamentParticipants(e.target.dataset.tournament);
-                }
-            });
-
-            // initialize accordion component
-            self.container.find('.accordion').find('.accordion-item').each((index, item) => {
-                $(item).click((e) => {
-                    e.preventDefault();
-
-                    $(item).find('.item-body').slideToggle(100)
-                })
-            })
-
             self.triggerTournamentEvents();
             self.triggerLanEvents();
             self.triggerGameEvents();
@@ -297,6 +273,33 @@ jQuery(function($) {
                     }
                 })
             })
+
+            $('.publish-tournament-btn').click((e) => {
+                const tournament = $('.publish-tournament-btn').data('tournament');
+                const is_draft = $('.publish-tournament-btn').data('draft');
+                console.log([tournament, is_draft]);
+
+                $eventAction = (is_draft === 1) ? "publish-event" : "unpublish-event";
+
+                $.ajax({
+                    method: "PUT",
+                    url: self.dxl.request.url,
+                    data: {
+                        action: "dxl_admin_tournament_update",
+                        event: {
+                            action: (is_draft === 1) ? "publish-event" : "unpublish-event",
+                            tournament,
+                            is_draft
+                        }
+                    },
+                    success: (response) => {
+                        console.log(response);
+                    },
+                    error: (error) => {
+                        console.log(error);
+                    }
+                })
+            });
         },
 
         /**

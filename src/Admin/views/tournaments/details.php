@@ -8,17 +8,29 @@
             <?php 
                 if( $tournament->is_draft ) {
                     ?>
-                        <a href="#" class="button-primary" data-draft="0" data-tournament="<?php echo $tournament->id; ?>">Offentliggør</a>
+                        <button 
+                            class="button-primary publish-tournament-btn"
+                            data-draft="0"
+                            data-tournament="<?php echo $tournament->id; ?>"
+                        >
+                            Offentliggør
+                        </button>
                     <?php
                 } else {
                     ?>
-                        <a href="#" class="button-primary" data-draft="1" data-tournament="<?php echo $tournament->id; ?>">Skjul</a>
+                        <button
+                            class="button-primary publish-tournament-btn"
+                            data-draft="1"
+                            data-tournament="<?php echo $tournament->id; ?>"
+                        >
+                            Skjul
+                        </button>
                     <?php
                 }
             ?>
         </div>
     </div>
-    <div class="content">
+    <div class="content mt-4">
         <div class="tournament-details details flex">
             <div class="left-details">
                 <h4>Start dato</h4>
@@ -31,12 +43,12 @@
                 <p><?php echo date("H:s", $tournament->endtime); ?></p>
             </div>
             <div class="right-details">
-                <h1>Extra tuernings informationer</h1>
+                <h1>Extra turnerings informationer</h1>
                 <h2>Beskrivelse</h2>
                 <p class="tournament-description">
                     <?php echo (strlen($tournament->description)) ? $tournament->description : "<div class='status-label warning description-label'>Ingen beskrivelse</div>"; ?>
                 </p>
-                <button class="button-primary update-description-btn modal-button" data-modal="#tournamentDescriptionModal">Opdater</button>
+                <button class="button-primary update-description-btn modal-button" data-bs-toggle="modal" data-bs-target="#tournamentDescriptionModal">Opdater</button>
                 <div class="divider"></div>
                 <?php 
                     // show game field
@@ -105,26 +117,28 @@
     </div>
 </div>
 
-<!-- participant list -->
-<div class="modal hidden tournamentDescriptionModal" id="tournamentDescriptionModal" role="dialog">
-    <div class="modal-header">
-        <h3>Udfyld beskrivelse</h3>
-    </div>
-    <div class="modal-body">
-        <form action="#" class="tournamentDescriptionForm">
-            <div class="form-group">
-                <?php
-                    wp_editor((!empty($tournament->description) ? $tournament->description : ''), 'tournament-description', [
-                        "textarea_rows" => 100,
-                        "height" => "100%"
-                    ]);
-                ?>
+<div class="modal modal-lg fade fadeInUp modal-open" id="tournamentDescriptionModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Udfyld beskrivelse</h2>
             </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button class="button-primary update-tournament-description-btn" data-tournament="<?php echo $tournament->id; ?>" data-action="bulk-update-description">Opdater <span class="dashicons dashicons-edit"></span></button>
-        <button class="button-primary close-modal">Luk <span class="dashicons dashicons-no"></span></button>
+            <div class="modal-body">
+                <form action="#" class="tournamentDescriptionForm">
+                    <div class="form-group">
+                        <?php
+                            wp_editor((!empty($tournament->description) ? $tournament->description : ''), 'tournament-description', [
+                                "textarea_rows" => 100,
+                                "height" => "100%"
+                            ]);
+                        ?>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                 <button class="button-primary update-tournament-description-btn" data-tournament="<?php echo $tournament->id; ?>" data-action="bulk-update-description">Opdater <span class="dashicons dashicons-edit"></span></button>
+                <button class="button-primary close-modal" data-bs-dismiss="modal">Luk <span class="dashicons dashicons-no"></span></button>
+            </div>
+        </div>
     </div>
 </div>
-<div class="overlay hidden"></div>

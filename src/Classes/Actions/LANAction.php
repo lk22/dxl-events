@@ -4,8 +4,13 @@ namespace DxlEvents\Classes\Actions;
 require_once(ABSPATH . "wp-content/plugins/dxl-core/src/Classes/Core.php");
 use Dxl\Classes\Abstracts\AbstractAction as Action;
 use Dxl\Classes\Core;
+
+// Repositories
 use DxlEvents\Classes\Repositories\LanRepository as Lan;
 use DxlEvents\Classes\Repositories\TournamentRepository;
+use DxlEvents\Classes\Repositories\LanParticipantRepository;
+
+// services
 use DxlEvents\Classes\Services\EventService as Service;
 
 if( !class_exists('LANAction') ) 
@@ -34,6 +39,13 @@ if( !class_exists('LANAction') )
          */
         protected $tournamentRepository;
 
+         /**
+         * Lan Participant repository
+         *
+         * @var DxlEvents\Classes\Repositories\TournamentRepository
+         */
+        protected $lanParticipantRepository;
+
         /**
          * Event service 
          *
@@ -48,6 +60,7 @@ if( !class_exists('LANAction') )
         {
             $this->lanRepository = new Lan();
             $this->tournamentRepository = new TournamentRepository();
+            $this->lanParticipantRepository = new LanParticipantRepository();
             $this->dxl = new Core();
             $this->eventService = new Service();
             $this->registerAdminActions();
@@ -351,6 +364,8 @@ if( !class_exists('LANAction') )
             $event = $this->lanRepository->find($this->getUriKey('id'));
             $settings = $this->lanRepository->settings()->find($this->getUriKey('id'));
             $tournaments = $this->tournamentRepository->select()->where('lan_id', $event->id)->get();
+            $participants = $this->lanParticipantRepository->select()->where('event_id', $event->id)->get();
+            var_dump($participants);
 
             $tournamentData = [];
 
@@ -370,7 +385,7 @@ if( !class_exists('LANAction') )
             $end_at = $settings->end_at;
             $latest_participation_date = $settings->latest_participation_date;
             $participant_opening_date = $settings->participation_opening_date;
-
+            
             $is_configured = true;
 
             if( 

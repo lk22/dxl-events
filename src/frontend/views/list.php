@@ -10,20 +10,17 @@
         <div class="sidebar__filter--form">
             <form action="#">
                 <div class="form-group">
-                    <input type="text" name="event-name" class="form-control" placeholder="Angiv begivenheds navn">
-                </div>
-                <div class="form-group">
                     <p>Begivenheds typer</p>
                     <div class="type">
-                        <input type="checkbox" name="type" id="lan-type" value="lan">
+                        <input type="checkbox" name="type" id="lan-type" value="LAN" checked>
                         <label for="lan-type">LAN</label>
                     </div>
                     <div class="type">
-                        <input type="checkbox" name="type" id="lan-type" value="training">
+                        <input type="checkbox" name="type" id="lan-type" value="Træning" checked>
                         <label for="lan-type">Træning</label>
                     </div>
                     <div class="type">
-                        <input type="checkbox" name="type" id="lan-type" value="tournaments">
+                        <input type="checkbox" name="type" id="lan-type" value="Turnering" checked>
                         <label for="lan-type">Turneringer</label>
                     </div>
                 </div>
@@ -34,8 +31,9 @@
         <?php
             foreach($events["lan"] as $event) {
                 ?>
+                <div class="row">
                     <a href="<?php echo $event["link"]; ?>">
-                        <div class="event" data-event-type="<?php echo $event["type"]; ?>">
+                        <div class="event event-<?php echo $event["type"] ?>" data-event-type="<?php echo $event["type"]; ?>">
                             <div class="event__datetime">
                                 <div class="event__datetime--date">
                                     <p>
@@ -79,7 +77,7 @@
                 ?>
                     <a href="<?php echo $event["link"]; ?>">
 
-                        <div class="event" data-event-type="<?php echo $event["type"]; ?>">
+                        <div class="event event-<?php echo $event["type"] ?>" data-event-type="<?php echo $event["type"]; ?>">
                             <div class="event__datetime">
                                 <div class="event__datetime--date">
                                     <p>
@@ -111,7 +109,7 @@
             foreach($events["tournaments"] as $event) {
                 ?>
                     <a href="<?php echo $event["link"]; ?>">
-                        <div class="event" data-event-type="<?php echo $event["type"]; ?>">
+                        <div class="event event-<?php echo $event["type"] ?>" data-event-type="<?php echo $event["type"]; ?>">
                             <div class="event__datetime">
                                 <div class="event__datetime--date">
                                     <p>
