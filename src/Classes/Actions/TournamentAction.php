@@ -466,10 +466,10 @@ if( ! class_exists('TournamentAction') )
                     break;
 
                 case 'publish-tournament':
-
-                    $published = $this->tournamentRepository->update([
+                    $event = $this->get('event');
+                    $published = $this->tournament->update([
                         "is_draft" => 0 
-                    ], $tournament->id);
+                    ], $event["id"]);
 
                     if( ! $published ) {
                         $this->dxl->response('event', [
@@ -478,6 +478,7 @@ if( ! class_exists('TournamentAction') )
                             "data" => $this->get("event")
                         ]);
                         $logger->log("failed to perform event " . $event["action"] . "  " . __METHOD__, 'events');
+                        wp_die();
                     }
 
                     $this->dxl->response('eevnt', ['response' => $event]);
@@ -485,12 +486,13 @@ if( ! class_exists('TournamentAction') )
                     break;
 
                 case 'unpublish-tournament':
-                    $unpublished = $this->tournamentRepository->update([
+                    $event = $this->get('event');
+                    $unpublished = $this->tournament->update([
                         'is_draft' => 1
-                    ], $tournament->id);
+                    ], $event["id"]);
 
                     if( ! $unpublished ) {
-                        $this->dxl-response('event', [
+                        $this->dxl->response('event', [
                             'error' => true,
                             "response" => "Noget gik galt, kunne ikke skjule turneringen",
                             "data" => $this->get('event')
@@ -498,7 +500,7 @@ if( ! class_exists('TournamentAction') )
                         $logger->log("failed to perform event " . $event["action"] . "  " . __METHOD__, 'events');
                         wp_die();
                     }
-                    $this->dxl-response('event', ["response" => $event]);
+                    $this->dxl->response('event', ["response" => $event]);
                     wp_die();
                     break;
             }

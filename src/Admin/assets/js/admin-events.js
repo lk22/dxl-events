@@ -288,7 +288,7 @@ jQuery(function($) {
                         action: "dxl_admin_tournament_update",
                         dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
                         event: {
-                            action: (is_draft === 1) ? "publish-event" : "unpublish-event",
+                            action: (is_draft === 1) ? "publish-tournament" : "unpublish-tournament",
                             id: tournament,
                             is_draft
                         }

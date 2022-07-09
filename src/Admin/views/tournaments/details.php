@@ -10,7 +10,7 @@
                     ?>
                         <button 
                             class="button-primary publish-tournament-btn"
-                            data-draft="0"
+                            data-draft="1"
                             data-tournament="<?php echo $tournament->id; ?>"
                         >
                             Offentliggør
@@ -20,7 +20,7 @@
                     ?>
                         <button
                             class="button-primary publish-tournament-btn"
-                            data-draft="1"
+                            data-draft="0"
                             data-tournament="<?php echo $tournament->id; ?>"
                         >
                             Skjul
