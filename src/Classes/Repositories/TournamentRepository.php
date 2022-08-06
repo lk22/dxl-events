@@ -13,6 +13,12 @@ if( ! class_exists('TournamentRepository') )
         protected $repository = "tournaments";
         protected $defaultOrder = "DESC";
         protected $primaryIdentifier = "id";
+
+
+        public function getByMember($member)
+        {
+            return $this->select()->where('author', $member->user_id)->get();
+        }
     }
 }
 

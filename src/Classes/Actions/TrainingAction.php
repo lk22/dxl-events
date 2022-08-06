@@ -31,5 +31,9 @@ if( !class_exists('TrainingAction') )
         {
             return $this->trainingRepository->select()->where('is_draft', 0)->get();
         }
+
+        public function getTrainingByMember($member) {
+            return $this->select()->where('author', $member->user_id)->get();
+        }
     }
 }

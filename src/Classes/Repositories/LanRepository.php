@@ -47,6 +47,10 @@ if( ! class_exists('LanRepository') )
         {
             return (new LanParticipantRepository())->findByEvent($event);
         }
+
+        public function getLansbyMember($member) {
+            return $this->select()->where('author', $member->user_id)->get();
+        }
     }
 }
 
