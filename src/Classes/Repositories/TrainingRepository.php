@@ -31,6 +31,10 @@ if( ! class_exists('TrainingRepository') )
         {
             return (new ParticipantRepository())->create($participant);
         }
+
+        public function getTrainingsByMember($member) {
+            return $this->select()->where('author', $member->user_id)->get();
+        }
     }
 }
 
