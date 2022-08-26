@@ -156,7 +156,7 @@ if( ! class_exists('TournamentAction') )
         public function list(): void
         {
             $tournaments = $this->tournament->all();
-            require_once ABSPATH . "wp-content/plugins/dxl-events/src/admin/views/tournaments/list.php";
+            require_once ABSPATH . "wp-content/plugins/dxl-events/src/Admin/views/tournaments/list.php";
         }
 
         /**
@@ -172,7 +172,7 @@ if( ! class_exists('TournamentAction') )
             $games = $this->gameRepository->all();
             $attachedGame = $this->gameRepository->find($settings->game_id);
             $type = ($tournament->type == 2) ? "Online Turnering" : "LAN Turnering";
-            require_once ABSPATH . "wp-content/plugins/dxl-events/src/admin/views/tournaments/details.php";
+            require_once ABSPATH . "wp-content/plugins/dxl-events/src/Admin/views/tournaments/details.php";
         }
 
         /**
