@@ -14,7 +14,7 @@
             <div class="details flex">
                 <div class="left-details">
                 <h2>Spil type</h2>
-                <h4><?php echo $gameType->name; ?></h4>
+                <h4><?php echo $gameType->name ?? ''; ?></h4>
                 <h2>Spilletilstand</h2>
                     <?php
                         if( $gameModes ) {
