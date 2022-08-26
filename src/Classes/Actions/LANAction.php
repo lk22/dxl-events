@@ -351,7 +351,7 @@ if( !class_exists('LANAction') )
         public function list(): void
         {
             $events = $this->lanRepository->all();
-            require_once ABSPATH . "wp-content/plugins/dxl-events/src/admin/views/lan/list.php";
+            require_once ABSPATH . "wp-content/plugins/dxl-events/src/Admin/views/lan/list.php";
         }
 
         /**
@@ -402,7 +402,7 @@ if( !class_exists('LANAction') )
                 $is_configured = false;
             }
 
-            require_once ABSPATH . "wp-content/plugins/dxl-events/src/admin/views/lan/details.php";
+            require_once ABSPATH . "wp-content/plugins/dxl-events/src/Admin/views/lan/details.php";
         }
     }
 }

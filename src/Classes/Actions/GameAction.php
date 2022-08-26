@@ -338,7 +338,7 @@ if( !class_exists('GameAction'))
                 ];
             }
 
-            require_once ABSPATH . "wp-content/plugins/dxl-events/src/admin/views/games/list.php";
+            require_once ABSPATH . "wp-content/plugins/dxl-events/src/Admin/views/games/list.php";
         }
 
         /**
@@ -352,7 +352,7 @@ if( !class_exists('GameAction'))
             $gameType = $this->gameRepository->findGameTypeBy($game->game_type);
             $gameModes = $this->gameRepository->gameModes($game->id);
 
-            require_once ABSPATH . "wp-content/plugins/dxl-events/src/admin/views/games/details.php";
+            require_once ABSPATH . "wp-content/plugins/dxl-events/src/Admin/views/games/details.php";
         }
 
         /**
@@ -363,7 +363,7 @@ if( !class_exists('GameAction'))
         public function manageGameTypesList() 
         {
             $gameTypes = $this->gameRepository->gameType()->all();
-            require_once ABSPATH . "wp-content/plugins/dxl-events/src/admin/views/games/types/list.php";
+            require_once ABSPATH . "wp-content/plugins/dxl-events/src/Admin/views/games/types/list.php";
         }
     }
 }
