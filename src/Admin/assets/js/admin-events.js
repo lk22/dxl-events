@@ -353,8 +353,7 @@ jQuery(function($) {
                             });
 
                             self.dxl.redirectToAction('events-lan', {
-                                action: "details",
-                                id: parsed.id
+                                action: "list"
                             });
                         }
                     }

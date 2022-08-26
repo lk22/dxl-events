@@ -3,7 +3,7 @@
         <div class="logo">
             <img height="100" src="http://localhost:8888/dxl-v2/wp-content/uploads/2022/03/cropped-cropped-DXL-LOGO-Hjemmeside_192x192.png" alt="">
         </div>
-        <h1><?php echo $event->title; ?></h1>
+        <h1><?php echo $event->title ?? ''; ?></h1>
         <div class="actions">
             <?php 
                 if( $event->is_draft ) {

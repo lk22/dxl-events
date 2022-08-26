@@ -363,7 +363,7 @@ if( !class_exists('LANAction') )
         {
             $event = $this->lanRepository->find($this->getUriKey('id'));
             $settings = $this->lanRepository->settings()->find($this->getUriKey('id'));
-            $tournaments = $this->tournamentRepository->select()->where('lan_id', $event->id)->get();
+            $tournaments = $this->tournamentRepository->select()->where('lan_id', $event->id)->get() ?? [];
             $participants = $this->lanParticipantRepository->select()->where('event_id', $event->id)->get();
             var_dump($participants);
 
