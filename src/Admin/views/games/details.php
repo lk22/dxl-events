@@ -20,7 +20,7 @@
                         if( $gameModes ) {
                             ?>
                                 <table class="widefat fixed striped gamemodes-list">
-                                    <thead> 
+                                    <thead>
                                         <th>Navn</th>
                                         <th></th>
                                     </thead>
