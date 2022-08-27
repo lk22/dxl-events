@@ -463,6 +463,48 @@ jQuery(function($) {
                 })
             })
 
+            // deleting LAN event
+            self.container.find('.delete-lan-modal-btn').click(() => {
+                const event = self.container.find('.delete-lan-modal-btn').attr('data-event');
+
+                self.dxl.request.data = {
+                    action: "dxl_lan_event_delete",
+                    dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                    event: event
+                }
+
+                $.ajax({
+                    method: "POST",
+                    url: self.dxl.request.url,
+                    data: self.dxl.request.data,
+                    success: (response) => {
+                        console.log(response);
+
+                        const parsed = JSON.parse(response);
+
+                        if(parsed.event.error) {
+                            $.toast({
+                                title: "Fejl",
+                                text: parsed.event.response,
+                                icon: "error",
+                                position: "bottom-right"
+                            })
+                        } else {
+                            $.toast({
+                                title: "Success",
+                                text: parsed.event.response,
+                                icon: "success",
+                                position: "bottom-right"
+                            })
+
+                            self.dxl.redirectToAction('events-lan', {
+                                action: "list"
+                            })
+                        }
+                    }
+                })
+            });
+
             // publish event
             $('.publish-event').click((e) => {
                 e.preventDefault();

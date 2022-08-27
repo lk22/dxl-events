@@ -16,7 +16,8 @@
                     <?php
                 }
             ?>
-            <a href="#" class="button-primary modal-button" data-modal="#updateEventModal">Opdater begivenhed <span class="dashicons dashicons-calendar"></span></a>
+            <a href="#" class="button-primary modal-button" data-bs-toggle="modal" data-bs-target="#updateEventModal">Opdater begivenhed <span class="dashicons dashicons-calendar"></span></a>
+            <button class="button-primary delete-lan-btn" data-bs-toggle="modal" data-bs-target="#deleteLanModal">Slet begivenhed</button>
         </div>
     </div>
 
@@ -84,7 +85,7 @@
                                     }
                                 ?>
                             </ul>
-                            <span><button class="button-primary modal-button" data-modal="#configEventModal">Konfigurer</button></span>
+                            <span><button class="button-primary modal-button" data-bs-toggle="modal" data-bs-target="#configEventModal">Konfigurer</button></span>
                         </div>
                     </div>
                 <?php
@@ -282,13 +283,14 @@
     </div>
 </div>
 
-<!-- event configuration modal -->
-<div class="modal configEventModal hidden" id="configEventModal">
-    <div class="modal-header">
-        <h2>Konfigurer Begivenhed - <?php echo $event->title ?></h2>
-    </div>
-    <div class="modal-body">
-        <form action="#" class="configEventForm">
+<div class="modal modal-lg fade fadeInUp" id="configEventModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Konfigurer <?php echo $event->title; ?></h2>
+            </div>
+            <div class="modal-body">
+            <form action="#" class="configEventForm">
             <input type="hidden" name="event" value="<?php echo $event->id ?>">
             <div class="left-form">
                 <?php 
@@ -393,150 +395,173 @@
                 ?>
             </div>
         </form>
-    </div>
-    <div class="modal-footer">
-        <button class="button-primary close-modal">Luk</button>
-        <button class="button-primary config-event-btn">Konfigurer</button>
+            </div>
+            <div class="modal-footer">
+                <button class="button-primary" data-bs-dismiss="modal">Luk</button>
+                <button class="button-primary config-event-btn">Konfigurer</button>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- updating event modal -->
-<div class="modal updateEventModal hidden" id="updateEventModal">
-    <div class="modal-header">
-        <h2>Opret ny LAN Begivenhed</h2>
-    </div>
-    <div class="modal-body">
-        <h4>Opdater LAN Begivenheden med ny information, er begivenheden allerede offentliggjort vil ændringerne blive vist for alle besøgende.</h4>
-        <form action="#" class="updateEventForm">
-            <input type="hidden" name="event_id" value="<?php echo $event->id; ?>">
-            <div class="left-form">
-                <div class="form-group name-field">
-                    <label for="event-title">
-                        <h3>Begivendhed:</h3> <input type="text" name="event-title" id="event-title" value="<?php echo $event->title; ?>" required>
-                    </label>
-                </div>
+<div class="modal modal-lg fade fadeInUp" id="updateEventModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Opdater <?php echo $event->title; ?>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <h4>Opdater LAN Begivenheden med ny information, er begivenheden allerede offentliggjort vil ændringerne blive vist for alle besøgende.</h4>
+                <form action="#" class="updateEventForm">
+                    <input type="hidden" name="event_id" value="<?php echo $event->id; ?>">
+                    <div class="left-form">
+                        <div class="form-group name-field">
+                            <label for="event-title">
+                                <h3>Begivendhed:</h3> <input type="text" name="event-title" id="event-title" value="<?php echo $event->title; ?>" required>
+                            </label>
+                        </div>
 
-                <div class="form-group event-description">
-                    <label for="event-description">
-                        <h3>Beskrivelse</h3>
-                        <?php 
-                            wp_editor($event->description, 'event-description', array(
-                                "textarea_rows" => 100,
-                                "height" => 400
-                            ));
-                        ?>
-                    </label>
-                </div>
+                        <div class="form-group event-description">
+                            <label for="event-description">
+                                <h3>Beskrivelse</h3>
+                                <?php 
+                                    wp_editor($event->description, 'event-description', array(
+                                        "textarea_rows" => 100,
+                                        "height" => 400
+                                    ));
+                                ?>
+                            </label>
+                        </div>
 
-                <div class="form-group event-description-extra">
-                    <label for="event-description-extra">
-                        <h3>Beskrivelse (ekstra):</h3>
-                        <?php 
-                            wp_editor($event->extra_description, 'event-description-extra', array(
-                                "textarea_rows" => 100,
-                                "height" => 400
-                            ))
-                        ?>
-                    </label>
-                </div>
-                <div class="form-group breakfast-friday-field">
-                    <label for="breakfast-friday">
-                        <h3>Pris for morgenmad (Fredag)</h3>
-                        <input type="number" name="breakfast-friday" value="<?php echo $settings->breakfast_friday_price; ?>" id="breakfast-friday">
-                    </label>
-                </div>
+                        <div class="form-group event-description-extra">
+                            <label for="event-description-extra">
+                                <h3>Beskrivelse (ekstra):</h3>
+                                <?php 
+                                    wp_editor($event->extra_description, 'event-description-extra', array(
+                                        "textarea_rows" => 100,
+                                        "height" => 400
+                                    ))
+                                ?>
+                            </label>
+                        </div>
+                        <div class="form-group breakfast-friday-field">
+                            <label for="breakfast-friday">
+                                <h3>Pris for morgenmad (Fredag)</h3>
+                                <input type="number" name="breakfast-friday" value="<?php echo $settings->breakfast_friday_price; ?>" id="breakfast-friday">
+                            </label>
+                        </div>
 
-                <div class="form-group breakfast-saturday-field">
-                    <label for="breakfast-saturday">
-                        <h3>Pris for morgenmad (Lørdag)</h3>
-                        <input type="number" name="breakfast-saturday" value="<?php echo $settings->breakfast_saturday_price; ?>" id="breakfast-saturday">
-                    </label>
-                </div>
-          
-                <div class="form-group lunch-saturday-field">
-                    <label for="lunch-saturday">
-                        <h3>Prist for frokost (Lørdag)</h3>
-                        <input type="number" name="lunch-saturday" value="<?php echo $settings->lunch_saturday_price; ?>"id="lunch-saturday">
-                    </label>
-                </div>
-            
-                <div class="form-group dinner-saturday-field">
-                    <label for="dinner-saturday">
-                        <h3>Pris for aftensmad (Lørdag)</h3>
-                        <input type="number" name="dinner-saturday" value="<?php echo $settings->dinner_saturday_price; ?>" id="dinner-saturday">
-                    </label>
-                </div>
-
-                <div class="form-group breakfast-sunday-field">
-                    <label for="breakfast-sunday">
-                        <h3>Pris for morgenmad (Søndag)</h3>
-                        <input type="number" name="breakfast-sunday" value="<?php echo $settings->breakfast_sunday_price; ?>" id="breakfast-sunday">
-                    </label>
-                </div>
+                        <div class="form-group breakfast-saturday-field">
+                            <label for="breakfast-saturday">
+                                <h3>Pris for morgenmad (Lørdag)</h3>
+                                <input type="number" name="breakfast-saturday" value="<?php echo $settings->breakfast_saturday_price; ?>" id="breakfast-saturday">
+                            </label>
+                        </div>
                 
+                        <div class="form-group lunch-saturday-field">
+                            <label for="lunch-saturday">
+                                <h3>Prist for frokost (Lørdag)</h3>
+                                <input type="number" name="lunch-saturday" value="<?php echo $settings->lunch_saturday_price; ?>"id="lunch-saturday">
+                            </label>
+                        </div>
+                    
+                        <div class="form-group dinner-saturday-field">
+                            <label for="dinner-saturday">
+                                <h3>Pris for aftensmad (Lørdag)</h3>
+                                <input type="number" name="dinner-saturday" value="<?php echo $settings->dinner_saturday_price; ?>" id="dinner-saturday">
+                            </label>
+                        </div>
+
+                        <div class="form-group breakfast-sunday-field">
+                            <label for="breakfast-sunday">
+                                <h3>Pris for morgenmad (Søndag)</h3>
+                                <input type="number" name="breakfast-sunday" value="<?php echo $settings->breakfast_sunday_price; ?>" id="breakfast-sunday">
+                            </label>
+                        </div>
+                        
+                    </div>
+                    <div class="right-form">
+                        <div class="form-group location">
+                            <label for="event-location">
+                                <h3>Lokation:</h3>
+                                <input type="text" name="event-location" value="<?php echo $settings->event_location ?>" id="event-location" required>
+                            </label>
+                        </div>
+
+                        <div class="form-group available-seats">
+                            <label for="event-seats">
+                                <h3>Antal ledige pladser</h3>
+                                <input type="number" name="event-seats" value="<?php echo $event->seats_available ?>" id="event-seats">
+                            </label>
+                        </div>
+
+                        <div class="form-group startdate">
+                            <label for="event-startdate">
+                                <h3>Start dato:</h3>
+                                <input type="date" name="event-startdate" value="<?php echo date("Y-m-d", $event->start) ?>" id="event-startdate" required>
+                            </label>
+                        </div>
+
+                        <div class="form-group enddate">
+                            <label for="event-enddate">
+                                <h3>Slut dato:</h3>
+                                <input type="date" name="event-enddate" value="<?php echo date("Y-m-d", $event->end) ?>" id="event-enddate" required>
+                            </label>
+                        </div>
+
+                        <div class="form-group start-at-field">
+                            <label for="start-at">
+                                <h3>Start tidspunkt</h3>
+                                <input type="time" value="<?php echo date("H:i", $settings->start_at) ?>" name="start-at" id="start-at">
+                            </label>
+                        </div>
+                        <div class="form-group end-at-field">
+                            <label for="end-at">
+                                <h3>Slut tidspunkt</h3>
+                                <input type="time" name="end-at" value="<?php echo date("H:i", $settings->end_at); ?>" id="end-at">
+                            </label>
+                        </div>
+
+                        <div class="form-group participation_due">
+                            <label for="event-participation_due">
+                                <h3>Seneste tilmeldingsfrist</h3>
+                                <input type="date" name="event-participation_due" value="<?php echo date("Y-m-d", $settings->latest_participation_date); ?>" id="event-participation_due" required>
+                            </label>
+                        </div>
+
+                        <div class="form-group participation-open">
+                            <label for="event-participation-open">
+                                <h3>Dato for åbning (tilmelding)</h3>
+                                <input type="date" name="event-participation-open" value="<?php echo date("Y-m-d", $settings->participation_opening_date); ?>" id="event-participation-open" required>
+                            </label>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="right-form">
-                <div class="form-group location">
-                    <label for="event-location">
-                        <h3>Lokation:</h3>
-                        <input type="text" name="event-location" value="<?php echo $settings->event_location ?>" id="event-location" required>
-                    </label>
-                </div>
-
-                <div class="form-group available-seats">
-                    <label for="event-seats">
-                        <h3>Antal ledige pladser</h3>
-                        <input type="number" name="event-seats" value="<?php echo $event->seats_available ?>" id="event-seats">
-                    </label>
-                </div>
-
-                <div class="form-group startdate">
-                    <label for="event-startdate">
-                        <h3>Start dato:</h3>
-                        <input type="date" name="event-startdate" value="<?php echo date("Y-m-d", $event->start) ?>" id="event-startdate" required>
-                    </label>
-                </div>
-
-                <div class="form-group enddate">
-                    <label for="event-enddate">
-                        <h3>Slut dato:</h3>
-                        <input type="date" name="event-enddate" value="<?php echo date("Y-m-d", $event->end) ?>" id="event-enddate" required>
-                    </label>
-                </div>
-
-                <div class="form-group start-at-field">
-                    <label for="start-at">
-                        <h3>Start tidspunkt</h3>
-                        <input type="time" value="<?php echo date("H:i", $settings->start_at) ?>" name="start-at" id="start-at">
-                    </label>
-                </div>
-                <div class="form-group end-at-field">
-                    <label for="end-at">
-                        <h3>Slut tidspunkt</h3>
-                        <input type="time" name="end-at" value="<?php echo date("H:i", $settings->end_at); ?>" id="end-at">
-                    </label>
-                </div>
-
-                <div class="form-group participation_due">
-                    <label for="event-participation_due">
-                        <h3>Seneste tilmeldingsfrist</h3>
-                        <input type="date" name="event-participation_due" value="<?php echo date("Y-m-d", $settings->latest_participation_date); ?>" id="event-participation_due" required>
-                    </label>
-                </div>
-
-                <div class="form-group participation-open">
-                    <label for="event-participation-open">
-                        <h3>Dato for åbning (tilmelding)</h3>
-                        <input type="date" name="event-participation-open" value="<?php echo date("Y-m-d", $settings->participation_opening_date); ?>" id="event-participation-open" required>
-                    </label>
-                </div>
+            <div class="modal-footer">
+                <button class="button-primary close-modal" data-bs-dismiss="modal">Luk</button>
+                <button class="button-primary update-event-button">Opdater <span class="dashicons dashicons-calendar"></span></button>
             </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button class="button-primary close-modal">Luk</button>
-        <button class="button-primary update-event-button">Opdater <span class="dashicons dashicons-calendar"></span></button>
+        </div>
     </div>
 </div>
 
-<div class="overlay hidden"></div>
+
+<div class="modal fade modal-xl" id="deleteLanModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Slet <?php echo $event->title; ?></h5>
+                </div>
+                <div class="modal-body">
+                    <p>Er du sikker på du gerne vil slette begivenheden, <?php echo $event->title; ?>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="button-primary close-modal" data-bs-dismiss="modal">Luk <span class="dashicons dashicons-no"></span></button>
+                    <button class="button-primary delete-lan-modal-btn" data-event="<?php echo $event->id; ?>">Slet begivenhed</button>
+                </div>
+            </div>
+        </div>
+    </div>
