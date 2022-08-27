@@ -464,19 +464,17 @@ jQuery(function($) {
             })
 
             // deleting LAN event
-            self.container.find('.delete-lan-modal-btn').click(() => {
-                const event = self.container.find('.delete-lan-modal-btn').attr('data-event');
-
-                self.dxl.request.data = {
-                    action: "dxl_lan_event_delete",
-                    dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
-                    event: event
-                }
+            $('.delete-lan-modal-btn').click(() => {
+                const event = $('.delete-lan-modal-btn').data('event');
 
                 $.ajax({
                     method: "POST",
                     url: self.dxl.request.url,
-                    data: self.dxl.request.data,
+                    data: {
+                        action: "dxl_lan_event_delete",
+                        dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                        event: event
+                    },
                     success: (response) => {
                         console.log(response);
 

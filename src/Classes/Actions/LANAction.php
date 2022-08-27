@@ -77,6 +77,7 @@ if( !class_exists('LANAction') )
             add_action("wp_ajax_dxl_event_create", [$this, 'ajaxCreateEvent']);
             add_action("wp_ajax_dxl_event_configure", [$this, 'ajaxConfigureEvent']);
             add_action("wp_ajax_dxl_event_update", [$this, 'ajaxUpdateEvent']);
+            add_action("wp_ajax_dxl_lan_event_delete", [$this, 'ajaxDeleteEvent']);
             add_action("wp_ajax_dxl_event_publish", [$this, 'ajaxPublishEvent']);
             add_action("wp_ajax_dxl_event_unpublish", [$this, 'ajaxUnpublishEvent']);
         }
@@ -236,6 +237,45 @@ if( !class_exists('LANAction') )
         }
 
         /**
+         * Delete LAN event resources
+         *
+         * @return void
+         */
+        public function ajaxDeleteEvent()
+        {
+            $logger = $this->dxl->getUtility('Logger');
+            $logger->log("Triggering action: " . __METHOD__);
+
+            if( ! $this->verify_nonce() )
+            {
+                $this->dxl->forbiddenRequest('events');
+                $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
+                wp_die(403);
+            }
+
+            $event = $this->get('event');
+            // echo $event; wp_die();
+            
+            $delete = $this->lanRepository->delete($event);
+
+            if( ! $delete ) {
+                $this->dxl->response('event', [
+                    "error" => true,
+                    "response" => "Noget gik galt, kunne ikke slette begivenheden"
+                ]);
+                $logger->log("Failed to delete event, something went wrong " . __METHOD__, 'events');
+                wp_die();
+            }
+
+            $this->dxl->response('event', [
+                'response' => 'Begivenhed slettet'
+            ]);
+
+            $logger->log("Event deleted sucessfully, " . __METHOD__);
+            wp_die();
+        }
+
+        /**
          * Publis backend event
          *
          * @return void
@@ -252,7 +292,6 @@ if( !class_exists('LANAction') )
                 wp_die(403);
             }
 
-            
             $event = $this->lanRepository->find((int) $this->get('event'));
 
             $this->lanRepository->update(["is_draft" => 0], (int) $event->id);
