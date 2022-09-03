@@ -5,7 +5,7 @@
         </div>
         <h1>Turneringer</h1>
         <div class="actions">
-            <a href="#" class="button-primary modal-button" data-modal="#createTournamentModal">Opret begivenhed <span class="dashicons dashicons-calendar"></span></a>
+            <a href="#" class="button-primary modal-button" data-bs-toggle="modal" data-bs-target="#createTournamentModal">Opret begivenhed <span class="dashicons dashicons-calendar"></span></a>
         </div>
     </div>
 
@@ -72,76 +72,82 @@
 </div>
 
 <!-- create tournament modal -->
-<div class="modal createTournamentModal hidden" id="createTournamentModal" role="dialog">
-    <div class="modal-header">
-        <h2>Opret turnering</h2>
-    </div>
-    <div class="modal-body">
-        <form action="#" class="admin-create-tournament-form">
-            <div class="left-form">
-                <div class="form-group tournament-title">
-                    <label for="tournament-name">
-                        Turnerings titel
-                        <input type="text" class="form-control" name="tournament-name" id="tournament-name" required>
-                    </label>
-                </div>
-                <div class="form-group tournament-type">
-                    <h4>Vælg type turnering</h4>
-                    <label for="tournament-type">
-                        Online turnering
-                        <input type="radio" class="form-control" name="tournament-type" id="tournament-type" value="2" required>
-                    </label>
-                    <label for="tournament-type">
-                        LAN Turnering
-                        <input type="radio" class="form-control" name="tournament-type" id="tournament-type" value="3" required>
-                    </label>
-                </div>
-                <div class="form-group tournament-minimum-participants">
-                    <label for="tournament-min-participants">
-                        Minimum antal deltagere
-                        <input type="number" class="form-control" id="tournament-min-participants" name="tournament-min-participants">
-                    </label>
-                </div>
-                <div class="form-group tournament-maximum-participants">
-                    <label for="tournament-max-participants">
-                        Maximum antal deltagere
-                        <input type="number" class="form-control" id="tournament-max-participants" name="tournament-max-participants">
-                    </label>
-                </div>
+<div class="modal createTournamentModal modal-lg fade fadeInUp hidden" id="createTournamentModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Opret turnering</h2>
+            </div>
+            <div class="modal-body">
+                <form action="#" class="admin-create-tournament-form">
+                    <div class="row mb-4">
+
+                        <div class="form-group tournament-title col-12">
+                            <label for="tournament-name" class="w-100">
+                                Turnerings titel
+                                <input type="text" class="form-control" name="tournament-name" id="tournament-name" required>
+                            </label>
+                        </div>
+                        <div class="form-group tournament-type col-12 mt-2">
+                            <h4>Vælg type turnering</h4>
+                            <label for="tournament-type">
+                                Online turnering
+                                <input type="radio" class="form-control" name="tournament-type" id="tournament-type" value="2" required>
+                            </label>
+                            <label for="tournament-type">
+                                LAN Turnering
+                                <input type="radio" class="form-control" name="tournament-type" id="tournament-type" value="3" required>
+                            </label>
+                        </div>
+                        <div class="form-group tournament-minimum-participants col-12">
+                            <label for="tournament-min-participants" class="w-100">
+                                Minimum antal deltagere
+                                <input type="number" class="form-control" id="tournament-min-participants" name="tournament-min-participants">
+                            </label>
+                        </div>
+                        <div class="form-group tournament-maximum-participants col-12">
+                            <label for="tournament-max-participants" class="w-100">
+                                Maximum antal deltagere
+                                <input type="number" class="form-control" id="tournament-max-participants" name="tournament-max-participants">
+                            </label>
+                        </div>
+                    </div>
                 
+                    <h3 class="h-3">Tidsindstillinger</h3>
+                    <div class="row">
+                        <div class="form-group start-date">
+                            <label for="tournament-startdate" class="w-100">
+                                Start dato: 
+                                <input type="date" class="form-control" name="tournament-startdate" id="tournament-startdate" required>
+                            </label>
+                        </div>
+                        <div class="form-group end-date">
+                            <label for="tournament-startdate" class="w-100">
+                                Slut dato: 
+                                <input type="date" class="form-control" name="tournament-enddate" id="tournament-enddate" required>
+                            </label>
+                        </div>
+                        <div class="form-group start-time">
+                            <label for="tournament-starttime" class="w-100">
+                                Start tidspunkt: 
+                                <input type="time" class="form-control" name="tournament-starttime" id="tournament-starttime" required>
+                            </label>
+                        </div>
+                        <div class="form-group end-time">
+                            <label for="tournament-endtime" class="w-100">
+                                Start tidspunkt: 
+                                <input type="time" class="form-control" name="tournament-endtime" id="tournament-endtime" required>
+                            </label>
+                        </div>
+                    </div>
+                
+            </form>
             </div>
-            <div class="right-form">
-                <h1>Tidsindstillinger</h1>
-                <div class="form-group start-date">
-                    <label for="tournament-startdate">
-                        Start dato: 
-                        <input type="date" class="form-control" name="tournament-startdate" id="tournament-startdate" required>
-                    </label>
-                </div>
-                <div class="form-group end-date">
-                    <label for="tournament-startdate">
-                        Slut dato: 
-                        <input type="date" class="form-control" name="tournament-enddate" id="tournament-enddate" required>
-                    </label>
-                </div>
-                <div class="form-group start-time">
-                    <label for="tournament-starttime">
-                        Start tidspunkt: 
-                        <input type="time" class="form-control" name="tournament-starttime" id="tournament-starttime" required>
-                    </label>
-                </div>
-                <div class="form-group end-time">
-                    <label for="tournament-endtime">
-                        Start tidspunkt: 
-                        <input type="time" class="form-control" name="tournament-endtime" id="tournament-endtime" required>
-                    </label>
-                </div>
+            <div class="modal-footer">
+                <button class="button-primary close-modal" data-bs-dismiss="modal">Luk <span class="dashicons dashicons-no"></span></button>
+                <button class="button-primary create-tournament-button">Opret <span class="dashicons dashicons-calendar"></span></button>
             </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button class="button-primary close-modal">Luk <span class="dashicons dashicons-no"></span></button>
-        <button class="button-primary create-tournament-button">Opret <span class="dashicons dashicons-calendar"></span></button>
+        </div>
     </div>
 </div>
 
@@ -152,7 +158,7 @@
     </div>
     <div class="modal-body">
         <div class="text">
-            <h2>Indlæser deltager liste <sh2an class="dashicons dashicons-admin-users"></span></h2>
+            <h2>Indlæser deltager liste <span class="dashicons dashicons-admin-users"></span></h2>
             <p>vent venligst.</p>
         </div>
        

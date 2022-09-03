@@ -729,6 +729,7 @@ jQuery(function($) {
             // remove game resource
             self.eventModals.deleteTournamentModal.find('.remove-game-btn').click((e) => {
                 e.preventDefault();
+
                 $.ajax({
                     method: "POST", 
                     url: self.dxl.request.url,
@@ -749,6 +750,7 @@ jQuery(function($) {
                     }
                 })
             })
+        
 
             /**
              * Creating new Game in backend
@@ -760,23 +762,6 @@ jQuery(function($) {
                 const game = $('#game-name').val();
                 const gametype = $('#game-type').val();
                 // console.log(self.dxl.request.url)
-
-                // fetch(self.dxl.request.url, {
-                //     body: JSON.stringify({
-                //         action: "dxl_event_game_create",
-                //         dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
-                //         game: game
-                //     }),
-                //     'headers': {
-                //         "Accept": "application/json",
-                //         "Content-Type": "application/json"
-                //     },
-                //     method: "POST"
-                // }).then((response) => {
-                //     console.log(response)
-                // }).catch((error) => {
-                //     console.log(error)
-                // })
 
                 $.ajax({
                     method: 'POST',
@@ -889,7 +874,7 @@ jQuery(function($) {
                             } else {
                                 $.toast({
                                     title: "Success",
-                                    text: "Spil type " + type + " oprettet",
+                                    text: "Spil type fjernet",
                                     icon: "success",
                                     position: "bottom-right"
                                 });

@@ -6,8 +6,8 @@
             <h1><?php echo $game->name ?></h1>
             <div class="actions">
                 <a href="<?php echo generate_dxl_subpage_url(['action' => 'list']); ?>" class="button-primary">Gå tilbage</a>
-                <a href="#" class="button-primary modal-button" data-modal="#updateTournamentModal">Opdater spil <span class="dashicons dashicons-games"></span></a>
-                <a href="#" class="button-primary modal-button" data-modal="#deleteTournamentModal">fjern spil <span class="dashicons dashicons-trash"></span></a>
+                <a href="#" class="button-primary modal-button" data-bs-toggle="modal" data-bs-target="#updateTournamentModal">Opdater spil <span class="dashicons dashicons-games"></span></a>
+                <a href="#" class="button-primary modal-button" data-bs-toggle="modal" data-bs-target="#deleteTournamentModal">fjern spil <span class="dashicons dashicons-trash"></span></a>
             </div>
         </div>
         <div class="content">
@@ -50,52 +50,59 @@
     </div>
 </div>
 
-<div class="modal updateTournamentModal hidden" id="updateTournamentModal">
-    <div class="modal-header">
-        <h3>Opdater <?php echo $game->name; ?></h3>
-    </div>
-    <div class="modal-body">
-        <form action="#" class="updateGameForm" style="flex-direction:column;">
-            <input type="hidden" name="game" value="<?php echo $game->id ?>">
-            <div class="form-group">
-                <h3>Angiv spil type</h3>
-                <label for="game-type">
-                    <input type="text" id="game-type" value="<?php echo $gameType->name ?>">
-                </label>
+<div class="modal fade fadeInUp updateTournamentModal hidden" id="updateTournamentModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Opdater <?php echo $game->name; ?></h3>
             </div>
-            <div class="form-group">
-                <!-- todo: add multiple game mode entries -->
-                <div class="game-modes-field">
-                    <div class="game-mode-row">
-                        <h3>Spilletistande</h3>
-                        <div class="row" data-game-mode="1" style="margin-bottom: 0.5rem;">
-                            <label for="game-mode-1" data-game-mode="1">
-                                <b>#1</b>
-                                <input type="text" name="game-mode-1" id="game-mode-1" placeholder="Spilletilstand #1" required>
-                                <span class="add-game-mode-item dashicons dashicons-plus-alt"></span>
-                            </label>
+            <div class="modal-body">
+                <form action="#" class="updateGameForm" style="flex-direction:column;">
+                    <input type="hidden" name="game" value="<?php echo $game->id ?>">
+                    <div class="form-group">
+                        <h3>Angiv spil type</h3>
+                        <label for="game-type">
+                            <input type="text" id="game-type" value="<?php echo $gameType->name ?? '' ?>">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <!-- todo: add multiple game mode entries -->
+                        <div class="game-modes-field">
+                            <div class="game-mode-row">
+                                <h3>Spilletistande</h3>
+                                <div class="row" data-game-mode="1" style="margin-bottom: 0.5rem;">
+                                    <label for="game-mode-1" data-game-mode="1">
+                                        <b>#1</b>
+                                        <input type="text" name="game-mode-1" id="game-mode-1" placeholder="Spilletilstand #1" required>
+                                        <span class="add-game-mode-item dashicons dashicons-plus-alt"></span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button class="button-primary close-modal">Luk</button>
-        <button class="button-primary update-game-button">Opdater</button>
+            <div class="modal-footer">
+                <button class="button-primary close-modal" data-bs-dismiss="modal">Luk</button>
+                <button class="button-primary update-game-button">Opdater</button>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="modal deleteTournamentModal hidden" id="deleteTournamentModal">
-    <div class="modal-header">
-        <h3>Er du sikker ?</h3>
-    </div>
-    <div class="modal-body">
-        <p>er du sikker på du vil fjerne dette spil? </p>
-    </div>
-    <div class="modal-footer">
-        <button class="button-primary close-modal">Luk</button>
-        <button class="button-primary remove-game-btn" data-game="<?php echo $game->id; ?>">Slet</button>
+<div class="modal deleteTournamentModal fade fadeInUp hidden" id="deleteTournamentModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Er du sikker ?</h3>
+            </div>
+            <div class="modal-body">
+                <p>er du sikker på du vil fjerne dette spil? </p>
+            </div>
+            <div class="modal-footer">
+                <button class="button-primary close-modal" data-bs-dismiss="modal">Luk</button>
+                <button class="button-primary remove-game-btn" data-game="<?php echo $game->id; ?>">Slet</button>
+            </div>
+        </div>
     </div>
 </div>
-<div class="overlay hidden"></div>

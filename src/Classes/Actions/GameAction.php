@@ -87,8 +87,8 @@ if( !class_exists('GameAction'))
             }
 
             $created = $this->gameRepository->create([
-                "name" => $_REQUEST["game"]["name"],
-                "game_type" => (int) $_REQUEST["game"]["type"]
+                "name" => $_REQUEST["game"],
+                "game_type" => (int) $_REQUEST["gametype"]
             ]);
 
             if ( ! $created ) {
@@ -97,7 +97,10 @@ if( !class_exists('GameAction'))
                 wp_die();
             }
 
-            echo json_encode(["error" => false, "response" => "Game created!"]);
+            $this->dxl->response('events', [
+                "error" => falase,
+                "response" => "Spil oprettet"
+            ]);
             wp_die();
         }
 
@@ -291,6 +294,7 @@ if( !class_exists('GameAction'))
             }
 
             $this->dxl->response('event', [
+                "error" => false,
                 "response" => "Spil type er fjernet"
             ]);
             wp_die();
