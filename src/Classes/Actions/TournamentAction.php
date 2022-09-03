@@ -155,7 +155,8 @@ if( ! class_exists('TournamentAction') )
          */
         public function list(): void
         {
-            $tournaments = $this->tournament->all();
+            $tournaments = $this->tournament->select()->where('has_lan', 1)->get();
+            $onlineTournaments = $this->tournament->select()->where('has_lan', 0)->get();
             require_once ABSPATH . "wp-content/plugins/dxl-events/src/Admin/views/tournaments/list.php";
         }
 

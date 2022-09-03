@@ -9,65 +9,27 @@
         </div>
     </div>
 
-    <div class="content">
-    <?php 
-        if( $tournaments ) {
-    ?>
-    <table class="widefat fixed striped">
-        <thead>
-            <tr>
-                <th>Titel</th>
-                <th>Tilstand</th>
-                <th>Type</th>
-                <th>Antal deltagere</th>
-                <th>Dato</th>
-                <th>Tidspunkt</th>
-                <th>Oprettet</th>
-                <th>Oprettet af</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-                foreach($tournaments as $tournament) 
-                {
-                    $type = ($tournament->type == 3) ? "LAN turnering" : "Online turnering";
-                    $user = get_user_by('id', $tournament->author)->user_login ?? "";
-                    ?>
-                        <tr data-tournament="<?php echo $tournament->id ?>">
-                            <td><a href="<?php echo generate_dxl_subpage_url(['action' => 'details', 'id' => $tournament->id]) ?>"><?php echo $tournament->title; ?></a></td>
-                            <td><?php echo ($tournament->is_draft) ? "Udkast" : "Offentliggjort"; ?></td>
-                            <td><?php echo $type; ?></td>
-                            <td>
-                                <?php echo $tournament->participants_count . " Deltagere"; ?>
-                                <?php 
-                                    if( $tournament->participants_count > 0 ) {
-                                        ?>
-                                            <div class="lookup-participants-list modal-button" data-modal="#tournamentParticipantListModal" data-tournament="<?php echo $tournament->id; ?>">Se deltager liste</div>
-                                        <?php
-                                    }
-                                ?>
-                            </td>
-                            <td><?php echo date("d-m", $tournament->start) . " - " . date("d-m Y", $tournament->end); ?></td>
-                            <td><?php echo date("H:i", $tournament->starttime) . " - " . date("H:i", $tournament->endtime); ?></td>
-                            <td><?php echo date("d-m-Y H:i", $tournament->created_at) ?></td>
-                            <td><?php echo $user ?></td>
-                            <td><button class="button-primary delete-tournament-btn" data-tournament="<?php echo $tournament->id ?>"><span class="dashicons dashicons-trash"></span></button></td>
-                        </tr>
-                    <?php
-                }
-            ?>
-        </tbody>
-    </table>
-    <?php 
-        } else {
-            ?>
-                <div class="alert alert-danger">
-                    <h3>Vi kunne ikke finde nogle turneringer</h3>
+    <div class="content mt-4">
+        <div class="row">
+            <div class="col-2">
+                <div class="d-flex align-items-start">
+                    <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <button class="nav-link active" id="v-pills-lan-tab" data-bs-toggle="pill" data-bs-target="#v-pills-lan" type="button" role="tab" aria-controls="v-pills-lan" aria-selected="true">Lan turneringer</button>
+                        <button class="nav-link" id="v-pills-online-tab" data-bs-toggle="pill" data-bs-target="#v-pills-online" type="button" role="tab" aria-controls="v-pills-online" aria-selected="false">Online turneringer</button>
+                    </div>
                 </div>
-            <?php
-        }
-    ?>
+            </div>
+            <div class="col-10">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-lan" role="tabpanel" aria-labelledby="v-pills-lan-tab" tabindex="0">
+                        <?php require_once(dirname(__FILE__) . '/partials/lan-tournaments.php'); ?>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-online" role="tabpanel" aria-labelledby="v-pills-online-tab" tabindex="0">
+                        <?php require_once(dirname(__FILE__) . '/partials/online-tournaments.php'); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
