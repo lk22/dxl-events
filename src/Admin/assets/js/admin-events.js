@@ -11,6 +11,25 @@ jQuery(function($) {
         init: function() {
             this.dxl = DXLCore;
             this.container = $('.dxl');
+            this.deleteTournamentButton = this.container.find('.delete-tournament-button')
+            this.attachGameButton = this.container.find('.attachGameButton')
+            this.attachEventButton = this.container.find('.attach-event-btn');
+            this.publishTournamentButton = this.container.find('.publish-tournament-btn');
+            this.createEventButton = this.container.find('.create-event-button')
+            this.deleteLanModalButton = this.container.find('.delete-lan-modal-btn')
+            this.publishEventButton = this.container.find('.publish-event')
+            this.unpublishEventButton = this.container.find('.unpublish-event')
+            this.removeGameTypeButton = this.container.find('.remove-game-type')
+            this.eventModals = {
+                createTournamentModal: $('#createTournamentModal'),
+                tournamentDescriptionModal: $('#tournamentDescriptionModal'),
+                eventConfigModal: $('.configEventModal'),
+                updateEventModal: $('#updateEventModal'),
+                updateTournamentModal: $('#updateTournamentModal'),
+                deleteTournamentModal: $('.deleteTournamentModal'),
+                createGameModal: $('#createGameModal'),
+                createGameTypeModal: $('#createGameTypeModal')
+            }
             this.initializeActions();
         },
 
@@ -34,7 +53,7 @@ jQuery(function($) {
             /**
              * Creating new tournament ressource from form
              */
-            $('#createTournamentModal').find('.create-tournament-button').click((e) => {
+            self.eventModals.createTournamentModal.find('.create-tournament-button').click((e) => {
                 
                 const tournamentCreateForm = $('.admin-create-tournament-form');
 
@@ -81,7 +100,7 @@ jQuery(function($) {
             /**
              * udpate tournament description
              */
-            $('#tournamentDescriptionModal').find('.update-tournament-description-btn').click((e) => {
+            self.eventModals.tournamentDescriptionModal.find('.update-tournament-description-btn').click((e) => {
                 e.preventDefault();
                 const action = $('.update-tournament-description-btn').data('action');
                 const tournament = $('.update-tournament-description-btn').data('tournament');
@@ -118,7 +137,7 @@ jQuery(function($) {
             });
 
             // delete tournament action
-            self.container.find('.delete-tournament-btn').click((e) => {
+            self.deleteTournamentButton.click((e) => {
                 e.preventDefault();
 
                 const tournament = self.container.find('.delete-tournament-btn').data('tournament');
@@ -205,7 +224,7 @@ jQuery(function($) {
             /**
              * updating the game settings attached to the tournamen
              */
-            $('.attachGameButton').click((e) => {
+            self.attachGameButton.click((e) => {
                 e.preventDefault();
                 const game = $('#game-field').val();
                 const gameMode = $('#game-mode').val();
@@ -226,14 +245,25 @@ jQuery(function($) {
                             }
                         }
                     },
+                    beforeSend: () => {
+                        $.toast({
+                            title: "Opdeterer",
+                            test: "Opdaterer turnering vent venligst",
+                            icon: "info",
+                            position: "bottom-right"
+                        })
+                    },
                     success: (response) => {
                         console.log(response);
+                    },
+                    error: (error) => {
+                        console.log(error)
                     }
                 })
             })
-
+            
             // attach tournament to LAN event
-            $('.attach-event-btn').click((e) => {
+            self.attachEventButton.click((e) => {
                 e.preventDefault();
                 const tournament = $('.attach-event-btn').data('tournament');
                 const event = $('#lan-event').val();
@@ -274,7 +304,7 @@ jQuery(function($) {
                 })
             })
 
-            $('.publish-tournament-btn').click((e) => {
+            self.publishTournamentButton.click((e) => {
                 const tournament = $('.publish-tournament-btn').data('tournament');
                 const is_draft = $('.publish-tournament-btn').data('draft');
                 console.log([tournament, is_draft]);
@@ -310,7 +340,7 @@ jQuery(function($) {
             const self = this;
 
             // creating new lan event
-            $('.create-event-button').click((e) => {
+            self.createEventButton.click((e) => {
                 const eventForm = $('.createEventForm');
                 self.dxl.request.data = {
                     action: "dxl_event_create",
@@ -363,7 +393,7 @@ jQuery(function($) {
             /**
              * configuring
              */
-            $('.configEventModal').find('.config-event-btn').click((e) => {
+            self.eventModals.eventConfigModal.find('.config-event-btn').click((e) => {
                 const configurationForm = $('.configEventForm');
                 const event = configurationForm.find('input[name="event"]').val()
 
@@ -397,7 +427,7 @@ jQuery(function($) {
             })
 
             // updating event ressource
-            $('#updateEventModal').find('.update-event-button').click(() => {
+            self.eventModals.updateEventModal.find('.update-event-button').click(() => {
                 const eventForm = $('.updateEventForm');
                 const event = eventForm.find('input[name="event_id"]').val();
 
@@ -464,7 +494,7 @@ jQuery(function($) {
             })
 
             // deleting LAN event
-            $('.delete-lan-modal-btn').click(() => {
+            self.deleteLanModalButton.click(() => {
                 const event = $('.delete-lan-modal-btn').data('event');
 
                 $.ajax({
@@ -504,7 +534,7 @@ jQuery(function($) {
             });
 
             // publish event
-            $('.publish-event').click((e) => {
+            self.publishEventButton.click((e) => {
                 e.preventDefault();
 
                 const event = $('.publish-event').data('event');
@@ -547,7 +577,7 @@ jQuery(function($) {
             })
 
             // unpublish event 
-            $('.unpublish-event').click((e) => {
+            self.unpublishEventButton.click((e) => {
 
                 const event = $('.unpublish-event').data('event');
 
@@ -596,7 +626,7 @@ jQuery(function($) {
             const self = this;
 
             // updating game action
-            const updateGameForm = $('#updateTournamentModal').find('.updateGameForm');
+            const updateGameForm = self.eventModals.updateTournamentModal.find('.updateGameForm');
             const gameModeRow = updateGameForm.find('.game-mode-row');
             const gameModes = updateGameForm.find('.row');
             let gameModeValue = gameModes.find('label').data('game-mode');
@@ -615,7 +645,7 @@ jQuery(function($) {
                 );
             })
 
-            $('#updateTournamentModal').find('.update-game-button').click((e) => {
+            self.eventModals.updateTournamentModal.find('.update-game-button').click((e) => {
                 e.preventDefault();
 
                 self.dxl.request.data = {
@@ -697,7 +727,7 @@ jQuery(function($) {
             })
 
             // remove game resource
-            $('.deleteTournamentModal').find('.remove-game-btn').click((e) => {
+            self.eventModals.deleteTournamentModal.find('.remove-game-btn').click((e) => {
                 e.preventDefault();
                 $.ajax({
                     method: "POST", 
@@ -705,7 +735,7 @@ jQuery(function($) {
                     data: {
                         action: "dxl_event_game_delete",
                         dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
-                        id: $('.deleteTournamentModal').find('.remove-game-btn').data('game')
+                        id: self.eventModals.deleteTournamentModal.find('.remove-game-btn').data('game')
                     },
                     success: (response) => {
                         console.log(response);
@@ -720,8 +750,73 @@ jQuery(function($) {
                 })
             })
 
+            /**
+             * Creating new Game in backend
+             * Leo Knudsen 02/09-2022
+             */
+            self.eventModals.createGameModal.find('.create-game-btn').click((e) => {
+                e.preventDefault();
+
+                const game = $('#game-name').val();
+                const gametype = $('#game-type').val();
+                // console.log(self.dxl.request.url)
+
+                // fetch(self.dxl.request.url, {
+                //     body: JSON.stringify({
+                //         action: "dxl_event_game_create",
+                //         dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                //         game: game
+                //     }),
+                //     'headers': {
+                //         "Accept": "application/json",
+                //         "Content-Type": "application/json"
+                //     },
+                //     method: "POST"
+                // }).then((response) => {
+                //     console.log(response)
+                // }).catch((error) => {
+                //     console.log(error)
+                // })
+
+                $.ajax({
+                    method: 'POST',
+                    url: self.dxl.request.url,
+                    data: {
+                        action: "dxl_event_game_create",
+                        dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                        game: game,
+                        gametype: gametype
+                    },
+                    beforeSend: () => {
+                        console.log({sending: true});
+                    },
+                    success: (response) => {
+                        console.log(response);
+                        const json = JSON.parse(response);
+                        if ( json.error ) {
+                            $.toast({
+                                title: "Error",
+                                text: json.error,
+                                icon: "error",
+                                position: "bottom-right"
+                            });
+                        } else {
+                            $.toast({
+                                title: "Success",
+                                text: json.error,
+                                icon: "success",
+                                position: "bottom-right"
+                            });
+                        }
+                    },
+                    error: (error) => {
+                        console.log(error);
+                    }
+                })
+            })
+
             // creating game type resource to attach to games
-            $('#createGameTypeModal').find('.create-gametype-btn').click((e) => {
+            self.eventModals.createGameTypeModal.find('.create-gametype-btn').click((e) => {
                 e.preventDefault();
 
                 const type = $('.createGameTypeForm').find('#game-type').val();
@@ -760,13 +855,13 @@ jQuery(function($) {
                                     "<td><button class='button-primary remove-game-type' data-game-type='" + parsed.id + "'>Fjern <span class='dashicons dashicons-trash'></span></button></td>" +
                                 "</tr>" 
                             );
-                            self.dxl.cloaseModal();
+                            $('#createGameTypeModal').modal('hide');
                         }
                     }
                 })
             })
 
-            self.container.find('.remove-game-type').each((index, button) => {
+            self.removeGameTypeButton.each((index, button) => {
                 $(button).click(() => {
                     const type = $(button).data('game-type');
                     console.log(type);

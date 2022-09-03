@@ -86,10 +86,19 @@ if( !class_exists('GameAction'))
                 wp_die(403);
             }
 
-            $this->gameRepository->create([
+            $created = $this->gameRepository->create([
                 "name" => $_REQUEST["game"]["name"],
                 "game_type" => (int) $_REQUEST["game"]["type"]
             ]);
+
+            if ( ! $created ) {
+                $logger->log("Game not created, something went wrong");
+                echo json_encode(["error" => true, "response" => "game creating failed, something went wrong, try again"]);
+                wp_die();
+            }
+
+            echo json_encode(["error" => false, "response" => "Game created!"]);
+            wp_die();
         }
 
         /**

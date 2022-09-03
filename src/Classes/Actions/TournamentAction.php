@@ -460,7 +460,7 @@ if( ! class_exists('TournamentAction') )
                         wp_die();
                     }
 
-                    $this->dxl->response('event', ["response" => $event]);
+                    $this->dxl->response('event', ["response" => "Turnering opdateret!"]);
 
                     wp_die();
                     break;

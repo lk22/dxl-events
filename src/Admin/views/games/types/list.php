@@ -5,7 +5,7 @@
         </div>
         <h1>Spiltyper</h1>
         <div class="actions">
-            <a href="#" class="button-primary modal-button" data-modal="#createGameTypeModal">Opret ny spiltype <span class="dashicons dashicons-games"></span></a>
+            <a href="#" class="button-primary modal-button" data-bs-toggle="modal" data-bs-target="#createGameTypeModal">Opret ny spiltype <span class="dashicons dashicons-games"></span></a>
         </div>
     </div>
 
@@ -37,24 +37,29 @@
     </div>
 </div>
 
-<div class="modal createGameTypeModal hidden" id="createGameTypeModal">
-    <div class="modal-header">
-        <h2>Opret ny spiltype</h2>
-    </div>
-    <div class="modal-body">
-        <h3>Opret ny spil type ved at udfylde formularen</h3>
-        <form action="#" class="createGameTypeForm">
-            <div class="form-group">
-                <label for="game-type">
-                    Spil ttypeitel
-                    <input type="text" id="game-type" required>
-                </label>
+<div class="modal fade modal-xl" id="createGameTypeModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Opret nyt spil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button class="button-primary close-modal">Luk</button>
-        <button class="button-primary create-gametype-btn">Opret spiltype</button>
+            <div class="modal-body">
+                <p>Udfyld formularen nedenfor for at oprette et nyt spil </p>
+                <p>Spillet kan bruges til håndtering af dine turneringer eller andre events</p>
+                <form action="#" class="createGameTypeForm">
+                    <div class="form-group">
+                        <label for="game-type">
+                            Spil type
+                            <input type="text" id="game-type" required>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="button-primary close-modal" data-bs-dismiss="modal">Luk</button>
+                <button class="button-primary create-gametype-btn">Opret spil</button>
+            </div>
+        </div>
     </div>
 </div>
-<div class="overlay hidden"></div>

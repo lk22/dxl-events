@@ -61,7 +61,7 @@
                                     if( $games > 0 )
                                         foreach($games as $game) {
                                             ?>
-                                                <option value="<?php echo $attachedGame->id; ?>"><?php echo $attachedGame->name; ?></option>
+                                                <option value="<?php echo $attachedGame->id; ?>"><?php echo $attachedGame->name ?? 'Vælg spil'; ?></option>
                                                 <option value="<?php echo $game->id; ?>"><?php echo $game->name ?? "" ?></option>
                                             <?php
                                         }
