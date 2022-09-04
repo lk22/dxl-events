@@ -1,8 +1,8 @@
 <?php 
-namespace DxlEvents\Classes\Actions;
+namespace DxlEvents\Classes\Controllers;
 
 require_once(ABSPATH . "wp-content/plugins/dxl-core/src/Classes/Core.php");
-use Dxl\Classes\Abstracts\AbstractAction as Action;
+use Dxl\Classes\Abstracts\AbstractActionController as Controller;
 use Dxl\Classes\Core;
 
 // Repositories
@@ -15,7 +15,7 @@ use DxlEvents\Classes\Services\EventService as Service;
 
 if( !class_exists('LANAction') ) 
 {
-    class LANAction extends Action
+    class LANAction extends Controller
     {
 
         /**

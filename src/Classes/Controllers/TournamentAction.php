@@ -1,7 +1,7 @@
 <?php 
-namespace DxlEvents\Classes\Actions;
+namespace DxlEvents\Classes\Controllers;
 
-use Dxl\Classes\Abstracts\AbstractAction as Action;
+use Dxl\Classes\Abstracts\AbstractActionController;
 use DxlEvents\Classes\Repositories\TournamentRepository as Tournament;
 use DxlEvents\Classes\Repositories\TournamentSettingRepository as TournamentSetting;
 use DxlEvents\Classes\Repositories\ParticipantRepository as Participant;
@@ -12,7 +12,7 @@ use DXL\Classes\Core;
 
 if( ! class_exists('TournamentAction') ) 
 {
-    class TournamentAction extends Action
+    class TournamentAction extends AbstractActionController
     {
         /**
          * DXL Core

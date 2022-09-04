@@ -1,5 +1,5 @@
 <?php 
-namespace DxlEvents\Classes\Actions;
+namespace DxlEvents\Classes\Controllers;
 
 use DxlEvents\Classes\Repositories\TrainingRepository;
 

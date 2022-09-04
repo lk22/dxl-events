@@ -1,8 +1,8 @@
 <?php 
 
-namespace DxlEvents\Classes\Actions;
+namespace DxlEvents\Classes\Controllers;
 
-use Dxl\Classes\Abstracts\AbstractAction as Action;
+use Dxl\Classes\Abstracts\AbstractActionController as Controller;
 use Dxl\Classes\Core;
 use DxlEvents\Classes\Repositories\GameRepository;
 use DxlEvents\Classes\Repositories\GameModeRepository;
@@ -14,9 +14,9 @@ use DxlEvents\Classes\Repositories\ParticipantRepository;
 use DxlEvents\Classes\Repositories\LanParticipantRepository;
 use DxlMembership\Classes\Repositories\MemberRepository;
 
-if( !class_exists('EventAction')) 
+if( !class_exists('EventController')) 
 {
-    class EventAction extends Action 
+    class EventController extends Controller 
     {
         /**
          * Dxl core object

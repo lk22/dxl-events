@@ -1,15 +1,18 @@
 <?php 
 
-namespace DxlEvents\Classes\Actions;
+namespace DxlEvents\Classes\Controllers;
 
-use Dxl\Classes\Abstracts\AbstractAction as Action;
+use Dxl\Classes\Abstracts\AbstractActionController as Controller;
 use Dxl\Classes\Core;
 use DxlEvents\Classes\Repositories\GameRepository as Game;
 use DxlEvents\Classes\Repositories\TournamentSettingRepository as TournamentSetting;
 
+use DxlEvents\Classes\Actions\Game\CreateGameAction;
+use DxlEvents\Classes\Actions\Game\UpdateGame;
+
 if( !class_exists('GameAction')) 
 {
-    class GameAction extends Action 
+    class GameAction extends Controller 
     {
         /**
          * Dxl core object

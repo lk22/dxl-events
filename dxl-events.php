@@ -9,11 +9,11 @@
 
 require_once dirname(__FILE__) . "/vendor/autoload.php";
 
-use DxlEvents\Classes\Actions\LANAction;
-use DxlEvents\Classes\Actions\TournamentAction;
-use DxlEvents\Classes\Actions\TrainingAction;
-use DxlEvents\Classes\Actions\GameAction;
-use DxlEvents\Classes\Actions\EventAction;
+use DxlEvents\Classes\Controllers\LANAction;
+use DxlEvents\Classes\Controllers\TournamentAction;
+use DxlEvents\Classes\Controllers\TrainingAction;
+use DxlEvents\Classes\Controllers\GameAction;
+use DxlEvents\Classes\Controllers\EventController;
 
 use DxlEvents\Classes\Services\EventService;
 
@@ -148,8 +148,8 @@ if( !class_exists('DxlEvent') ){
         public function construct_events()
         {
             
-            $eventAction = new EventAction;
-            $eventAction->manageFrontendEventViews();
+            $eventController = new EventController;
+            $eventController->manageFrontendEventViews();
         }
 
         public function manage_tournaments()
