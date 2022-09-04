@@ -93,6 +93,7 @@ if( !class_exists('EventController'))
          */
         public function __construct()
         {
+            parent::__construsct();
             $this->dxl = new Core();
             $this->gameRepository = new GameRepository();
             $this->tournamentSettingsRepository = new TournamentSettingRepository();

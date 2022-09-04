@@ -86,6 +86,7 @@ if( ! class_exists('TournamentController') )
          */
         public function __construct() 
         {
+            parent::__construct();
             $this->tournament = new Tournament();
             $this->tournamentSetting = new TournamentSetting();
             $this->participant = new Participant();

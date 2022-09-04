@@ -58,6 +58,7 @@ if( !class_exists('LanController') )
          */
         public function __construct() 
         {
+            parent::__construct();
             $this->lanRepository = new Lan();
             $this->tournamentRepository = new TournamentRepository();
             $this->lanParticipantRepository = new LanParticipantRepository();

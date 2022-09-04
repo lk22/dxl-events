@@ -40,6 +40,7 @@ if( !class_exists('GameController'))
          */
         public function __construct()
         {
+            parent::__construct();
             $this->gameRepository = new Game();
             $this->dxl = new Core();
             $this->tournamentSettings = new TournamentSetting();
