@@ -81,14 +81,6 @@ if( !class_exists('GameController'))
         {
             $logger = $this->dxl->getUtility('Logger');
 
-            // verify action nonce
-            $verified = $this->verify_nonce();
-            if( ! $verified ) {
-                $this->dxl->forbiddenRequest('events');
-                $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
-                wp_die(403);
-            }
-
             $created = $this->gameRepository->create([
                 "name" => $_REQUEST["game"],
                 "game_type" => (int) $_REQUEST["gametype"]
@@ -96,15 +88,15 @@ if( !class_exists('GameController'))
 
             if ( ! $created ) {
                 $logger->log("Game not created, something went wrong");
-                echo json_encode(["error" => true, "response" => "game creating failed, something went wrong, try again"]);
-                wp_die();
+                echo $this->dxl->response('events', ["error" => true, "response" => "game creating failed, something went wrong, try again"]);
+                wp_die(409);
             }
 
             $this->dxl->response('events', [
                 "error" => falase,
                 "response" => "Spil oprettet"
             ]);
-            wp_die();
+            wp_die(201);
         }
 
         /**
@@ -115,14 +107,6 @@ if( !class_exists('GameController'))
         public function ajaxDeleteGameMode(): void 
         {
             $logger = $this->dxl->getUtility('Logger');
-            
-            // verify action nonce 
-            $verified = $this->verify_nonce();
-            if( ! $verified ) {
-                $this->dxl->forbiddenRequest('events');
-                $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
-                wp_die(403);
-            }
 
             $game_mode_id = (int) $_REQUEST["gameMode"];
 
@@ -141,13 +125,6 @@ if( !class_exists('GameController'))
         public function ajaxDeleteGame(): void 
         {
             $logger = $this->dxl->getUtility('Logger');
-
-            $verified = $this->verify_nonce();
-            if( ! $verified ) {
-                $this->dxl->forbiddenRequest('events');
-                $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
-                wp_die(403);
-            }
 
             $existingGame = $this->gameRepository->find((int) $_REQUEST["id"]);
             $settings = $this->tournamentSettings->findByGame($existingGame->id);
@@ -177,14 +154,6 @@ if( !class_exists('GameController'))
         {
             // Logger utility
             $logger = $this->dxl->getUtility('Logger');
-
-            // verify action nonce
-            $verified = $this->verify_nonce();
-            if( ! $verified ) {
-                $this->dxl->forbiddenRequest('events');
-                $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
-                wp_die(403);
-            }
 
             // game object
             $request = $this->get('game');
@@ -237,14 +206,6 @@ if( !class_exists('GameController'))
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Triggering method, " . __METHOD__, 'events');
 
-            // verify action nonce
-            $verified = $this->verify_nonce();
-            if( ! $verified ) {
-                $this->dxl->forbiddenRequest('events');
-                $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
-                wp_die(403);
-            }
-
             if( ! $this->has('type') ) {
                 $this->dxl->response('event', [
                     "error" => true,
@@ -275,15 +236,6 @@ if( !class_exists('GameController'))
         {
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Triggering method, " . __METHOD__, 'events');
-
-            // verify action nonce
-            $verified = $this->verify_nonce();
-
-            if( ! $verified ) {
-                $this->dxl->forbiddenRequest('events');
-                $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
-                wp_die(403);
-            }
 
             if( !$this->has('type') ) {
                 $logger->log("Failed to delete game type, could not find type identifier, " . __METHOD__ . 'events');
