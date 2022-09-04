@@ -103,13 +103,6 @@ if( !class_exists('LanController') )
             $logger = $this->dxl->getUtility('Logger');
             $logger->log('Trigger method ' . __METHOD__);
 
-            $verified = $this->verify_nonce();
-            if( ! $verified ) {
-                $this->dxl->forbiddenRequest('events');
-                $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
-                wp_die(403);
-            }
-
             $newEvent = $this->get('event');
 
             $event = $this->lanRepository->create([
@@ -167,13 +160,6 @@ if( !class_exists('LanController') )
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Trigger method: " . __METHOD__, 'events');
 
-            $verified = $this->verify_nonce();
-            if( ! $verified ) {
-                $this->dxl->forbiddenRequest('events');
-                $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
-                wp_die(403);
-            }
-
             $config = $this->get('config');
             $event = $this->lanRepository->find($this->get('event'));
 
@@ -205,13 +191,6 @@ if( !class_exists('LanController') )
         {
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Triggering action: " . __METHOD__);
-
-            if( !$this->verify_nonce() )
-            {
-                $this->dxl->forbiddenRequest('events');
-                $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
-                wp_die(403);
-            }
 
             $event = $this->get('event');
             $settings = $event["settings"];
@@ -246,13 +225,6 @@ if( !class_exists('LanController') )
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Triggering action: " . __METHOD__);
 
-            if( ! $this->verify_nonce() )
-            {
-                $this->dxl->forbiddenRequest('events');
-                $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
-                wp_die(403);
-            }
-
             $event = $this->get('event');
             // echo $event; wp_die();
             
@@ -285,13 +257,6 @@ if( !class_exists('LanController') )
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("triggering action: " . __METHOD__);
 
-            if( !$this->verify_nonce() )
-            {
-                $this->dxl->forbiddenRequest('events');
-                $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
-                wp_die(403);
-            }
-
             $event = $this->lanRepository->find((int) $this->get('event'));
 
             $this->lanRepository->update(["is_draft" => 0], (int) $event->id);
@@ -312,13 +277,7 @@ if( !class_exists('LanController') )
         {
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("triggering action: " . __METHOD__);
-            if( !$this->verify_nonce() )
-            {
-                $this->dxl->forbiddenRequest('events');
-                $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
-                wp_die(403);
-            }
-            
+
             $event = $this->lanRepository->find((int) $this->get('event'));
 
             $this->lanRepository->update(["is_draft" => 1], (int) $event->id);

@@ -197,18 +197,9 @@ if( ! class_exists('TournamentController') )
         public function ajaxCreateTournament(): void
         {
             global $current_user;
-            // $validated = $this->validateRequest($_REQUEST["event"]) ?? false;
+
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Triggering action: " . __METHOD__, 'events');
-
-            // echo wp_json_encode($_REQUEST["event"]); wp_die();
-
-            if( ! $this->verify_nonce() )
-            {
-                $this->dxl->forbiddenRequest('events');
-                $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
-                wp_die();
-            }
 
             $type = (int) $_REQUEST["event"]["type"];
 
@@ -298,12 +289,6 @@ if( ! class_exists('TournamentController') )
         {
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Triggering event: " . __METHOD__, 'events');
-            if( ! $this->verify_nonce($request) )
-            {
-                $this->dxl->forbiddenRequest('events');
-                $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
-                wp_die();
-            }
 
             $event = (int) $_REQUEST["event"]["tournament"];
             $participant = (int) $_REQUEST["event"]["participant"];
@@ -322,13 +307,6 @@ if( ! class_exists('TournamentController') )
         {
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Triggering event: " . __METHOD__, 'events');
-
-            $verified = $this->verify_nonce();
-            if( ! $verified ) {
-                $this->dxx->forbiddenRequest('event');
-                $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
-                wp_die();
-            }
 
             $tournament = $this->tournament->find($this->get('event')['tournament']);
             if( $tournamnet && $tournament->has_lan && $tournamnet->lan_id != 0 ) {
@@ -358,13 +336,6 @@ if( ! class_exists('TournamentController') )
         {
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Triggering event: " . __METHOD__, 'events');
-
-            $verified = $this->verify_nonce();
-            if( ! $verified ) {
-                $this->dxl->forbiddenRequest('event');
-                $logger->log("Unauthorized request caught, invalid nonce " . __METHOD__, 'events');
-                wp_die();
-            }
 
             if( ! isset($this->get('event')["action"]) ) {
                 $this->dxl->response('event', [
