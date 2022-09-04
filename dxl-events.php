@@ -9,10 +9,10 @@
 
 require_once dirname(__FILE__) . "/vendor/autoload.php";
 
-use DxlEvents\Classes\Controllers\LANAction;
-use DxlEvents\Classes\Controllers\TournamentAction;
+use DxlEvents\Classes\Controllers\LanController;
+use DxlEvents\Classes\Controllers\TournamentController;
 use DxlEvents\Classes\Controllers\TrainingAction;
-use DxlEvents\Classes\Controllers\GameAction;
+use DxlEvents\Classes\Controllers\GameController;
 use DxlEvents\Classes\Controllers\EventController;
 
 use DxlEvents\Classes\Services\EventService;
@@ -22,10 +22,10 @@ if( !class_exists('DxlEvent') ){
 
         public function __construct()
         {
-            $this->lan = new LANAction();
-            $this->tournament = new TournamentAction();
+            $this->lan = new LanController();
+            $this->tournament = new TournamentController();
             $this->training = new TrainingAction();
-            $this->game = new GameAction();
+            $this->game = new GameController();
             $this->constructFrontend();
             add_action( 'admin_menu', [$this, 'registerModuleMenu']);
             add_action('admin_enqueue_scripts', [$this, 'enqueueAdminEventScripts']);

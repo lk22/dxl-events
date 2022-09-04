@@ -10,9 +10,9 @@ use DxlEvents\Classes\Repositories\TournamentSettingRepository as TournamentSett
 use DxlEvents\Classes\Actions\Game\CreateGameAction;
 use DxlEvents\Classes\Actions\Game\UpdateGame;
 
-if( !class_exists('GameAction')) 
+if( !class_exists('GameController')) 
 {
-    class GameAction extends Controller 
+    class GameController extends Controller 
     {
         /**
          * Dxl core object

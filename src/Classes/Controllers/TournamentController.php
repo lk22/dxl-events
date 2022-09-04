@@ -10,9 +10,9 @@ use DxlEvents\Classes\Repositories\GameRepository as Game;
 use DxlEvents\Classes\Services\EventService;
 use DXL\Classes\Core;
 
-if( ! class_exists('TournamentAction') ) 
+if( ! class_exists('TournamentController') ) 
 {
-    class TournamentAction extends AbstractActionController
+    class TournamentController extends AbstractActionController
     {
         /**
          * DXL Core

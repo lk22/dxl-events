@@ -13,9 +13,9 @@ use DxlEvents\Classes\Repositories\LanParticipantRepository;
 // services
 use DxlEvents\Classes\Services\EventService as Service;
 
-if( !class_exists('LANAction') ) 
+if( !class_exists('LanController') ) 
 {
-    class LANAction extends Controller
+    class LanController extends Controller
     {
 
         /**
