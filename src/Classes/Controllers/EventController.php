@@ -93,7 +93,7 @@ if( !class_exists('EventController'))
          */
         public function __construct()
         {
-            parent::__construsct();
+            parent::__construct();
             $this->dxl = new Core();
             $this->gameRepository = new GameRepository();
             $this->tournamentSettingsRepository = new TournamentSettingRepository();
@@ -325,5 +325,4 @@ if( !class_exists('EventController'))
         }
     }
 }
-
 ?>
