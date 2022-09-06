@@ -2,20 +2,26 @@
     if( $events ) {
         foreach($events as $event) {
             ?>
-                <div class="card col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12" style="border-radius: 10px;">
-                    <div class="card-header flex">
-                        <h3>
-                            <?php echo $event->title; ?>
-                        </h3>
-                        <span>
-                            <?php
-                                if( $event->is_draft ) {
-                                    ?>
-                                        <span class="status-label warning">Udkast</span>
-                                    <?php
-                                }
-                            ?>
-                        </span>
+                <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3 mb-4" style="border-radius: 10px;">
+                    <div class="card-header flex row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3>
+                                        <?php echo $event->title; ?>
+                                    </h3>
+                                </div>
+                                <?php 
+                                    if( $event->is_draft ) {
+                                        ?>
+                                            <div class="col-md-6">
+                                                <span class="label label-warning">Udkast</span>
+                                            </div>
+                                        <?php
+                                    }
+                                ?>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="available-seats">

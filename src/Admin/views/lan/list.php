@@ -9,8 +9,8 @@
         </div>
     </div>
 
-    <div class="content">
-        <div class="events-list list gap-10">
+    <div class="content mt-4">
+        <div class="events-list list">
             <div class="row">
                 <?php require dirname(__FILE__) . "/partials/lan-list.php"; ?>
             </div>
