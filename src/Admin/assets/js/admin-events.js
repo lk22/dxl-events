@@ -678,11 +678,15 @@ jQuery(function($) {
                     success: (response) => {
                         console.log(response);
 
-                        self.dxl.closeModal();
-                        self.dxl.redirectToAction('events-games', {
-                            action: "details",
-                            id: updateGameForm.find('input[name="game"]').val()
-                        });
+                        const json = JSON.parse( response )
+                        if( ! json.error ) {
+                            self.dxl.closeModal();
+                            self.dxl.redirectToAction('events-games', {
+                                action: "details",
+                                id: updateGameForm.find('input[name="game"]').val()
+                            });
+                        }
+
                     }
                 })
             })
@@ -804,7 +808,7 @@ jQuery(function($) {
             self.eventModals.createGameTypeModal.find('.create-gametype-btn').click((e) => {
                 e.preventDefault();
 
-                const type = $('.createGameTypeForm').find('#game-type').val();
+                const type = self.eventModals.createGameTypeModal.find('#game-type').val();
 
                 $.ajax({
                     method: "POST", 
@@ -814,10 +818,10 @@ jQuery(function($) {
                         dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
                         type: type
                     },
-                    success: (response) => {
-                        console.log(response)
+                    success: ( response ) => {
+                        console.log( response )
 
-                        const parsed = JSON.parse(response).event;
+                        const parsed = JSON.parse( response ).event;
 
                         if( parsed.error ) {
                             $.toast({
@@ -840,7 +844,7 @@ jQuery(function($) {
                                     "<td><button class='button-primary remove-game-type' data-game-type='" + parsed.id + "'>Fjern <span class='dashicons dashicons-trash'></span></button></td>" +
                                 "</tr>" 
                             );
-                            $('#createGameTypeModal').modal('hide');
+                            self.eventModals.createGameTypeModal.modal('hide');
                         }
                     }
                 })

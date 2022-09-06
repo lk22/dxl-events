@@ -4,11 +4,17 @@ namespace DxlEvents\Classes\Controllers;
 
 use Dxl\Classes\Abstracts\AbstractActionController as Controller;
 use Dxl\Classes\Core;
+
+// Repositories
 use DxlEvents\Classes\Repositories\GameRepository as Game;
 use DxlEvents\Classes\Repositories\TournamentSettingRepository as TournamentSetting;
 
+// Actions
 use DxlEvents\Classes\Actions\Game\CreateGameAction;
 use DxlEvents\Classes\Actions\Game\UpdateGame;
+
+// services
+use DxlEvents\Classes\Services\GameService;
 
 if( !class_exists('GameController')) 
 {
@@ -36,6 +42,13 @@ if( !class_exists('GameController'))
         public $tournamentSettings;
 
         /**
+         * Game service
+         *
+         * @var \DxlEvents\Classses\Services\GameService;
+         */
+        public $gameService;
+
+        /**
          * Game action constructor
          */
         public function __construct()
@@ -44,6 +57,7 @@ if( !class_exists('GameController'))
             $this->gameRepository = new Game();
             $this->dxl = new Core();
             $this->tournamentSettings = new TournamentSetting();
+            $this->gameService = new GameService();
             $this->registerAdminActions();
             $this->registerGuestActions();
         }
@@ -158,15 +172,10 @@ if( !class_exists('GameController'))
 
             // game object
             $request = $this->get('game');
-
-            // game type
-            $gameType = $this->get('game')["type"];
-
-            // list of game modes
-            $gameModes = $this->get('game')["modes"]; 
-
-            // game id to update
-            $game_id = (int) $this->get('game')["id"];
+            $request = $_REQUEST["game"];
+            $gameType = $request["type"];
+            $gameModes = $request["modes"];
+            $game_id = $request["id"];
 
             $game = $this->gameRepository->find($game_id);
 
@@ -177,22 +186,20 @@ if( !class_exists('GameController'))
                 "name" => $gameType
             ], (int) $game->game_type);
 
-            // create new game mode attached to the game ressource
-            foreach($gameModes as $mode)    
-            {
-                // dont do anything if the one row is empty
-                if( empty($mode) ) {
-                    continue;
-                }
+            $inserted = $this->gameService->insertGameModes($gameModes, $game);
 
-                // creating new row for the game Mode
-                if( !empty($mode["name"]) ) {
-                    $this->gameRepository->gameMode()->create([
-                        "name" => $mode["name"],
-                        "game_id" => $game_id
-                    ]);
-                }
+            if ( ! $inserted ) {
+                $this->dxl->response('events', [
+                    "error" => true,
+                    "response" => "Noget gik galt, kunne ikke opdatere spillet."
+                ]);
+                wp_die(409, '');
             }
+
+            $this->dxl->response('events', [
+                "error" => false,
+                "response" => "Spillet er opdateret!"
+            ]);
 
             wp_die();
         }
@@ -207,7 +214,7 @@ if( !class_exists('GameController'))
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Triggering method, " . __METHOD__, 'events');
 
-            if( ! $this->has('type') ) {
+            if( ! $_REQUEST['type'] ) {
                 $this->dxl->response('event', [
                     "error" => true,
                     "response" => "Noget gik galt, kunne ikke oprette spil type"
