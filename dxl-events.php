@@ -84,8 +84,6 @@ if( !class_exists('DxlEvent') ){
         public function enqueueAdminEventScripts()
         {
             wp_enqueue_script('dxl-admin-events', plugins_url('dxl-events/src/admin/assets/js/admin-events.js'), array('jquery'));
-            
-            wp_enqueue_script('dxl-admin-fetch', plugins_url('dxl-events/src/admin/assets/js/admin-fetch.js'), array('wp-api-fetch', 'wp-polyfill'));
         }
 
         public function constructFrontend()
