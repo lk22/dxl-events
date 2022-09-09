@@ -52,6 +52,16 @@
                         <label class="form-check-label" for="flexSwitchCheckChecked">Aftensmad (Lørdagg)</label>
                     </div>
 
+                    <div class="form-check form-switch mb-4">
+                        <input type="checkbox" role="switch" name="participant-has-companion-field" id="participant-companion" class="form-check-input">
+                        <label for="companionSwitchCheckCkeced" class="form-check-label">Har du ledsager med?</label>
+                    </div>
+
+                    <div class="form-floating companion-name-field d-none mb-3">
+                        <input type="text" class="form-control" name="participant-companion-name" id="floatingInput participant-companion-name" placeholder="udfyld navn på ledsager">
+                        <label for="floatingInput">Navn på ledsager</label>
+                    </div> 
+
                     <label>Hvem ønsker du at sidde sammen med</label>
                     <select class="form-select member-select mb-4" id="participant-member-select" multiple aria-label="Vælg medlmmer">
                         <?php 

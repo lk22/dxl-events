@@ -106,14 +106,14 @@
 
                 $template .= "</ul>\n\n";
 
-                if( count($this->seatedMembers) ) {
-                    $template .= "<h3>Ønsker og sidde sammen med følgende: </h3>";
-                    $template .= "<ul>";
-                    foreach( $this->seatedMembers as $member ) {
-                        $template .= "<li>" . $member . "</li>";
-                    }
-                    $template .= "</ul>\n\n";
-                }
+                // if( count($this->seatedMembers) ) {
+                //     $template .= "<h3>Ønsker og sidde sammen med følgende: </h3>";
+                //     $template .= "<ul>";
+                //     foreach( $this->seatedMembers as $member ) {
+                //         $template .= "<li>" . $member . "</li>";
+                //     }
+                //     $template .= "</ul>\n\n";
+                // }
 
                 if( strlen($this->notice) ) {
                     $template .= "<h3>Bemærkning: </h3>\n";

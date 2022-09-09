@@ -40,16 +40,27 @@
             public $notice;
 
             /**
+             * Companion name
+             */
+            public $companion;
+
+            /**
              * Constructor
              *
              * @param [type] $participant
              */
-            public function __construct($participant, $event, $seatedMembers = [], $notice)
+            public function __construct(
+                $participant, 
+                $event, 
+                $seatedMembers = [], 
+                $notice, 
+                $companion)
             {
                 $this->participant = $participant;
                 $this->event = $event;
                 $this->seatedMembers = $seatedMembers;
                 $this->notice = $notice;
+                $this->companion = $companion;
             }
 
             /**
@@ -78,12 +89,19 @@
                 $template .= "<p>Du vil inden længe modtage en faktura</p>\n\n";
                 $template .= "<p>OBS: vær opmærksom på prisen kan variere efter madvalg</p>\n\n";
 
-                if( count($this->seatedMembers) ) {
-                    $template .= "<p>Vi har noteret os du gerne vil sidde sammen med følgende:</p>\n";
+                // if( $this->seatedMembers) {
+                //     $template .= "<p>Vi har noteret os du gerne vil sidde sammen med følgende:</p>\n";
+                //     $template .= "<ul>";
+                //     foreach( $this->seatedMembers as $member ) {
+                //         $template .= "<li>" . $member . "</li>";
+                //     }
+                //     $template .= "</ul>\n";
+                // }
+
+                if ( $this->companion ) {
+                    $template .= "<p>Vi har noteret os du gerne vil have følgende med som ledsager:</p>\n";
                     $template .= "<ul>";
-                    foreach( $this->seatedMembers as $member ) {
-                        $template .= "<li>" . $member . "</li>";
-                    }
+                    $template .= "<li>" . $this->companion . "</li>";
                     $template .= "</ul>\n";
                 }
 
