@@ -21,6 +21,7 @@ jQuery(function($) {
             this.unpublishEventButton = this.container.find('.unpublish-event')
             this.removeGameTypeButton = this.container.find('.remove-game-type')
             this.eventModals = {
+                createLanEventModal: $('#createLanModal'),
                 createTournamentModal: $('#createTournamentModal'),
                 tournamentDescriptionModal: $('#tournamentDescriptionModal'),
                 eventConfigModal: $('.configEventModal'),
@@ -339,17 +340,22 @@ jQuery(function($) {
         triggerLanEvents: function() {
             const self = this;
 
+            console.log(self.createEventButton);
             // creating new lan event
-            self.createEventButton.click((e) => {
+            self.eventModals.createLanEventModal.find('.create-event-button').click((e) => {
                 e.preventDefault()
                 const eventForm = $('.createEventForm');
                 console.log("creating");
+
+                console.log(
+                    eventForm.find('textarea#event-description').val(),
+                )
                 self.dxl.request.data = {
                     action: "dxl_event_create",
                     dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
                     event: {
                         title: eventForm.find('#event-title').val(),
-                        description: eventForm.find('#event-description').val(),
+                        description: eventForm.find('textarea#event-description').val(),
                         description_extra: eventForm.find('#event-description-extra').val(),
                         location: eventForm.find('#event-location').val(),
                         startdate: eventForm.find('#event-startdate').val(),

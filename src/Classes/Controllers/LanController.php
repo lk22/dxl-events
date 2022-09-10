@@ -105,6 +105,8 @@ if( !class_exists('LanController') )
             $logger->log('Trigger method ' . __METHOD__);
 
             $newEvent = $this->get('event');
+            $newEvent = $_REQUEST["event"];
+            // echo json_encode($_REQUEST["event"]["description"]); wp_die();
 
             $event = $this->lanRepository->create([
                 "title" => $newEvent["title"],
