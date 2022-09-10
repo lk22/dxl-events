@@ -163,8 +163,8 @@ if( !class_exists('LanController') )
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Trigger method: " . __METHOD__, 'events');
 
-            $config = $this->get('config');
-            $event = $this->lanRepository->find($this->get('event'));
+            $config = $_REQUEST['config'];
+            $event = $this->lanRepository->find($_REQUEST['event']);
 
             $is_configured = $this->eventService->configureEvent($event->id, $config);
             
@@ -178,6 +178,7 @@ if( !class_exists('LanController') )
             }
 
             $this->dxl->response('event', [
+                "error" => false,
                 "response" => "Begivenhed konfigureret"
             ]);
 
@@ -195,7 +196,7 @@ if( !class_exists('LanController') )
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Triggering action: " . __METHOD__);
 
-            $event = $this->get('event');
+            $event = $_REQUEST["event"];
             $settings = $event["settings"];
 
             $this->lanRepository->update([

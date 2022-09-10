@@ -340,7 +340,6 @@ jQuery(function($) {
         triggerLanEvents: function() {
             const self = this;
 
-            console.log(self.createEventButton);
             // creating new lan event
             self.eventModals.createLanEventModal.find('.create-event-button').click((e) => {
                 e.preventDefault()
@@ -401,9 +400,11 @@ jQuery(function($) {
             /**
              * configuring
              */
-            self.eventModals.eventConfigModal.find('.config-event-btn').click((e) => {
+            
+            $('.config-event-btn').click((e) => {
                 const configurationForm = $('.configEventForm');
                 const event = configurationForm.find('input[name="event"]').val()
+                
 
                 self.dxl.request.data = {
                     action: "dxl_event_configure",
@@ -430,6 +431,28 @@ jQuery(function($) {
                     data: self.dxl.request.data,
                     success: (response) => {
                         console.log(response);
+
+                        const parsed = JSON.parse(response).event;
+                        if( parsed.error === true ) {
+                            $.toast({
+                                title: "Fejl",
+                                text: parsed.response,
+                                icon: "error",
+                                position: "bottom-right"
+                            })
+                        } else {
+                            $.toast({
+                                title: "Success",
+                                text: parsed.response,
+                                icon: "info",
+                                position: "bottom-right"
+                            });
+
+                            self.dxl.redirectToAction('events-lan', {
+                                action: "details",
+                                id: event
+                            });
+                        }
                     }
                 })
             })
