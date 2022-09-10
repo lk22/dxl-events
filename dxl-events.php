@@ -30,7 +30,7 @@ if( !class_exists('DxlEvent') ){
             add_action( 'admin_menu', [$this, 'registerModuleMenu']);
             add_action('admin_enqueue_scripts', [$this, 'enqueueAdminEventScripts']);
             // add_action( 'wp_dashboard_setup', [$this, 'register_event_widgets']);
-            var_dump(plugins_url('dxl-events/src/admin/assets/js/admin-events.js'));
+
             // construct shortcodes
             add_shortcode('frontpage_latest_events', [$this, 'construct_latest_events']);
             add_shortcode('events_page_lan_events', [$this, 'construct_events']);
@@ -83,7 +83,6 @@ if( !class_exists('DxlEvent') ){
 
         public function enqueueAdminEventScripts()
         {
-            
             wp_enqueue_script('dxl-admin-events', plugins_url('dxl-events/src/admin/assets/js/admin-events.js'), array('jquery'));
         }
 
