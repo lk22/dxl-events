@@ -230,6 +230,8 @@ if( !class_exists('LanController') )
             $logger->log("Triggering action: " . __METHOD__);
 
             $event = $_REQUEST["event"];
+
+            $this->eventService->removeEvent($event["id"]);
             
             $delete = $this->lanRepository->delete($event);
 
