@@ -86,7 +86,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="button-primary close-modal">Luk</button>
+                <button class="button-primary close-modal" data-bs-dismiss="modal">Luk</button>
                 <button class="button-primary create-event-button">Opret <span class="dashicons dashicons-calendar"></span></button>
             </div>
         </div>
