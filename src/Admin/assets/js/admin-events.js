@@ -21,6 +21,7 @@ jQuery(function($) {
             this.unpublishEventButton = this.container.find('.unpublish-event')
             this.removeGameTypeButton = this.container.find('.remove-game-type')
             this.eventModals = {
+                deleteLanModal: $('deleteLanModal'),
                 createLanEventModal: $('#createLanModal'),
                 createTournamentModal: $('#createTournamentModal'),
                 tournamentDescriptionModal: $('#tournamentDescriptionModal'),
@@ -525,7 +526,8 @@ jQuery(function($) {
             })
 
             // deleting LAN event
-            self.deleteLanModalButton.click(() => {
+            $('.delete-lan-modal-btn').on('click', (e) => {
+                console.log("deleting event");
                 const event = $('.delete-lan-modal-btn').data('event');
 
                 $.ajax({

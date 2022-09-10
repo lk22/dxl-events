@@ -229,8 +229,7 @@ if( !class_exists('LanController') )
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Triggering action: " . __METHOD__);
 
-            $event = $this->get('event');
-            // echo $event; wp_die();
+            $event = $_REQUEST["event"];
             
             $delete = $this->lanRepository->delete($event);
 
