@@ -262,7 +262,7 @@ if( !class_exists('LanController') )
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("triggering action: " . __METHOD__);
 
-            $event = $this->lanRepository->find((int) $this->get('event'));
+            $event = $this->lanRepository->find((int) $_REQUEST["event"]);
 
             $this->lanRepository->update(["is_draft" => 0], (int) $event->id);
 
@@ -283,7 +283,7 @@ if( !class_exists('LanController') )
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("triggering action: " . __METHOD__);
 
-            $event = $this->lanRepository->find((int) $this->get('event'));
+            $event = $this->lanRepository->find((int) $_REQUEST["event"]);
 
             $this->lanRepository->update(["is_draft" => 1], (int) $event->id);
 

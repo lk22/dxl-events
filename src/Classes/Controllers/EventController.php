@@ -176,7 +176,8 @@ if( !class_exists('EventController'))
         public function renderEventsList()
         {
             $events = [];
-            $lan = $this->lanRepository->all();
+            $lan = $this->lanRepository->select()->where('is_draft', 0)->get();
+            var_dump($lan);
             $tournaments = $this->tournamentRepository->all();
             $training = $this->trainingRepository->all();
             
