@@ -1,4 +1,4 @@
-;jQuery(function($) {
+jQuery(function($) {
 
     /**
      * Initializing event module object
