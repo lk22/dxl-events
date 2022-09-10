@@ -341,7 +341,9 @@ jQuery(function($) {
 
             // creating new lan event
             self.createEventButton.click((e) => {
+                e.preventDefault()
                 const eventForm = $('.createEventForm');
+                console.log("creating");
                 self.dxl.request.data = {
                     action: "dxl_event_create",
                     dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
