@@ -1,5 +1,5 @@
 <?php 
-    if( $event->tournaments_count > 0 ) {
+    if( $tournamentData ) {
         ?>
             <table class="widefat fixed striped event-tournaments-list">
                 <thead>

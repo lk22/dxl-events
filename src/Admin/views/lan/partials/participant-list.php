@@ -1,5 +1,5 @@
 <?php 
-    if( $event->participants_count > 0 ) {
+    if( $participants > 0 ) {
         ?>
             <table class="table table-responsive">
                 <thead>
