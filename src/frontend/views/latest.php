@@ -4,6 +4,7 @@
 
 <div class="dxl-shortcode latest-events-container">
     <?php
+    if( $eventData["lan"] ) {
         foreach($eventData["lan"] as $lan) {
             ?>
                 <div class="event lan">
@@ -23,33 +24,35 @@
                 </div>
             <?php
         }
-
-        foreach($eventData["training"] as $training) {
-            ?>
-                <div class="event training">
-                    <div class="event-header">
-                        <h4><?php echo $training["title"]; ?> (Træning)</h4>
+    }
+        if( $eventData["tranining"] ) {
+            foreach($eventData["training"] as $training) {
+                ?>
+                    <div class="event training">
+                        <div class="event-header">
+                            <h4><?php echo $training["title"]; ?> (Træning)</h4>
+                        </div>
+                        <div class="event-body">
+                            <?php 
+                                if( $training["is_recurring"] ) {
+                                    ?>
+                                        <p>
+                                            Hver <?php echo $training["event_day"] ?>
+                                            <span class="starttime">
+                                                <?php echo date("H", $training["starttime"]); ?>
+                                            </span>
+                                             - 
+                                             <span class="endtime">
+                                                 <?php echo date("H", $training["endtime"]); ?>
+                                             </span>
+                                        </p>
+                                    <?php
+                                }
+                            ?>
+                        </div>
                     </div>
-                    <div class="event-body">
-                        <?php 
-                            if( $training["is_recurring"] ) {
-                                ?>
-                                    <p>
-                                        Hver <?php echo $training["event_day"] ?>
-                                        <span class="starttime">
-                                            <?php echo date("H", $training["starttime"]); ?>
-                                        </span>
-                                         - 
-                                         <span class="endtime">
-                                             <?php echo date("H", $training["endtime"]); ?>
-                                         </span>
-                                    </p>
-                                <?php
-                            }
-                        ?>
-                    </div>
-                </div>
-            <?php
+                <?php
+            }
         }
     ?>
 </div>
