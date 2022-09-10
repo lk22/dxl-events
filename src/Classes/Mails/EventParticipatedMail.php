@@ -70,8 +70,6 @@
              */
             public function send()
             {
-                // $this->setView('dxl-events/src/admin/views/mails/event-participated-mail.php');
-                // str_replace('[participant_name]', $this->participant->name, file_get_contents($this->view));
                 add_filter('wp_mail_content_type', [$this, 'setContentType']);
                 wp_mail($this->receiver, $this->getSubject(), $this->template(), $this->getHeaders(), $this->getAttachments());
                 remove_filter('wp_mail_content_type', [$this, 'setContentType']);
@@ -89,14 +87,14 @@
                 $template .= "<p>Du vil inden længe modtage en faktura</p>\n\n";
                 $template .= "<p>OBS: vær opmærksom på prisen kan variere efter madvalg</p>\n\n";
 
-                // if( $this->seatedMembers) {
-                //     $template .= "<p>Vi har noteret os du gerne vil sidde sammen med følgende:</p>\n";
-                //     $template .= "<ul>";
-                //     foreach( $this->seatedMembers as $member ) {
-                //         $template .= "<li>" . $member . "</li>";
-                //     }
-                //     $template .= "</ul>\n";
-                // }
+                if( $this->seatedMembers) {
+                    $template .= "<p>Vi har noteret os du gerne vil sidde sammen med følgende:</p>\n";
+                    $template .= "<ul>";
+                    foreach( $this->seatedMembers as $member ) {
+                        $template .= "<li>" . $member . "</li>";
+                    }
+                    $template .= "</ul>\n";
+                }
 
                 if ( $this->companion ) {
                     $template .= "<p>Vi har noteret os du gerne vil have følgende med som ledsager:</p>\n";
