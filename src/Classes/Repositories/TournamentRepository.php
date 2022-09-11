@@ -5,6 +5,7 @@ namespace DxlEvents\Classes\Repositories;
 use Dxl\Classes\Abstracts\AbstractRepository as Repository;
 use Dxl\Classes\Traits\TrashableTrait;
 use DxlEvents\Classes\Repositories\TournamentSettingRepository as Setting;
+use DxlEvents\Classes\Repositories\ParticipantRepository;
 
 if( ! class_exists('TournamentRepository') )
 {
@@ -13,6 +14,11 @@ if( ! class_exists('TournamentRepository') )
         protected $repository = "tournaments";
         protected $defaultOrder = "DESC";
         protected $primaryIdentifier = "id";
+
+        public function participants(): ParticipantRepository
+        {
+            return new ParticipantRepository();
+        }
 
         public function getByMember($member)
         {
