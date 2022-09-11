@@ -280,6 +280,15 @@ if( !class_exists('EventController'))
                     $event = $this->tournamentRepository->find($identifier);
                     $settings = $this->tournamentSettingsRepository->find($event->id);
                     $participants = $this->participantRepository->findByEvent($event->id);
+                    // $participated = ($member) ? $this->participantRepository->hasParticipated($event->id, $member->id) : false;
+                    $participated = ($member) ?
+                        $this->participantRepository
+                            ->select()
+                            ->where('event_id', $event->id)
+                            ->whereAnd('member_id', $member->id)
+                            ->getRow() : 
+                        false;
+                    
                     require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/details.php";
                     break;
 
@@ -289,7 +298,12 @@ if( !class_exists('EventController'))
                     $game = $this->gameRepository->find($event->game_id);
                     $author = $this->memberRepository->select(["gamertag"])->where('user_id', $event->author)->getRow();
                     $gameMode = ($game) ? $this->gameModeRepository->find($game->id) : false;
-                    $participated = ($member) ? $this->participantRepository->select()->where('member_id', $member->id)->whereAnd('event_id', $event->id)->getRow() : false;
+                    $participated = ($member) ? 
+                        $this->participantRepository->select()
+                            ->where('member_id', $member->id)
+                            ->whereAnd('event_id', $event->id)
+                            ->getRow() : 
+                        false;
                     require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/details.php";
                     break;
                     
