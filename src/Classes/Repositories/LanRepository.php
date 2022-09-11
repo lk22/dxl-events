@@ -51,6 +51,11 @@ if( ! class_exists('LanRepository') )
         public function getLansbyMember($member) {
             return $this->select()->where('author', $member->user_id)->get();
         }
+
+        public function participants(): LanParticipantRepository
+        {
+            return new LanParticipantRepository();
+        }
     }
 }
 

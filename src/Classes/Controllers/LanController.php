@@ -11,7 +11,7 @@ use DxlEvents\Classes\Repositories\TournamentRepository;
 use DxlEvents\Classes\Repositories\LanParticipantRepository;
 
 // services
-use DxlEvents\Classes\Services\EventService as Service;
+use DxlEvents\Classes\Services\LanEventService as Service;
 
 if( !class_exists('LanController') ) 
 {
@@ -107,6 +107,8 @@ if( !class_exists('LanController') )
             $newEvent = $this->get('event');
             $newEvent = $_REQUEST["event"];
             // echo json_encode($_REQUEST["event"]["description"]); wp_die();
+
+            // $created = $this->eventService->createEvent($newEvent);
 
             $event = $this->lanRepository->create([
                 "title" => $newEvent["title"],
@@ -231,9 +233,11 @@ if( !class_exists('LanController') )
 
             $event = $_REQUEST["event"];
 
-            $this->eventService->removeEvent($event["id"]);
+            // $this->eventService->removeEvent($event["id"]);
             
             $delete = $this->lanRepository->delete($event);
+            $this->lanRepository->settings()->delete($event);
+            $this->lanRepository->participants()->delete($event);
 
             if( ! $delete ) {
                 $this->dxl->response('event', [
