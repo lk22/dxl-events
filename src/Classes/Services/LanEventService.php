@@ -88,45 +88,6 @@
 
                 return $configured ? true : false;
             }
-
-            /**
-             * removing event from database
-             *
-             * @param integer $event
-             * @return boolean
-             */
-            public function removeEvent($event): bool 
-            {
-                $this->removeConfiguration($event);
-                $this->removeParticipants($event);
-                $removed = (new Event())->delete((int) $event);
-                return $removed ? true : false;
-            }
-
-            /**
-             * remove LAN event configuration data
-             *
-             * @param integer $identifier
-             * @return boolean
-             */
-            public function removeConfiguration(int $identifier): bool {
-                $settings = new Settings();
-                $removed = $settings->delete($identifier);
-                return $removed ? true : false;
-            }
-
-            /**
-             * remove LAN event participants
-             *
-             * @param integer $identifier
-             * @return boolean
-             */
-            public function removeParticipants($identifier): bool {
-                $participants = new LanParticipant();
-                $identifier = $participants->setPrimaryIdentifier("event_id");
-                $removed = $participants->delete($identifier);
-                return $removed ? true : false;
-            }
         }
     }
 ?>
