@@ -32,86 +32,92 @@
     </div>
     <div class="content mt-4">
         <div class="tournament-details details flex">
-            <div class="left-details">
-                <h4>Start dato</h4>
-                <p><?php echo date("d-m-Y", $tournament->start); ?></p>
-                <h4>Slut dato</h4>
-                <p><?php echo date("d-m-Y", $tournament->end); ?></p>
-                <h4>Start tidspunkt</h4>
-                <p><?php echo date("H:s", $tournament->starttime); ?></p>
-                <h4>Slut tidspunkt</h4>
-                <p><?php echo date("H:s", $tournament->endtime); ?></p>
-            </div>
-            <div class="right-details">
-                <h1>Extra turnerings informationer</h1>
-                <h2>Beskrivelse</h2>
-                <p class="tournament-description">
-                    <?php echo (strlen($tournament->description)) ? $tournament->description : "<div class='status-label warning description-label'>Ingen beskrivelse</div>"; ?>
-                </p>
-                <button class="button-primary update-description-btn modal-button" data-bs-toggle="modal" data-bs-target="#tournamentDescriptionModal">Opdater</button>
-                <div class="divider"></div>
-                <?php 
-                    // show game field
-                    if( count($games) ) {
-                        ?>
-                            <form action="#" class="attachGameForm">
-                                <h3>Vælg spil</h3>
-                                <select name="game-field" id="game-field">
-                                    <?php
-                                    if( $games > 0 )
-                                        foreach($games as $game) {
-                                            ?>
-                                                <option value="<?php echo $attachedGame->id; ?>"><?php echo $attachedGame->name ?? 'Vælg spil'; ?></option>
-                                                <option value="<?php echo $game->id; ?>"><?php echo $game->name ?? "" ?></option>
-                                            <?php
-                                        }
-                                    ?>
-                                </select>
-                                <div class="divider"></div>
-                                <div>
-                                    <select class="hidden" name="game-mode" id="game-mode"></select>
-                                </div>
-                                <div class="divider"></div>
-                                <div>
-                                    <button class="attachGameButton button-primary" data-tournament="<?php echo $tournament->id; ?>">Opdater</button>
-                                </div>
-                                <div class="divider"></div>
-                            </form>
-                        <?php
-                    } else {
-                        ?>
-                            <div class="status-label danger">Der er ikke oprettet nogle LAN begivenheder</div>
-                        <?php
-                    }
+            <div class="row">
+                <div class="col-md-4">
 
-                    // if there exists any lan events show them in a select field
-                    if( $tournament->has_lan ) {
-                        if( count($lan)) {
+                    <h4>Start dato</h4>
+                    <p><?php echo date("d-m-Y", $tournament->start); ?></p>
+                    <h4>Slut dato</h4>
+                    <p><?php echo date("d-m-Y", $tournament->end); ?></p>
+                    <h4>Start tidspunkt</h4>
+                    <p><?php echo date("H:s", $tournament->starttime); ?></p>
+                    <h4>Slut tidspunkt</h4>
+                    <p><?php echo date("H:s", $tournament->endtime); ?></p>
+                </div>
+                <div class="col-md-8">
+
+                    <h1>Extra turnerings informationer</h1>
+                    <h2>Beskrivelse</h2>
+                    <p class="tournament-description">
+                        <?php echo (strlen($tournament->description)) ? $tournament->description : "<div class='status-label warning description-label'>Ingen beskrivelse</div>"; ?>
+                    </p>
+                    <button class="button-primary update-description-btn modal-button" data-bs-toggle="modal" data-bs-target="#tournamentDescriptionModal">Opdater</button>
+                    <div class="divider"></div>
+                    <?php 
+                        // show game field
+                        if( count($games) ) {
                             ?>
-                                <h3>Vælg LAN begivenhed</h3>
-                                <form action="#">
-                                    <select name="lan-event" id="lan-event">
-                                        <?php 
-                                            foreach($lan as $l) {
+                                <form action="#" class="attachGameForm">
+                                    <h3>Vælg spil</h3>
+                                    <select name="game-field" id="game-field">
+                                        <?php
+                                        if( $games > 0 )
+                                            foreach($games as $game) {
                                                 ?>
-                                                    <option value="<?php echo $l->id; ?>"><?php echo $l->title; ?></option>
+                                                    <option value="<?php echo $attachedGame->id; ?>"><?php echo $attachedGame->name ?? 'Vælg spil'; ?></option>
+                                                    <option value="<?php echo $game->id; ?>"><?php echo $game->name ?? "" ?></option>
                                                 <?php
                                             }
                                         ?>
                                     </select>
-
-                                    <button class="button-primary attach-event-btn" data-tournament="<?php echo $tournament->id ?>">Tilknyt</button>
+                                    <div class="divider"></div>
+                                    <div>
+                                        <select class="hidden" name="game-mode" id="game-mode"></select>
+                                    </div>
+                                    <div class="divider"></div>
+                                    <div>
+                                        <button class="attachGameButton button-primary" data-tournament="<?php echo $tournament->id; ?>">Opdater</button>
+                                    </div>
+                                    <div class="divider"></div>
                                 </form>
-                                <div class="divider"></div>
                             <?php
                         } else {
                             ?>
                                 <div class="status-label danger">Der er ikke oprettet nogle LAN begivenheder</div>
-                                <div class="divider"></div>
                             <?php
                         }
-                    }
-                ?>
+        
+                        // if there exists any lan events show them in a select field
+                        if( $tournament->has_lan ) {
+                            if( count($lan)) {
+                                ?>
+                                    <h3>Vælg LAN begivenhed</h3>
+                                    <form action="#">
+                                        <select name="lan-event" id="lan-event">
+                                            <?php 
+                                                foreach($lan as $l) {
+                                                    ?>
+                                                        <option value="<?php echo $l->id; ?>"><?php echo $l->title; ?></option>
+                                                    <?php
+                                                }
+                                            ?>
+                                        </select>
+        
+                                        <button class="button-primary attach-event-btn" data-tournament="<?php echo $tournament->id ?>">Tilknyt</button>
+                                    </form>
+                                    <div class="divider"></div>
+                                <?php
+                            } else {
+                                ?>
+                                    <div class="status-label danger">Der er ikke oprettet nogle LAN begivenheder</div>
+                                    <div class="divider"></div>
+                                <?php
+                            }
+                        }
+                    ?>
+                <div class="col-md-12">
+                    <?php require dirname(__FILE__) . "/partials/tournament-participants.php"; ?>
+                </div>
             </div>
         </div>
     </div>

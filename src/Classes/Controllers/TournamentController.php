@@ -64,24 +64,6 @@ if( ! class_exists('TournamentController') )
         public $eventService;
 
         /**
-         * define validation rules for tournament action requests
-         *
-         * @var array
-         */
-        protected $rules = [
-            "title" => "requred",
-            "is_draft" => "boolean",
-            "slug" => "required",
-            "description" => "required",
-            "start" => "required",
-            "end" => "required",
-            "starttime" => "required",
-            "endtime" => "required",
-            "participants_count" => "required",
-            "type" => "required"
-        ];
-
-        /**
          * Tournament action constructor
          */
         public function __construct() 
@@ -174,6 +156,8 @@ if( ! class_exists('TournamentController') )
             $games = $this->gameRepository->all();
             $attachedGame = $this->gameRepository->find($settings->game_id);
             $type = ($tournament->type == 2) ? "Online Turnering" : "LAN Turnering";
+            $participants = $this->participant->findByEvent($tournament->id);
+            var_dump($participants);
             require_once ABSPATH . "wp-content/plugins/dxl-events/src/Admin/views/tournaments/details.php";
         }
 
