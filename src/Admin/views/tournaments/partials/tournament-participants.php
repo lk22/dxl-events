@@ -2,7 +2,7 @@
     if ( $participants > 0 ) {
         ?>
             <div class="tournament-participants-list mt-4">
-                <h3>Deltagerliste</h3>
+                <h3>Deltagerliste (<?php echo count($participants); ?>)</h3>
                 <?php 
                     foreach ( $participants as $participant ) {
                         ?>
