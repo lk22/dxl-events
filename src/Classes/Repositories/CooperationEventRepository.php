@@ -13,6 +13,11 @@
             protected $repository = "cooperation_events";
             protected $defaultOrder = "DESC";
             protected $primaryIdentifier = "id";
+
+            public function participants() 
+            {
+                return (new ParticipantRepository());
+            }
         }
     }
 

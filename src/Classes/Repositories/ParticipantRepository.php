@@ -26,6 +26,13 @@ if( !class_exists('ParticipantRepository') )
         protected $defaultOrder = "DESC";
 
         /**
+         * Primary identifier
+         *
+         * @var string
+         */
+        protected $primaryIdentifier = "event_id";
+
+        /**
          * Find by specific event identifier
          *
          * @param [type] $event
