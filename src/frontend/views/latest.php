@@ -4,27 +4,28 @@
 
 <div class="dxl-shortcode latest-events-container">
     <?php
-    if( $eventData["lan"] ) {
-        foreach($eventData["lan"] as $lan) {
-            ?>
-                <div class="event lan">
-                    <div class="event-header"><h4><?php echo $lan["title"] ?></h4></div>
-                    <div class="event-body">
-                        <p>Dato: 
-                                <span class="startdate">
-                                    <?php echo date("d", $lan["startdate"]); ?>
-                                </span>
-                                - 
-                                <span class="enddate">
-                                    <?php echo date("d", $lan["enddate"]); ?>
-                                </span>
-                                <?php echo date("F", $lan["enddate"]); ?>
-                            </p>
+        if( $eventData["lan"] ) {
+            foreach($eventData["lan"] as $lan) {
+                ?>
+                    <div class="event lan">
+                        <div class="event-header"><h4><?php echo $lan["title"] ?></h4></div>
+                        <div class="event-body">
+                            <p>Dato: 
+                                    <span class="startdate">
+                                        <?php echo date("d", $lan["startdate"]); ?>
+                                    </span>
+                                    - 
+                                    <span class="enddate">
+                                        <?php echo date("d", $lan["enddate"]); ?>
+                                    </span>
+                                    <?php echo date("F", $lan["enddate"]); ?>
+                                </p>
+                        </div>
                     </div>
-                </div>
-            <?php
+                <?php
+            }
         }
-    }
+        
         if ( isset($eventData["training"] ) ) {
             foreach($eventData["training"] as $training) {
                 ?>

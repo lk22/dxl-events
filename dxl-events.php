@@ -118,7 +118,7 @@ if( !class_exists('DxlEvent') ){
             $events = [
                 "lan" => $this->lan->getEvents(),
                 // "tournaments" => $this->tournament->getEvents(),
-                "training" => $this->training->getEvents()
+                "training" => $this->training->getEvents(2)
             ];
 
             // var_dump($events); die();

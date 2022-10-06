@@ -27,9 +27,14 @@ if( !class_exists('TrainingAction') )
          *
          * @return void
          */
-        public function getEvents()
+        public function getEvents($count = 2)
         {
-            return $this->trainingRepository->select()->where('is_draft', 0)->get();
+            return $this->trainingRepository
+                ->select()
+                ->where('is_draft', 0)
+                ->descending('id')
+                ->limit($count)
+                ->get();
         }
 
         public function getTrainingByMember($member) {
