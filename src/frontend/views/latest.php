@@ -25,7 +25,7 @@
             <?php
         }
     }
-        if( $eventData["tranining"] ) {
+        if ( isset($eventData["training"] ) ) {
             foreach($eventData["training"] as $training) {
                 ?>
                     <div class="event training">

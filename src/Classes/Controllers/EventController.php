@@ -193,7 +193,7 @@ if( !class_exists('EventController'))
                         "participants_count" => $event->participants_count,
                         "available_seats" => $event->seats_available,
                         "latest_participation_date" => $settings->latest_participation_date,
-                        "link" => "?action=details&type=lan&event=" . $event->id,
+                        "link" => "?action=details&type=lan&event=" . $event->slug,
                         "type" => "LAN"
                     ];
                 }
@@ -210,7 +210,7 @@ if( !class_exists('EventController'))
                         "endtime" => date("H:i", $event->endtime),
                         "author" => $author,
                         "participants_count" => $event->participants_count,
-                        "link" => "?action=details&type=tournament&event=" . $event->id,
+                        "link" => "?action=details&type=tournament&event=" . $event->slug,
                         "type" => "Turnering"
                     ];
                 }
@@ -226,7 +226,7 @@ if( !class_exists('EventController'))
                         "event_day" => $event->event_day,
                         "is_recurring" => $event->is_recurring,
                         "participants_count" => count($participants_count),
-                        "link" => "?action=details&type=training&event=" . $event->id,
+                        "link" => "?action=details&type=training&event=" . $event->slug,
                         "type" => "Træning"
                     ];
                 }
@@ -254,7 +254,7 @@ if( !class_exists('EventController'))
 
             switch($type) {
                 case "lan":
-                    $event = $this->lanRepository->find($identifier);
+                    $event = $this->lanRepository->select()->where('slug', "'$identifier'")->getRow();
                     $settings = $this->lanRepository->settings()->find($event->id);
                     $participants = $this->lanRepository->getParticipants($event->id);
                     $tournaments = $this->tournamentRepository
@@ -277,7 +277,7 @@ if( !class_exists('EventController'))
                     break;
 
                 case "tournament":
-                    $event = $this->tournamentRepository->find($identifier);
+                    $event = $this->tournamentRepository->select()->where('slug', "'$identifier'")->getRow();
                     $settings = $this->tournamentSettingsRepository->find($event->id);
                     $participants = $this->participantRepository->findByEvent($event->id);
                     // $participated = ($member) ? $this->participantRepository->hasParticipated($event->id, $member->id) : false;
@@ -293,7 +293,7 @@ if( !class_exists('EventController'))
                     break;
 
                 case "training": 
-                    $event = $this->trainingRepository->find($identifier);
+                    $event = $this->trainingRepository->select()->where('slug', "'$identifier'")->getRow();
                     $participants = $this->participantRepository->findByEvent($event->id);
                     $game = $this->gameRepository->find($event->game_id);
                     $author = $this->memberRepository->select(["gamertag"])->where('user_id', $event->author)->getRow();
@@ -306,7 +306,6 @@ if( !class_exists('EventController'))
                         false;
                     require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/details.php";
                     break;
-                    
             }
         }
 

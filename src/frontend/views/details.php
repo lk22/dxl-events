@@ -108,7 +108,7 @@
     </div>
 </div>
 
-<div class="modal modal-lg fade fadeInUp" id="eventParticipantsModal">
+<div class="modal modal-lg fade fadeInUp" tabindex="-1" id="eventParticipantsModal">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">

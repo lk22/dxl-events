@@ -124,7 +124,7 @@
     </div>
 </div>
 
-<div class="modal modal-lg fade fadeInUp modal-sm" id="lanEventParticipantsModal">
+<div class="modal modal-xl fade fadeInUp" tabindex="-1" aria-modal="true" role="dialog" id="lanEventParticipantsModal" aria-labelledby="myModalLabel">>
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -200,7 +200,7 @@
                     <p>Ønsker du og fortælle os hvorfor du ikke kan deltage, er du velkommen til at udfylde feltet nedenfor</p>
                     <form action="#" class="unparticipate-lan-form">
                         <div class="form-floating">
-                            <textarea class="form-control" placeholder="Noget vi særligt skal være opmærksom på?" name="participant-message"  id="floatingTextarea2 participant-message" style="height: 300px"></textarea>
+                            <textarea required class="form-control" placeholder="Noget vi særligt skal være opmærksom på?" name="participant-message"  id="floatingTextarea2 participant-message" style="height: 300px"></textarea>
                             <label for="floatingTextarea2">Udfyld besked</label>
                         </div>
                     </form>
