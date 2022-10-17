@@ -270,6 +270,8 @@ jQuery(function($) {
                 const tournament = $('.attach-event-btn').data('tournament');
                 const event = $('#lan-event').val();
 
+                console.log(self.dxl.request.url)
+
                 $.ajax({
                     method: "POST",
                     url: self.dxl.request.url,

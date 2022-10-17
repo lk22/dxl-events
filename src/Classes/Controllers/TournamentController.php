@@ -321,17 +321,17 @@ if( ! class_exists('TournamentController') )
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Triggering event: " . __METHOD__, 'events');
 
-            if( ! isset($this->get('event')["action"]) ) {
+            if ( ! isset($_REQUEST["event"]["action"]) ) {
                 $this->dxl->response('event', [
                     "error" => true,
-                    "response" => "Kunne ikke finde dit event og udføre",
-                    "data" => $this->get('event')
+                    "response" => "Noget gik galt, kunne ikke opdatere turnering prøv igen",
+                    "data" => $_REQUEST["event"]
                 ]);
                 $logger->log("Could not find update event");
                 wp_die('Could not read your event action to trigger', 404);
             }
 
-            $tournament = isset($this->get('event')["id"]) ? (int) $this->get('event')["id"] : false;
+            $tournament = (isset($_REQUEST["event"]["id"])) ? (int) $_REQUEST["event"]["id"] : false;
 
             if( ! $tournament ) {
                 $this->dxl->response('event', [
@@ -348,7 +348,7 @@ if( ! class_exists('TournamentController') )
             /**
              * Check update event
              */
-            switch($this->get('event')["action"]) {
+            switch($_REQUEST["event"]["action"]) {
 
                 // updating description column on specific tournament
                 case 'bulk-update-description': 
@@ -374,9 +374,10 @@ if( ! class_exists('TournamentController') )
 
                 // attach lan event
                 case 'attach-lan-event':
-                    $event = $this->get('event');
+                    $event = $_REQUEST["event"];
                     
                     $attached = $this->tournament->update(['lan_id' => (int) $event["lan"]], (int) $event["id"]);
+
                     $tournaments_count = $this->lan->select('tournaments_count')->where('id', $event["lan"])->getRow();
 
                     $this->lan->update(["tournaments_count" => $tournaments_count + 1], $event["lan"]);
