@@ -11,34 +11,45 @@
     </div>
 
     <div class="content">
-        <div class="games-list list flex-wrap gap-10">
+
+        <div class="game-lile list d-flex flex-wrap gap-4">
             <?php
-                foreach($gameList as $game) {
+                foreach ( $gameList as $game ) {
                     ?>
-                        <div class="card" style="border-radius: 10px;">
-                            <div class="card-header flex"  style="border-bottom: 1px solid green;">
-                                <h3>
-                                    <?php 
-                                        echo $game["name"];
-                                    ?>
-                                </h3>
+                        <div class="card rounded w-100">
+                            <div class="card-header rounded d-flex">
+                                <p class="lead fw-bold">
+                                    <?php echo $game["name"]; ?>
+                                </p>
                             </div>
                             <div class="card-body">
-                                <p>Game type: <?php echo $game["type"]->name ?? "<div class='status-label warning'>Har ingen spil type</div>"  ?></p>
-                                <p>Game modes: </p>
-                                <ul>
-                                    <?php 
-                                    if($game["modes"]) {
-                                        foreach( $game["modes"] as $mode ) {
-                                            ?>
-                                                <li><?php echo $mode->name; ?></li>
-                                            <?php
-                                        }
+                                <p class="lead game-type">
+                                    <?php echo $game["type"]->name ?? "<div class='badgde badge-warning'>Ingen spil type</div>"; ?>
+                                </p>
+                                <p class="lead">
+                                    Spille tilstand:
+                                </p>
+                                <?php 
+                                    if ( $game["modes"] ) {
+                                        ?>
+                                            <ul class="play-state-list">
+                                                <?php 
+                                                    foreach ( $game["modes"] as $mode ) {
+                                                      ?>
+                                                            <li class="play-state-item"> -
+                                                                <?php 
+                                                                    echo $mode->name
+                                                                ?>
+                                                            </li>
+                                                      <?php
+                                                    }
+                                                ?>
+                                            </ul>
+                                        <?php
                                     } else {
                                         echo "<div class='status-label warning'>Har ingen spiletilstand</div>";
                                     }
-                                    ?>
-                                </ul>
+                                ?>
                             </div>
                             <div class="card-footer">
                                 <a class="button-primary" href="<?php echo generate_dxl_subpage_url(['action' => 'details', 'id' => $game["id"]]) ?>">Se mere</a>

@@ -347,6 +347,7 @@ if( ! class_exists('TournamentController') )
             
             /**
              * Check update event
+             * @todo: refactor this to seperate methods for better maintainability
              */
             switch($_REQUEST["event"]["action"]) {
 
