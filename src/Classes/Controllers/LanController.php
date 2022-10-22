@@ -81,6 +81,7 @@ if( !class_exists('LanController') )
             add_action("wp_ajax_dxl_lan_event_delete", [$this, 'ajaxDeleteEvent']);
             add_action("wp_ajax_dxl_event_publish", [$this, 'ajaxPublishEvent']);
             add_action("wp_ajax_dxl_event_unpublish", [$this, 'ajaxUnpublishEvent']);
+            add_action("wp_ajax_dxl_event_export_participants", [$this, 'ajaxExportParticipants']);
         }
 
         /**
@@ -201,6 +202,8 @@ if( !class_exists('LanController') )
             $event = $_REQUEST["event"];
             $settings = $event["settings"];
 
+            // echo json_encode($event["description"]); wp_die();
+
             $this->lanRepository->update([
                 "title" => $event["title"],
                 "description" => $event["description"],
@@ -296,6 +299,36 @@ if( !class_exists('LanController') )
             ]);
 
             $logger->log("Closed event " . $event->title . " and is now closed to participation " . __METHOD__);
+            wp_die();
+        }
+
+        /**
+         * Export all participants to CSV
+         */
+        public function ajaxExportParticipants(): void
+        {
+            $logger = $this->dxl->getUtility('Logger');
+            $logger->log("triggering action: " . __METHOD__);
+
+            $participants = $this->lanParticipantRepository
+                ->select()
+                ->where('event_id', $_REQUEST["event"])
+                ->get();
+
+            if ( count($participants) < 1) {
+                echo $this->dxl->response('event', [
+                    "error" => true,
+                    "response" => "Ingen deltagere fundet"
+                ]);
+                wp_die();
+            }
+
+            $export = $this->eventService->exportParticipants($participants, $_REQUEST["event"]);
+            echo $this->dxl->response('event', [
+                "error" => false,
+                "response" => "Deltagere eksporteret",
+                "export" => $export
+            ]);
             wp_die();
         }
 

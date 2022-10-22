@@ -8,6 +8,7 @@
  */
 
 require_once dirname(__FILE__) . "/vendor/autoload.php";
+require_once ABSPATH . "wp-content/plugins/dxl-memberships/PhpSpreadsheet/vendor/autoload.php";
 
 use DxlEvents\Classes\Controllers\LanController;
 use DxlEvents\Classes\Controllers\TournamentController;

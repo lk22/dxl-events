@@ -88,12 +88,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="lan-export-participants mt-4">
+                        <button class="button-primary export-participants" data-event="<?php echo $event->id; ?>">
+                            Export tilmeldinger
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <?php require dirname(__FILE__) . "/partials/config-event-modal.php"; ?>
 <?php require dirname(__FILE__) . "/partials/update-event-modal.php"; ?>

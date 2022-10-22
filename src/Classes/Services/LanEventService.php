@@ -5,6 +5,10 @@
     use DxlEvents\Classes\Repositories\LanSettingsRepository as Settings;
     use DxlEvents\Classes\Repositories\LanParticipantRepository as LanParticipant;
 
+    use PhpOffice\PhpSpreadsheet\Spreadsheet;
+    use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+    use PhpOffice\PhpSpreadsheet\Style\Fill;
+
     if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
     if( ! class_exists('LanEventService') )
@@ -87,6 +91,31 @@
                 $configured = $settings->update($configuration, (int) $identifier);
 
                 return $configured ? true : false;
+            }
+
+            public function exportParticipants(array $participants, $event)
+            {
+                $spreadsheet = new Spreadsheet();
+                $sheet = $spreadsheet->getActiveSheet();
+
+                $sheet->setCellValue('A1', 'ID')->getColumnDimension('A')->setAutoSize(true);
+                $sheet->setCellValue('B1', 'Name')->getColumnDimension('B')->setAutoSize(true);
+                $sheet->setCellValue('C1', 'Gamertag')->getColumnDimension('C')->setAutoSize(true);
+
+                $row = 2;
+                foreach ( $participants as $participant ) {
+                    $sheet->setCellValue('A' . $row, $participant->id);
+                    $sheet->setCellValue('B' . $row, $participant->name);
+                    $sheet->setCellValue('C' . $row, $participant->gamertag);
+                    $row++;
+                }
+
+                $writer = new Xlsx($spreadsheet);
+
+                $filename = ABSPATH . "wp-content/plugins/dxl-events/csv/lan_" . $event->title . "_participants_" . date("d_m_Y", strtotime('today')) . ".xlsx";
+                $writer->save($filename);
+
+                return str_replace(ABSPATH, '', $filename);
             }
         }
     }

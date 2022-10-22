@@ -20,6 +20,7 @@ jQuery(function($) {
             this.publishEventButton = this.container.find('.publish-event')
             this.unpublishEventButton = this.container.find('.unpublish-event')
             this.removeGameTypeButton = this.container.find('.remove-game-type')
+            this.exportParticipantsButton = this.container.find('.export-participants')
             this.eventModals = {
                 deleteLanModal: $('deleteLanModal'),
                 createLanEventModal: $('#createLanModal'),
@@ -652,6 +653,38 @@ jQuery(function($) {
                     }
                 })
             })
+
+            self.exportParticipantsButton.click((e) => {
+                e.preventDefault();
+
+                const event = $('.export-participants').data('event');
+                $.ajax({
+                    method: "POST",
+                    url: self.dxl.request.url,
+                    data: {
+                        action: "dxl_event_export_participants",
+                        dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                        event: event
+                    },
+                    success: (response) => {
+                        console.log(response);
+
+                        const exported = JSON.parse(response).event.export;
+
+                        if ( exported ) {
+                            const exportLink = document.createElement('a');
+                            exportLink.setAttribute('download', exported);
+                            exportLink.setAttribute('href', "/" + exported);
+                            console.log(exportLink.download); // validate the download attribute support
+                            document.body.appendChild(exportLink)
+                            exportLink.click();
+                        }
+                    }, error: (error) => {
+                        console.log(error);
+                    }
+                })
+
+            });
         },
 
         /**
