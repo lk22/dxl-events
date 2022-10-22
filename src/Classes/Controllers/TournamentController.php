@@ -401,8 +401,10 @@ if( ! class_exists('TournamentController') )
                     break;
 
                 case 'attach-game':
-                    $game = $this->get('event')["game"];
-                    $event = (int) $this->get("event")["id"];
+                    $game = $_REQUEST["event"]["game"];
+                    // $game = $this->get('event')["game"];
+                    // $event = (int) $this->get("event")["id"];
+                    $event = (int) $_REQUEST["event"]["id"];
                     $attached = $this->tournamentSetting->update([
                         "game_mode" => isset($game['mode']) ? (int) $game['mode'] : 0,
                         "game_id" => (int) $game["id"]
@@ -424,7 +426,8 @@ if( ! class_exists('TournamentController') )
                     break;
 
                 case 'publish-tournament':
-                    $event = $this->get('event');
+                    $event = $_REQUEST["event"];
+                    // $event = $this->get('event');
                     $published = $this->tournament->update([
                         "is_draft" => 0 
                     ], $event["id"]);

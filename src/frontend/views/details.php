@@ -112,7 +112,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Se hvem du kommer til at træne med.</h2>
+                <h2>Se hvem du kommer til at spille med.</h2>
             </div>
             <div class="modal-body">
             <h4>Vi fandt <?php echo count($participants) . ' deltagere.' ?></h4>
