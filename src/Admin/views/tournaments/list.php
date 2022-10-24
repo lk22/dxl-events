@@ -61,6 +61,17 @@
                                 <input type="radio" class="form-control" name="tournament-type" id="tournament-type" value="3" required>
                             </label>
                         </div>
+                        <div class="form-group is-team-tournament-field col-12 mt-2">
+                            <h4>Er det en hold turnering?</h4>
+                            <label for="is-team-tournament">
+                                Ja
+                                <input type="radio" class="form-control" name="is-team-tournament" id="is-team-tournament" value="1" required>
+                            </label>
+                            <label for="is-team-tournament">
+                                Nej
+                                <input type="radio" class="form-control" name="is-team-tournament" id="is-team-tournament" value="0" required>
+                            </label>
+                        </div>
                         <div class="form-group tournament-minimum-participants col-12">
                             <label for="tournament-min-participants" class="w-100">
                                 Minimum antal deltagere

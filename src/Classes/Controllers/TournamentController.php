@@ -8,6 +8,10 @@ use DxlEvents\Classes\Repositories\ParticipantRepository as Participant;
 use DxlEvents\Classes\Repositories\LanRepository as Lan;
 use DxlEvents\Classes\Repositories\GameRepository as Game;
 use DxlEvents\Classes\Services\EventService;
+
+use DxlEvents\Classes\Actions\TournamentPublishAction;
+use DxlEvents\Classes\Actions\TournamentUnpublishAction;
+use DxlEvents\Classes\Actions\TournamentAttachGame;
 use DXL\Classes\Core;
 
 if( ! class_exists('TournamentController') ) 
@@ -201,6 +205,7 @@ if( ! class_exists('TournamentController') )
                 "author" => $current_user->ID,
                 "has_lan" => ($type == 3) ? 1 : 0,
                 "lan_id" => 0,
+                "is_team_tournament" => $_REQUEST["event"]["is_team_tournament"],
                 "created_at" => time(),
                 "updated_at" => 0
             ]);
@@ -330,7 +335,7 @@ if( ! class_exists('TournamentController') )
                 $logger->log("Could not find update event");
                 wp_die('Could not read your event action to trigger', 404);
             }
-
+            //echo json_encode($_REQUEST["event"]); wp_die();
             $tournament = (isset($_REQUEST["event"]["id"])) ? (int) $_REQUEST["event"]["id"] : false;
 
             if( ! $tournament ) {
@@ -401,67 +406,39 @@ if( ! class_exists('TournamentController') )
                     break;
 
                 case 'attach-game':
-                    $game = $_REQUEST["event"]["game"];
-                    // $game = $this->get('event')["game"];
-                    // $event = (int) $this->get("event")["id"];
-                    $event = (int) $_REQUEST["event"]["id"];
-                    $attached = $this->tournamentSetting->update([
-                        "game_mode" => isset($game['mode']) ? (int) $game['mode'] : 0,
-                        "game_id" => (int) $game["id"]
-                    ], $event);
-
-                    if( ! $attached ) {
-                        $this->dxl->response('event', [
-                            "error" => true,
-                            "response" => "Noget gik galt, kunne ikke tilknytte spillet til turneringen",
-                            "data" => $this->get('event')
-                        ]);
-                        $logger->log("failed to perform event " . $event["action"] . "  " . __METHOD__, 'events');
-                        wp_die();
-                    }
-
-                    $this->dxl->response('event', ["response" => "Turnering opdateret!"]);
-
-                    wp_die();
+                    $event = (new TournamentAttachGame())->trigger();
                     break;
 
                 case 'publish-tournament':
-                    $event = $_REQUEST["event"];
-                    // $event = $this->get('event');
-                    $published = $this->tournament->update([
-                        "is_draft" => 0 
-                    ], $event["id"]);
-
-                    if( ! $published ) {
-                        $this->dxl->response('event', [
-                            "error" => true,
-                            "response" => "Noget gik galt, kunne ikke offentliggøre turneringen",
-                            "data" => $this->get("event")
-                        ]);
-                        $logger->log("failed to perform event " . $event["action"] . "  " . __METHOD__, 'events');
-                        wp_die();
-                    }
-
-                    $this->dxl->response('eevnt', ['response' => $event]);
-                    wp_die();
+                    $event = (new TournamentPublishAction())->trigger();
                     break;
 
                 case 'unpublish-tournament':
-                    $event = $this->get('event');
-                    $unpublished = $this->tournament->update([
-                        'is_draft' => 1
+                    $event = (new TournamentUnpublishAction())->trigger();
+                    break;
+
+                /**
+                 * Seting max tournamnet team size
+                 */
+                case 'set_team_max_size': // what the hell its right here??!?!?!?
+                    $event = $_REQUEST["event"];
+                    
+                    $updated = $this->tournament->update([
+                        "max_team_size" => $_REQUEST["event"]["max_team_size"]
                     ], $event["id"]);
 
-                    if( ! $unpublished ) {
+                    if ( ! $updated ) {
                         $this->dxl->response('event', [
                             'error' => true,
-                            "response" => "Noget gik galt, kunne ikke skjule turneringen",
-                            "data" => $this->get('event')
+                            "response" => "Der opstod en fejl, kunne ikke opdatere maksimalt holdstørrelse"
                         ]);
-                        $logger->log("failed to perform event " . $event["action"] . "  " . __METHOD__, 'events');
                         wp_die();
                     }
-                    $this->dxl->response('event', ["response" => $event]);
+
+                    $this->dxl->response('event', [
+                        'error' => false,
+                        'response' => "Maksimalt holdstørrelse er opdateret"
+                    ]);
                     wp_die();
                     break;
             }

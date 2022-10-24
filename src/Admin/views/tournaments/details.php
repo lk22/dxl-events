@@ -3,7 +3,7 @@
         <div class="logo">
             <img height="100" src="http://localhost:8888/dxl-v2/wp-content/uploads/2022/03/cropped-cropped-DXL-LOGO-Hjemmeside_192x192.png" alt="">
         </div>
-        <h1><?php echo $tournament->title; ?> (<?php echo $type; ?>)</h1>
+        <p class="lead fw-bold"><?php echo $tournament->title; ?> (<?php echo $type; ?> <?php if ($tournament->is_team_tournament == 1) {echo " - Hold turnering";} ?>)</p>
         <div class="actions">
             <?php 
                 if( $tournament->is_draft ) {
@@ -34,20 +34,19 @@
         <div class="tournament-details details flex">
             <div class="row">
                 <div class="col-md-4">
-
                     <h4>Start dato</h4>
-                    <p><?php echo date("d-m-Y", $tournament->start); ?></p>
+                    <p class="lead"><?php echo date("d-m-Y", $tournament->start); ?></p>
                     <h4>Slut dato</h4>
-                    <p><?php echo date("d-m-Y", $tournament->end); ?></p>
+                    <p class="lead"><?php echo date("d-m-Y", $tournament->end); ?></p>
                     <h4>Start tidspunkt</h4>
-                    <p><?php echo date("H:s", $tournament->starttime); ?></p>
+                    <p class="lead"><?php echo date("H:s", $tournament->starttime); ?></p>
                     <h4>Slut tidspunkt</h4>
-                    <p><?php echo date("H:s", $tournament->endtime); ?></p>
+                    <p class="lead"><?php echo date("H:s", $tournament->endtime); ?></p>
                 </div>
                 <div class="col-md-8">
 
-                    <h1>Extra turnerings informationer</h1>
-                    <h2>Beskrivelse</h2>
+                    <p class="lead fw-bold">Extra turnerings informationer</p>
+                    <p class="lead fw-bold">Beskrivelse</p>
                     <p class="tournament-description">
                         <?php echo (strlen($tournament->description)) ? $tournament->description : "<div class='status-label warning description-label'>Ingen beskrivelse</div>"; ?>
                     </p>
@@ -58,16 +57,22 @@
                         if( count($games) ) {
                             ?>
                                 <form action="#" class="attachGameForm">
-                                    <h3>Vælg spil</h3>
+                                    <p class="lead">Vælg spil</p>
                                     <select name="game-field" id="game-field">
                                         <?php
-                                        if( $games > 0 )
+                                        if ( $attachedGame ) {
+                                            ?>
+                                                <option value="<?php echo $attachedGame->id; ?>"><?php echo $attachedGame->name; ?></option>
+                                            <?php
+                                        }
+                                        if( $games > 0 ) {
                                             foreach($games as $game) {
                                                 ?>
                                                     <option value="<?php echo $attachedGame->id; ?>"><?php echo $attachedGame->name ?? 'Vælg spil'; ?></option>
                                                     <option value="<?php echo $game->id; ?>"><?php echo $game->name ?? "" ?></option>
                                                 <?php
                                             }
+                                        }
                                         ?>
                                     </select>
                                     <div class="divider"></div>
@@ -113,6 +118,19 @@
                                     <div class="divider"></div>
                                 <?php
                             }
+                        }
+
+                        /**
+                         * show options for team tournaments
+                         */
+                        if ( $tournament->is_team_tournament ) {
+                            ?>
+                                <p class="lead fw-bold">
+                                    Angiv max størrelse pr hold
+                                </p>
+                                <input type="number" class="form-control" name="max-team-size" id="max-team-size" value="<?php echo $settings->max_team_size ?? 0; ?>">
+                                <button class="button-primary mt-2 set-team-size-btn" data-tournament="<?php echo $tournament->id; ?>">Sæt hold størrelse</button>
+                            <?php
                         }
                     ?>
                 <div class="col-md-12">

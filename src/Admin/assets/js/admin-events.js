@@ -21,6 +21,7 @@ jQuery(function($) {
             this.unpublishEventButton = this.container.find('.unpublish-event')
             this.removeGameTypeButton = this.container.find('.remove-game-type')
             this.exportParticipantsButton = this.container.find('.export-participants')
+            this.setTeamMaxSizeButton = this.container.find('.set-team-size-btn')
             this.eventModals = {
                 deleteLanModal: $('deleteLanModal'),
                 createLanEventModal: $('#createLanModal'),
@@ -66,6 +67,7 @@ jQuery(function($) {
                     event: {
                         title: tournamentCreateForm.find('#tournament-name').val(),
                         type: tournamentCreateForm.find('[name="tournament-type"]:checked').val(),
+                        is_team_tournament: tournamentCreateForm.find('[name="is-team-tournament"]:checked').val(),
                         min_participants: tournamentCreateForm.find('#tournament-min-participants').val(),
                         max_participants: tournamentCreateForm.find('#tournament-max-participants').val(),
                         startdate: tournamentCreateForm.find('#tournament-startdate').val(),
@@ -137,6 +139,37 @@ jQuery(function($) {
                         self.dxl.closeModal();
                     }
                 });
+            });
+
+            self.setTeamMaxSizeButton.click((e) => {
+                e.preventDefault()
+
+                const max_team_size = $('#max-team-size').val();
+
+                const data = {
+                    event: {
+                        id: self.setTeamMaxSizeButton.data('tournament'),
+                        action: "set_team_max_size",
+                        max_team_size: max_team_size
+                    }
+                };
+                console.log(data);
+
+                $.ajax({
+                    method: "POST",
+                    url: self.dxl.request.url,
+                    data: {
+                        action: "dxl_admin_tournament_update",
+                        dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                        data
+                    },
+                    success: (response) => {
+                        console.log(response)
+                    },
+                    error: (err) => {
+                        console.log(err);
+                    }
+                })
             });
 
             // delete tournament action
@@ -312,9 +345,6 @@ jQuery(function($) {
             self.publishTournamentButton.click((e) => {
                 const tournament = $('.publish-tournament-btn').data('tournament');
                 const is_draft = $('.publish-tournament-btn').data('draft');
-                console.log([tournament, is_draft]);
-
-                $eventAction = (is_draft === 1) ? "publish-event" : "unpublish-event";
 
                 $.ajax({
                     method: "POST",
@@ -329,7 +359,7 @@ jQuery(function($) {
                         }
                     },
                     success: (response) => {
-                        console.log(response);
+                        window.location.reload();
                     },
                     error: (error) => {
                         console.log(error);
