@@ -30,29 +30,24 @@
             /**
              * Trigger publish action
              */
-            public function trigger()
+            public function call()
             {
                 $updated = $this->tournamentRepository->update([
                     "max_team_size" => $_REQUEST["event"]["max_team_size"]
                 ], $_REQUEST["event"]["id"]);
 
-                echo json_encode($updated); wp_die();
-
                 if ( ! $updated ) {
-                    echo wp_send_json_error([
-                        "message" => "Failed to set max team size",
+                    Logger::getInstance()->log("Failed to set max team size on event");
+                    return wp_send_json_error([
+                        "message" => "Failed to update max team size",
                         "data" => $_REQUEST["event"]
                     ]);
-                    Logger::getInstance()->log("Failed to set max team size on event");
-                    wp_die();
                 }
 
-                return json_encode(["response" => "Event updated successfully"]);
- 
-                // echo wp_send_json_success([
-                //     "message" => "Event updated successfully",
-                // ]);
-                // wp_die();
+                return wp_send_json_success([
+                    "message" => "Max team size updated",
+                    "data" => $_REQUEST["event"]
+                ]);                
             }
         }
     }

@@ -327,7 +327,6 @@ if( ! class_exists('TournamentController') )
         {
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Triggering event: " . __METHOD__, 'events');
-            // echo json_encode($_REQUEST["event"]["action"]); wp_die();
 
             if ( ! isset($_REQUEST["event"]["action"]) ) {
                 $this->dxl->response('event', [
@@ -354,7 +353,8 @@ if( ! class_exists('TournamentController') )
             $logger->log("Triggering update event: " . $this->get('event')["action"] . " on action " . __METHOD__, 'events');
             
             $factory = new TournamentActionFactory();
-            echo $factory->trigger($_REQUEST["event"]["action"]);
+            $result = $factory->trigger($_REQUEST["event"]["action"])->call();
+            $this->dxl->response('event', $result);
             wp_die();
         }
     }
