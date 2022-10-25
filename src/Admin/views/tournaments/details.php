@@ -128,7 +128,7 @@
                                 <p class="lead fw-bold">
                                     Angiv max størrelse pr hold
                                 </p>
-                                <input type="number" class="form-control" name="max-team-size" id="max-team-size" value="<?php echo $settings->max_team_size ?? 0; ?>">
+                                <input type="number" class="form-control w-25" name="max-team-size" id="max-team-size" value="<?php echo $settings->max_team_size ?? 0; ?>">
                                 <button class="button-primary mt-2 set-team-size-btn" data-tournament="<?php echo $tournament->id; ?>">Sæt hold størrelse</button>
                             <?php
                         }

@@ -12,6 +12,8 @@ use DxlEvents\Classes\Services\EventService;
 use DxlEvents\Classes\Actions\TournamentPublishAction;
 use DxlEvents\Classes\Actions\TournamentUnpublishAction;
 use DxlEvents\Classes\Actions\TournamentAttachGame;
+
+use DxlEvents\Classes\Factories\TournamentActionFactory;
 use DXL\Classes\Core;
 
 if( ! class_exists('TournamentController') ) 
@@ -325,6 +327,7 @@ if( ! class_exists('TournamentController') )
         {
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Triggering event: " . __METHOD__, 'events');
+            // echo json_encode($_REQUEST["event"]["action"]); wp_die();
 
             if ( ! isset($_REQUEST["event"]["action"]) ) {
                 $this->dxl->response('event', [
@@ -335,7 +338,7 @@ if( ! class_exists('TournamentController') )
                 $logger->log("Could not find update event");
                 wp_die('Could not read your event action to trigger', 404);
             }
-            //echo json_encode($_REQUEST["event"]); wp_die();
+            
             $tournament = (isset($_REQUEST["event"]["id"])) ? (int) $_REQUEST["event"]["id"] : false;
 
             if( ! $tournament ) {
@@ -350,98 +353,9 @@ if( ! class_exists('TournamentController') )
 
             $logger->log("Triggering update event: " . $this->get('event')["action"] . " on action " . __METHOD__, 'events');
             
-            /**
-             * Check update event
-             * @todo: refactor this to seperate methods for better maintainability
-             */
-            switch($_REQUEST["event"]["action"]) {
-
-                // updating description column on specific tournament
-                case 'bulk-update-description': 
-                    $updated = $this->tournament->update([
-                        "description" => $this->get('event')["description"]
-                    ], $tournament);
-
-                    if ( !$updated ) {
-                        $this->dxl->response('event', [
-                            'error' => true,
-                            "response" => "Der opstod en fejl, kunne ikke opdatere turnerings beskrivelse"
-                        ]);
-                        $logger->log("failed to perform event " . $event["action"]. " " . __METHOD__, 'events');
-                        wp_die();
-                    }
-
-                    $this->dxl->response('event', [
-                        'error' => true,
-                        'response' => "Beskrivelse er opdateret"
-                    ]);
-                    wp_die();
-                    break;
-
-                // attach lan event
-                case 'attach-lan-event':
-                    $event = $_REQUEST["event"];
-                    
-                    $attached = $this->tournament->update(['lan_id' => (int) $event["lan"]], (int) $event["id"]);
-
-                    $tournaments_count = $this->lan->select('tournaments_count')->where('id', $event["lan"])->getRow();
-
-                    $this->lan->update(["tournaments_count" => $tournaments_count + 1], $event["lan"]);
-
-                    if( ! $attached ) {
-                        $this->dxl->response('event', [
-                            "error" => true,
-                            "response" => "Noget gik galt, kunne ikke tilknytte turneringen til valgt LAN",
-                            "data" => $this->get('event')
-                        ]);
-                        $logger->log("failed to perform event " . $event["action"]. " " . __METHOD__, 'events');
-                        wp_die();
-                    }
-
-                    $this->dxl->response('event', [
-                        "response" => "Turneringen er nu tilknyttet"
-                    ]);
-                    wp_die();
-
-                    break;
-
-                case 'attach-game':
-                    $event = (new TournamentAttachGame())->trigger();
-                    break;
-
-                case 'publish-tournament':
-                    $event = (new TournamentPublishAction())->trigger();
-                    break;
-
-                case 'unpublish-tournament':
-                    $event = (new TournamentUnpublishAction())->trigger();
-                    break;
-
-                /**
-                 * Seting max tournamnet team size
-                 */
-                case 'set_team_max_size': // what the hell its right here??!?!?!?
-                    $event = $_REQUEST["event"];
-                    
-                    $updated = $this->tournament->update([
-                        "max_team_size" => $_REQUEST["event"]["max_team_size"]
-                    ], $event["id"]);
-
-                    if ( ! $updated ) {
-                        $this->dxl->response('event', [
-                            'error' => true,
-                            "response" => "Der opstod en fejl, kunne ikke opdatere maksimalt holdstørrelse"
-                        ]);
-                        wp_die();
-                    }
-
-                    $this->dxl->response('event', [
-                        'error' => false,
-                        'response' => "Maksimalt holdstørrelse er opdateret"
-                    ]);
-                    wp_die();
-                    break;
-            }
+            $factory = new TournamentActionFactory();
+            echo $factory->trigger($_REQUEST["event"]["action"]);
+            wp_die();
         }
     }
 }

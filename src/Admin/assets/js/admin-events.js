@@ -146,22 +146,17 @@ jQuery(function($) {
 
                 const max_team_size = $('#max-team-size').val();
 
-                const data = {
-                    event: {
-                        id: self.setTeamMaxSizeButton.data('tournament'),
-                        action: "set_team_max_size",
-                        max_team_size: max_team_size
-                    }
-                };
-                console.log(data);
-
                 $.ajax({
                     method: "POST",
                     url: self.dxl.request.url,
                     data: {
                         action: "dxl_admin_tournament_update",
                         dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
-                        data
+                        event: {
+                            id: self.setTeamMaxSizeButton.data('tournament'),
+                            action: "set_team_max_size",
+                            max_team_size: max_team_size
+                        }
                     },
                     success: (response) => {
                         console.log(response)
