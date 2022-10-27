@@ -299,7 +299,7 @@ if( ! class_exists('TournamentController') )
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Triggering event: " . __METHOD__, 'events');
 
-            $tournament = $this->tournament->find($this->get('event')['tournament']);
+            $tournament = $this->tournament->find($_REQUEST['event']['tournament']);
             if( $tournamnet && $tournament->has_lan && $tournamnet->lan_id != 0 ) {
                 $lan = $this->lan->find($tournament->lan_id);
                 $tournaments_count = $lan->tournaments_count;
@@ -327,7 +327,6 @@ if( ! class_exists('TournamentController') )
         {
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Triggering event: " . __METHOD__, 'events');
-
             if ( ! isset($_REQUEST["event"]["action"]) ) {
                 $this->dxl->response('event', [
                     "error" => true,
@@ -339,22 +338,23 @@ if( ! class_exists('TournamentController') )
             }
             
             $tournament = (isset($_REQUEST["event"]["id"])) ? (int) $_REQUEST["event"]["id"] : false;
-
+            
             if( ! $tournament ) {
                 $this->dxl->response('event', [
                     "error" => true,
                     "response" => "kunne ikke finde dit turnering ID din forespørgsel",
-                    "data" => $this->get('event')
+                    "data" => $_REQUEST['event']
                 ]);
                 $logger->log("Could not find event Identifier " . __METHOD__, 'events');
                 wp_die('', 404);
             }
-
-            $logger->log("Triggering update event: " . $this->get('event')["action"] . " on action " . __METHOD__, 'events');
+            
+            $logger->log("Triggering update event: " . $_REQUEST['event']["action"] . " on action " . __METHOD__, 'events');
             
             $factory = new TournamentActionFactory();
-            $result = $factory->trigger($_REQUEST["event"]["action"])->call();
-            $this->dxl->response('event', $result);
+            $result = $factory->get($_REQUEST["event"]["action"])->call();
+
+            echo $this->dxl->response('event', $result);
             wp_die();
         }
     }

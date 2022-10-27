@@ -33,25 +33,23 @@
              *
              * @return void
              */
-            public function trigger() 
+            public function call() 
             {
                 $updated = $this->tournamentRepository->update([
                     "description" => $_REQUEST["event"]["description"]
                 ], $_REQUEST["event"]["id"]);
 
                 if ( ! $updated ) {
-                    echo wp_send_json_error([
+                    Logger::getInstsance()->log("Failed to perform event: " . $_REQUEST["event"]["action"]);
+                    return [
                         "response" => "Der opstod en fejl, kunne ikke opdatere beskrivelse",
                         "data" => $_REQUEST
-                    ]);
-                    Logger::getInstsance()->log("Failed to perform event: " . $_REQUEST["event"]["action"]);
-                    wp_die();
+                    ];
                 }
 
-                echo wp_send_json_success( [
+                return [
                     "response" => "Beskrivelsen er opdateret"
-                ]);
-                wp_die();
+                ];
             }
         }
     }

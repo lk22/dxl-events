@@ -38,16 +38,16 @@
 
                 if ( ! $updated ) {
                     Logger::getInstance()->log("Failed to set max team size on event");
-                    return wp_send_json_error([
+                    return [
                         "message" => "Failed to update max team size",
                         "data" => $_REQUEST["event"]
-                    ]);
+                    ];
                 }
 
-                return wp_send_json_success([
+                return [
                     "message" => "Max team size updated",
                     "data" => $_REQUEST["event"]
-                ]);                
+                ];
             }
         }
     }

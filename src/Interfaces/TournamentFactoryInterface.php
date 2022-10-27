@@ -7,7 +7,7 @@
     {
         interface TournamentFactoryInterface 
         {
-            public function trigger($action);
+            public function get($action);
         }
     }
 ?>

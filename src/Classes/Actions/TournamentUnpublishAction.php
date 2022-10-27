@@ -30,25 +30,23 @@
             /**
              * Trigger Unpublish action
              */
-            public function trigger(): void
+            public function call()
             {
                 $unpublished = $this->tournamentRepository->update([
                     "is_draft" => 1
                 ], $_REQUEST["event"]["id"]);
 
                 if ( ! $unpublished ) {
-                    wp_send_json_error([
+                    return [
                         "message" => "Failed to unpublish event",
                         "data" => $_REQUEST["event"]
-                    ]);
+                    ];
                     Logger::getInstance()->log("Failed to unpublish event");
-                    wp_die();
                 }
-
-                wp_send_json_success([
+                
+                return [
                     "message" => "Event unpublished successfully",
-                ]);
-                wp_die();
+                ];
             }
         }
     }

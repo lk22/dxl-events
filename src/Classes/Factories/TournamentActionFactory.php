@@ -17,16 +17,16 @@
     {
         class TournamentActionFactory implements TournamentFactoryInterface
         {
-            public function trigger($action)
+            public function get($action)
             {
                 switch($action) {
                     case "bulk-update-description":
                         return new TournamentUpdateDescription();
                     case "attach_game":
                         return new TournamentAttachGame();
-                    case "publish":
+                    case "publish-tournament":
                         return new TournamentPublishAction();
-                    case "unpublish":
+                    case "unpublish-tournament":
                         return new TournamentUnpublishAction();
                     case "attach-lan-event":
                         return new TournamentAttachLanEvent();

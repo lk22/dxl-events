@@ -12,9 +12,6 @@
     {
         class TournamentAttachGame implements ActionInterface
         {
-
-            private $result;
-
             /**
              * Tournament Setting Repository
              *
@@ -33,7 +30,7 @@
             /**
              * Trigger publish action
              */
-            public function trigger(): void
+            public function call()
             {
                 $game = $_REQUEST["event"]["game"];
                 $event = (int) $_REQUEST["event"]["id"];
@@ -44,24 +41,17 @@
                 ], $event);
 
                 if ( ! $attached ) {
-                    $this->result = [
+                    Logger::getInstance()->log("Failed to attach game to event");
+                    return wp_send_json_error([
                         "message" => "Failed to attach game to event",
                         "data" => $_REQUEST["event"]
-                    ];
-                    
-                    // wp_send_json_error([
-                    //     "message" => "Failed to attach game to event",
-                    //     "data" => $_REQUEST["event"]
-                    // ]);
-                    Logger::getInstance()->log("Failed to attach game to event");
-                    return $this->result;
+                    ]);
                     wp_die();
                 }
 
-                wp_send_json_success([
+                return wp_send_json_success([
                     "message" => "Game successfully attached",
                 ]);
-                wp_die();
             }
         }
     }

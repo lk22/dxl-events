@@ -41,24 +41,24 @@
              *
              * @return void
              */
-            public function trigger() 
+            public function call() 
             {
                 $attached = $this->tournamentRepository->update([
                     "lan_id" => $_REQUEST["event"]["lan_id"]
                 ], $_REQUEST["event"]["id"]);
 
                 if ( ! $attached ) {
-                    echo wp_send_json_error([
+                    return [
                         "response" => "Der opstod en fejl, kunne ikke tilføje LAN",
                         "data" => $_REQUEST
-                    ]);
+                    ];
                     Logger::getInstsance()->log("Failed to perform event: " . $_REQUEST["event"]["action"]);
                     wp_die();
                 }
 
-                echo wp_send_json_success([
+                return [
                     "response" => "Event er tilknyttet"
-                ]);
+                ];
                 wp_die();
             }
         }

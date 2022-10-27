@@ -354,6 +354,7 @@ jQuery(function($) {
                         }
                     },
                     success: (response) => {
+                        console.log(response);
                         window.location.reload();
                     },
                     error: (error) => {

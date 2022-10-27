@@ -30,25 +30,23 @@
             /**
              * Trigger publish action
              */
-            public function trigger(): void
+            public function call()
             {
                 $published = $this->tournamentRepository->update([
                     "is_draft" => 0
                 ], $_REQUEST["event"]["id"]);
 
                 if ( ! $published ) {
-                    wp_send_json_error([
+                    Logger::getInstance()->log("Failed to publish event");
+                    return [
                         "message" => "Failed to publish event",
                         "data" => $_REQUEST["event"]
-                    ]);
-                    Logger::getInstance()->log("Failed to publish event");
-                    wp_die();
+                    ];
                 }
 
-                wp_send_json_success([
+                return [
                     "message" => "Event published successfully",
-                ]);
-                wp_die();
+                ];
             }
         }
     }

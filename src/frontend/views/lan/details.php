@@ -1,5 +1,5 @@
 <div class="container-fluid event lan-event h-100"">
-    <div class="row event-header p-5 align-items-end" style="height: 800px;">
+    <div class="row event-header p-5 align-items-end">
         <div class="container pb-5">
             <div class="col-lg-5 col-xl-5 text-white">
                 <div class="row title mb-5">
