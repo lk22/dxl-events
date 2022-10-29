@@ -41,17 +41,18 @@
                 ], $event);
 
                 if ( ! $attached ) {
-                    Logger::getInstance()->log("Failed to attach game to event");
                     return wp_send_json_error([
                         "message" => "Failed to attach game to event",
                         "data" => $_REQUEST["event"]
                     ]);
+                    Logger::getInstance()->log("Failed to attach game to event"); 
                     wp_die();
                 }
 
                 return wp_send_json_success([
                     "message" => "Game successfully attached",
                 ]);
+                wp_die();
             }
         }
     }

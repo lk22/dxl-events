@@ -319,7 +319,7 @@ if( !class_exists('EventController'))
         {
             global $current_user;
 
-            $details = $this->lanRepository->select(["title", "seats_available", "extra_description"])->getRow();
+            $details = $this->lanRepository->select(["title", "seats_available", "extra_description", "slug"])->where('id', $event)->getRow();
 
             $member = $this->memberRepository
                 ->select()

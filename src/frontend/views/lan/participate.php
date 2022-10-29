@@ -6,7 +6,7 @@
                 <p class="lead">Der er <?php echo $details->seats_available?> pladser tilbage</p>
             </div>
             <div class="col-2">
-                <a href="events/?action=details&type=lan&event=<?php echo $_GET["event"]; ?>" class="btn btn-success">Gå tilbage</a>
+                <a href="events/?action=details&type=lan&event=<?php echo $details->slug; ?>" class="btn btn-success">Gå tilbage</a>
             </div>
         </div>
     </div>
