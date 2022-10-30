@@ -48,16 +48,22 @@
             public $notice;
 
             /**
+             * Participant companion
+             */
+            public $companion;
+
+            /**
              * Constructor
              *
              * @param [type] $participant
              */
-            public function __construct($participant, $event, $seatedMembers = [], $notice = "")
+            public function __construct($participant, $event, $seatedMembers = [], $notice = "", $companion = null)
             {
                 $this->participant = $participant;
                 $this->event = $event;
                 $this->seatedMembers = $seatedMembers;
                 $this->notice = $notice;
+                $this->companion = $companion;
                 $this->lanParticipantRepository = new LanParticipantRepository();
             }
 
@@ -68,9 +74,6 @@
              */
             public function send()
             {
-                return $this->getParticipantDetails();
-                // $this->setView('dxl-events/src/admin/views/mails/lan-event-participant-mail.php');
-                // str_replace('[participant_name]', $this->participant->name, file_get_contents($this->view));
                 add_filter('wp_mail_content_type', [$this, 'setContentType']);
                 wp_mail($this->receiver, $this->getSubject(), $this->template(), $this->getHeaders(), $this->getAttachments());
                 remove_filter('wp_mail_content_type', [$this, 'setContentType']);
@@ -104,16 +107,26 @@
                     $template .= "<li>Ønsker aftensmad (Lørdag): ja</li>";
                 }
 
+                
+                if ( $this->companion ) {
+                    $template .= "<p>Info om ledsager</p>\n";
+                    $template .= "<ul>\n";
+                    $template .= "<li>Navn: " . $this->companion["name"] . "</li>\n";
+                    $template .= (!empty($this->companion["email"])) ? "<li>Navn: " . $this->companion["name"] . "</li>\n" : "";
+                    $template .= (!empty($this->companion["phone"])) ? "<li>Navn: " . $this->companion["phone"] . "</li>\n" : "";
+                    $template .= "</ul>\n\n";
+                }
+                
                 $template .= "</ul>\n\n";
 
-                // if( count($this->seatedMembers) ) {
-                //     $template .= "<h3>Ønsker og sidde sammen med følgende: </h3>";
-                //     $template .= "<ul>";
-                //     foreach( $this->seatedMembers as $member ) {
-                //         $template .= "<li>" . $member . "</li>";
-                //     }
-                //     $template .= "</ul>\n\n";
-                // }
+                if( count($this->seatedMembers) ) {
+                    $template .= "<h3>Ønsker og sidde sammen med følgende: </h3>";
+                    $template .= "<ul>";
+                    foreach( $this->seatedMembers as $member ) {
+                        $template .= "<li>" . $member . "</li>";
+                    }
+                    $template .= "</ul>\n\n";
+                }
 
                 if( strlen($this->notice) ) {
                     $template .= "<h3>Bemærkning: </h3>\n";

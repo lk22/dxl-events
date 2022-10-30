@@ -62,6 +62,17 @@
                         <label for="floatingInput">Navn på ledsager</label>
                     </div> 
 
+                    <div class="form-floating companion-phone-field d-none mb-3">
+                        <input type="number" class="form-control" name="participant-companion-phone" id="floatingInput participant-companion-phone" placeholder="udfyld telefon nummer på ledsager">
+                        <label for="floatingInput">Telefon nummer på ledsager</label>
+                    </div> 
+                    
+                    <div class="form-floating companion-mail-field d-none mb-3">
+                        <input type="text" class="form-control" name="participant-companion-mail" id="floatingInput participant-companion-mail" placeholder="udfyld email på ledsager">
+                        <label for="floatingInput">Email på ledsager</label>
+                        <small>Vi skal bruge din ledsages kontaktoplysninger (Navn, email eller telefonnummer)</small>
+                    </div> 
+
                     <label>Hvem ønsker du at sidde sammen med</label>
                     <select class="form-select member-select mb-4" id="participant-member-select" multiple aria-label="Vælg medlmmer">
                         <?php 
