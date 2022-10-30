@@ -35,12 +35,13 @@
              */
             public function call() 
             {
+                $logger = Logger::getInstance();
                 $updated = $this->tournamentRepository->update([
                     "description" => $_REQUEST["event"]["description"]
                 ], $_REQUEST["event"]["id"]);
 
                 if ( ! $updated ) {
-                    Logger::getInstsance()->log("Failed to perform event: " . $_REQUEST["event"]["action"]);
+                    $logger->log("Failed to perform event: " . $_REQUEST["event"]["action"]);
                     return [
                         "response" => "Der opstod en fejl, kunne ikke opdatere beskrivelse",
                         "data" => $_REQUEST

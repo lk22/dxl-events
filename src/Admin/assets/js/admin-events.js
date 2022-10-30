@@ -518,8 +518,6 @@ jQuery(function($) {
                     }
                 }
 
-                console.log(self.dxl.request.data.event.description)
-
                 $.ajax({
                     method: "POST",
                     url: self.dxl.request.url,

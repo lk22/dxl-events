@@ -32,12 +32,13 @@
              */
             public function call()
             {
+                $logger = Logger::getInstance();
                 $updated = $this->tournamentRepository->update([
                     "max_team_size" => $_REQUEST["event"]["max_team_size"]
                 ], $_REQUEST["event"]["id"]);
 
                 if ( ! $updated ) {
-                    Logger::getInstance()->log("Failed to set max team size on event");
+                    $logger->log("Failed to set max team size on event");
                     return [
                         "message" => "Failed to update max team size",
                         "data" => $_REQUEST["event"]

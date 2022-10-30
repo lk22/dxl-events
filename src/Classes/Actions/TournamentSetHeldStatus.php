@@ -1,30 +1,30 @@
 <?php 
     namespace DxlEvents\Classes\Actions;
 
-    use DxlEvents\Classes\Repositories\TournamentSettingRepository as TournamentSetting;
-    use Dxl\Classes\Utilities\Logger;
+    use DxlEvents\Classes\Repositories\TournamentRepository;
+    
 
     use Dxl\Interfaces\ActionInterface;
 
     if ( ! defined('ABSPATH') ) exit;
 
-    if ( ! class_exists('TournamentAttachGame') ) 
+    if ( ! class_exists('TournamentSetHeldStatus') ) 
     {
-        class TournamentAttachGame implements ActionInterface
+        class TournamentSetHeldStatus implements ActionInterface
         {
             /**
              * Tournament Setting Repository
              *
-             * @var DxlEvents\Classes\Repositories\TournamentSettingRepository
+             * @var DxlEvents\Classes\Repositories\TournamentRepository
              */
-            public $tournamentSettingRepository;
+            public $tournamentRepository;
 
             /**
              * Tournament publish action constructor
              */
             public function __construct()
             {
-                $this->tournamentSettingRepository = new TournamentSetting();
+                $this->tournamentRepository();
             }
 
             /**
@@ -36,17 +36,17 @@
                 $game = $_REQUEST["event"]["game"];
                 $event = (int) $_REQUEST["event"]["id"];
 
-                $attached = $this->tournamentSettingRepository->update([
+                $attached = $this->tournamentRepository->update([
                     "game_mode" => isset($game["mode"]) ? (int) $game["mode"] : 0,
                     "game_id" => (int) $game["id"]
                 ], $event);
 
                 if ( ! $attached ) {
+                    $logger->log("Failed to attach game to event"); 
                     return wp_send_json_error([
                         "message" => "Failed to attach game to event",
                         "data" => $_REQUEST["event"]
                     ]);
-                    $logger->log(__METHOD__ . " Failed to attach game to event"); 
                 }
 
                 return wp_send_json_success([

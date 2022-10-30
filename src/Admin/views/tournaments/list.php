@@ -16,6 +16,13 @@
                     <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <button class="nav-link active" id="v-pills-lan-tab" data-bs-toggle="pill" data-bs-target="#v-pills-lan" type="button" role="tab" aria-controls="v-pills-lan" aria-selected="true">Lan turneringer</button>
                         <button class="nav-link" id="v-pills-online-tab" data-bs-toggle="pill" data-bs-target="#v-pills-online" type="button" role="tab" aria-controls="v-pills-online" aria-selected="false">Online turneringer</button>
+                        <?php 
+                            if ( count($heldTournaments) ) {
+                                ?>
+                                    <button class="nav-link" id="v-pills-online-tab" data-bs-toggle="pill" data-bs-target="#v-pills-held" type="button" role="tab" aria-controls="v-pills-online" aria-selected="false">Afholdte turneringer</button>
+                                <?php
+                            }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -26,6 +33,9 @@
                     </div>
                     <div class="tab-pane" id="v-pills-online" role="tabpanel" aria-labelledby="v-pills-online-tab" tabindex="0">
                         <?php require_once(dirname(__FILE__) . '/partials/online-tournaments.php'); ?>
+                    </div>
+                    <div class="tab-pane" id="v-pills-held" role="tabpanel" aria-labelledby="v-pills-online-tab" tabindex="0">
+                        <?php require_once(dirname(__FILE__) . '/partials/held-tournaments.php'); ?>
                     </div>
                 </div>
             </div>

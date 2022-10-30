@@ -32,12 +32,13 @@
              */
             public function call()
             {
+                $logger = Logger::getInstance();
                 $published = $this->tournamentRepository->update([
                     "is_draft" => 0
                 ], $_REQUEST["event"]["id"]);
 
                 if ( ! $published ) {
-                    Logger::getInstance()->log("Failed to publish event");
+                    $logger->log(__METHOD__ . " Failed to publish event");
                     return [
                         "message" => "Failed to publish event",
                         "data" => $_REQUEST["event"]

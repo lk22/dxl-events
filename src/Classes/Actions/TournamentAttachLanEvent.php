@@ -43,6 +43,7 @@
              */
             public function call() 
             {
+                $logger = Logger::getInstance();
                 $attached = $this->tournamentRepository->update([
                     "lan_id" => $_REQUEST["event"]["lan_id"]
                 ], $_REQUEST["event"]["id"]);
@@ -52,7 +53,7 @@
                         "response" => "Der opstod en fejl, kunne ikke tilføje LAN",
                         "data" => $_REQUEST
                     ];
-                    Logger::getInstsance()->log("Failed to perform event: " . $_REQUEST["event"]["action"]);
+                    $logger->log(__METHOD__ . " Failed to perform event: " . $_REQUEST["event"]["action"]);
                     wp_die();
                 }
 

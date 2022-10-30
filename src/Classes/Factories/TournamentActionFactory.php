@@ -2,14 +2,13 @@
     namespace DxlEvents\Classes\Factories;
 
     use DxlEvents\Interfaces\TournamentFactoryInterface;
-
-
     use DxlEvents\Classes\Actions\TournamentPublishAction;
     use DxlEvents\Classes\Actions\TournamentUnpublishAction; 
     use DxlEvents\Classes\Actions\TournamentAttachGame;
     use DxlEvents\Classes\Actions\TournamentAttachLanEvent;
     use DxlEvents\Classes\Actions\TournamentUpdateDescription;
     use DxlEvents\Classes\Actions\TournamentSetMaxTeamSize;
+    use Dxl\Classes\Utilities\Logger;
 
     if ( ! defined('ABSPATH') ) exit;
 
@@ -19,6 +18,7 @@
         {
             public function get($action)
             {
+                $logger = Logger::getInstance("calling {$action} action");
                 switch($action) {
                     case "bulk-update-description":
                         return new TournamentUpdateDescription();
@@ -32,6 +32,8 @@
                         return new TournamentAttachLanEvent();
                     case "set_team_max_size":
                         return new TournamentSetMaxTeamSize();
+                    case "set_held_status":
+                        return new TournamentSetHeldStatus();
                     default:
                         return null;
                 }

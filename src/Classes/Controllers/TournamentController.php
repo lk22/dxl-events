@@ -144,8 +144,12 @@ if( ! class_exists('TournamentController') )
          */
         public function list(): void
         {
-            $tournaments = $this->tournament->select()->where('has_lan', 1)->get();
-            $onlineTournaments = $this->tournament->select()->where('has_lan', 0)->get();
+            $tournaments = $this->tournament->select()->where('has_lan', 1)->whereAnd('is_held', 0)->get();
+            $onlineTournaments = $this->tournament->select()->where('has_lan', 0)->whereAnd('is_held', 0)->get();
+            $heldTournaments = $this->tournament
+                ->select()
+                ->where('is_held', 1)
+                ->get();
             require_once ABSPATH . "wp-content/plugins/dxl-events/src/Admin/views/tournaments/list.php";
         }
 

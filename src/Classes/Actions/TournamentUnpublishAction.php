@@ -32,16 +32,17 @@
              */
             public function call()
             {
+                $logger = Logger::getInstance();
                 $unpublished = $this->tournamentRepository->update([
                     "is_draft" => 1
                 ], $_REQUEST["event"]["id"]);
 
                 if ( ! $unpublished ) {
+                    $logger->log("Failed to unpublish event");
                     return [
                         "message" => "Failed to unpublish event",
                         "data" => $_REQUEST["event"]
                     ];
-                    Logger::getInstance()->log("Failed to unpublish event");
                 }
                 
                 return [
