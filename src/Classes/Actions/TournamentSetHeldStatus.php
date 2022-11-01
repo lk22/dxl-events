@@ -45,7 +45,7 @@
                         "data" => $_REQUEST["event"]
                     ]);
                 }
-
+                $logger->log(__METHOD__ . " Held status changed on event"); 
                 return wp_send_json_success([
                     "message" => "Game successfully attached",
                 ]);
