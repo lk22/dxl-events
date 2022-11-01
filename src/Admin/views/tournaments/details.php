@@ -3,7 +3,7 @@
         <div class="logo">
             <img height="100" src="http://localhost:8888/dxl-v2/wp-content/uploads/2022/03/cropped-cropped-DXL-LOGO-Hjemmeside_192x192.png" alt="">
         </div>
-        <p class="lead fw-bold"><?php echo $tournament->title; ?> (<?php echo $type; ?> <?php if ($tournament->is_team_tournament == 1) {echo " - Hold turnering";} ?>)</p>
+        <p class="lead fw-bold"><?php echo $tournament->title; ?> (<?php echo $type; ?><?php if ($tournament->is_team_tournament == 1){echo " - Hold turnering";} ?>)</p>
         <div class="actions">
             <?php
                 // show held button if tournament is not held
@@ -49,15 +49,13 @@
         <div class="tournament-details details flex">
             <div class="row">
                 <div class="col-md-4">
-                    <?php 
-                        if ( $tournament->is_held ) {
-                            ?>
-                                <div class="alert alert-success rounded">
-                                    Turneringen er afholdt
-                                </div>
-                            <?php
-                        }
-                    ?>
+                    <div class="alert alert-success rounded is-held-status" style="<?php echo ($tournament->is_held) ? "display:block" : "display:none" ?>">
+                        <?php 
+                            if ( $tournament->is_held ) {
+                                echo "Turneringen er afholdt";
+                            }
+                        ?>
+                    </div>
                     <h4>Start dato</h4>
                     <p class="lead"><?php echo date("d-m-Y", $tournament->start); ?></p>
                     <h4>Slut dato</h4>

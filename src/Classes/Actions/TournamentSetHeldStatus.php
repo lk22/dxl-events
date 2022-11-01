@@ -2,8 +2,7 @@
     namespace DxlEvents\Classes\Actions;
 
     use DxlEvents\Classes\Repositories\TournamentRepository;
-    
-
+    use Dxl\Classes\Utilities\Logger;
     use Dxl\Interfaces\ActionInterface;
 
     if ( ! defined('ABSPATH') ) exit;
@@ -24,7 +23,7 @@
              */
             public function __construct()
             {
-                $this->tournamentRepository();
+                $this->tournamentRepository = new TournamentRepository();
             }
 
             /**
@@ -33,18 +32,16 @@
             public function call()
             {
                 $logger = Logger::getInstance();
-                $game = $_REQUEST["event"]["game"];
                 $event = (int) $_REQUEST["event"]["id"];
 
-                $attached = $this->tournamentRepository->update([
-                    "game_mode" => isset($game["mode"]) ? (int) $game["mode"] : 0,
-                    "game_id" => (int) $game["id"]
+                $statusChanged = $this->tournamentRepository->update([
+                    "is_held" => 1
                 ], $event);
 
-                if ( ! $attached ) {
-                    $logger->log("Failed to attach game to event"); 
+                if ( ! $statusChanged ) {
+                    $logger->log(__METHOD__ . "Failed to change held status on event"); 
                     return wp_send_json_error([
-                        "message" => "Failed to attach game to event",
+                        "message" => "Failed to change held status",
                         "data" => $_REQUEST["event"]
                     ]);
                 }

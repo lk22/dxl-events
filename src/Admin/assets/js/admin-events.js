@@ -22,6 +22,7 @@ jQuery(function($) {
             this.removeGameTypeButton = this.container.find('.remove-game-type')
             this.exportParticipantsButton = this.container.find('.export-participants')
             this.setTeamMaxSizeButton = this.container.find('.set-team-size-btn')
+            this.setHeldStatusButton = this.container.find('.isheld-tournament-btn')
             this.eventModals = {
                 deleteLanModal: $('deleteLanModal'),
                 createLanEventModal: $('#createLanModal'),
@@ -165,6 +166,49 @@ jQuery(function($) {
                         console.log(err);
                     }
                 })
+            });
+
+            /**
+             * Set held status on tournament
+             */
+            self.setHeldStatusButton.click((e) => {
+                e.preventDefault();
+                const tournament = self.container.find('.isheld-tournament-btn').data('tournament');
+                self.dxl.request.data = {
+                    action: "dxl_admin_tournament_update",
+                    dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                    event: {
+                        id: tournament,
+                        action: "set_held_status"
+                    }
+                }
+
+                $.ajax({
+                    method: "POST",
+                    url: self.dxl.request.url,
+                    data: self.dxl.request.data,
+                    success: (response) => {
+                        if ( response.success ) {
+                            $.toast({
+                                title: 'Succes',
+                                text: response.data.message,
+                                icon: "success",
+                                position: "bottom-right"
+                            });
+                            $('.is-held-status').html('Turneringen er afhold').show();
+                        } else {
+                            $.toast({
+                                title: 'Fejl',
+                                text: response.data.message,
+                                icon: "error",
+                                position: "bottom-right"
+                            });
+                        }
+                    },
+                    error: (err) => {
+                        console.log(err);
+                    }
+                });
             });
 
             // delete tournament action

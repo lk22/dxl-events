@@ -19,7 +19,12 @@ use DxlEvents\Classes\Controllers\EventController;
 use DxlEvents\Classes\Services\EventService;
 
 if( !class_exists('DxlEvent') ){
-    class DxlEvent {
+    class DxlEvent 
+    {
+
+        protected $commands = [
+            'SetTournamentHeldStatus' => 'DxlEvents\Classes\Cron\ChangeTournamentHeldStatus',
+        ];
 
         public function __construct()
         {
@@ -28,6 +33,7 @@ if( !class_exists('DxlEvent') ){
             $this->training = new TrainingAction();
             $this->game = new GameController();
             $this->constructFrontend();
+            $this->register_cron_tasks();
             add_action( 'admin_menu', [$this, 'registerModuleMenu']);
             add_action('admin_enqueue_scripts', [$this, 'enqueueAdminEventScripts']);
             // add_action( 'wp_dashboard_setup', [$this, 'register_event_widgets']);
@@ -94,6 +100,19 @@ if( !class_exists('DxlEvent') ){
         }
 
         /**
+         * register events cron tasks
+         *
+         * @param array $commands
+         * @return void
+         */
+        public function register_cron_tasks()
+        {
+            foreach($this->commands as $command) {
+                return new $command;
+            }
+        }
+
+        /**
          * enqueuing event scripts only on event pages
          *
          * @return void
@@ -147,7 +166,6 @@ if( !class_exists('DxlEvent') ){
 
         public function construct_events()
         {
-            
             $eventController = new EventController;
             $eventController->manageFrontendEventViews();
         }

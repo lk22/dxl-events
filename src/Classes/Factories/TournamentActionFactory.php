@@ -8,6 +8,7 @@
     use DxlEvents\Classes\Actions\TournamentAttachLanEvent;
     use DxlEvents\Classes\Actions\TournamentUpdateDescription;
     use DxlEvents\Classes\Actions\TournamentSetMaxTeamSize;
+    use DxlEvents\Classes\Actions\TournamentSetHeldStatus;
     use Dxl\Classes\Utilities\Logger;
 
     if ( ! defined('ABSPATH') ) exit;
