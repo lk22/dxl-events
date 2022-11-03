@@ -50,6 +50,19 @@
         </div>
     </div>
     <div class="container py-5 px-4 my-5 overflow-hidden rounded rounded-md">
+        <?php 
+            if ( $event->is_held ) {
+                ?>
+                    <div class="row event-is-held">
+                        <div class="col-12">
+                            <div class="alert alert-success">
+                                <p class="lead display-6 fw-bold">LAN begivenheden er afholdt</p>
+                            </div>
+                        </div>
+                    </div>
+                <?php
+            }
+        ?>
         <div class="row gx-5 gy-5 tournaments">
             <div class="col col-xl-7 p-5 rounded rounded-md">
             <div class="descriptions info-field mb-5">
