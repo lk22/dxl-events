@@ -41,7 +41,7 @@ if ( ! class_exists('ChangeTournamentHeldStatus') )
         /**
          * Change tournament held status
          */
-        public function changeTournamentHeldStatus()
+        public function call()
         {
             $today = strtotime(date("Y-m-d"));
             $lanEvents = $this->lanRepository->all();

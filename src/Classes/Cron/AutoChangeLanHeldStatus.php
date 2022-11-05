@@ -45,9 +45,6 @@ if ( ! class_exists('AutoChangeLanHeldStatus') )
                 ->select(['id', 'title', 'end'])
                 ->where('is_held', 0)
                 ->get();
-            
-            var_dump($lanEvents);
-            die();
 
             $eventsData = [];
 

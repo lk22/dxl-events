@@ -23,8 +23,8 @@ if( !class_exists('DxlEvent') ){
     {
 
         protected $commands = [
-            'SetTournamentHeldStatus' => 'DxlEvents\Classes\Cron\ChangeTournamentHeldStatus',
-            'AutoChangeLanHeldStatus' => 'DxlEvents\Classes\Cron\AutoChangeLanHeldStatus',
+            'SetTournamentHeldStatus',
+            'AutoChangeLanHeldStatus'
         ];
 
         public function __construct()
@@ -108,9 +108,9 @@ if( !class_exists('DxlEvent') ){
          */
         public function register_cron_tasks()
         {
-            if ( isset($_GET["action"]) ) {
+            if ( isset($_GET["task"]) && in_array($_GET["task"], $this->commands) ) {
                 $cronFactory = new \DxlEvents\Classes\Factories\CronTasksFactory();
-                $cronFactory->get($_GET["action"])->call();
+                $call = $cronFactory->get($_GET["task"])->call();
             }
         }
 
