@@ -35,25 +35,28 @@ if ( ! class_exists('AutoChangeLanHeldStatus') )
             $this->lanRepository = new LanRepository();
             $this->logger = (new Core())->getUtility('Logger');
             
-            if ( isset($_GET["action"]) && $_GET["action"] == "dxl_events_change_tournament_held_status" ) {
-                $this->logger->logCronReport("Calling CRON action: dxl_events_change_tournament_held_status, hold on..");
-                $this->changeTournamentHeldStatus();
+            if ( isset($_GET["action"]) && $_GET["action"] == "dxl_lan_events_change_held_status" ) {
+                $this->logger->logCronReport("Calling CRON action: " . $_GET["action"] . ", hold on..");
+                $this->call();
             }
         }
 
         /**
          * Change tournament held status
          */
-        public function changeTournamentHeldStatus()
+        public function call()
         {
             $today = strtotime(date("Y-m-d"));
             $lanEvents = $this->lanRepository
                 ->select(['id', 'title', 'end'])
                 ->where('is_held', 0)
                 ->get();
+            
+            var_dump($lanEvents);
+            die();
 
             $eventsData = [];
-            
+
             // for each lan event that is held from end date of the event
             if ( count($lanEvents) > 0) {
                 $count = count($lanEvents);

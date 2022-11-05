@@ -24,6 +24,7 @@ if( !class_exists('DxlEvent') ){
 
         protected $commands = [
             'SetTournamentHeldStatus' => 'DxlEvents\Classes\Cron\ChangeTournamentHeldStatus',
+            'AutoChangeLanHeldStatus' => 'DxlEvents\Classes\Cron\AutoChangeLanHeldStatus',
         ];
 
         public function __construct()
