@@ -36,11 +36,6 @@ if ( ! class_exists('ChangeTournamentHeldStatus') )
             $this->tournamentRepository = new TournamentRepository();
             $this->lanRepository = new LanRepository();
             $this->logger = (new Core())->getUtility('Logger');
-            
-            if ( isset($_GET["action"]) && $_GET["action"] == "dxl_events_change_tournament_held_status" ) {
-                $this->logger->logCronReport("Calling CRON action: " . $_GET["action"] . " hold on...");
-                $this->changeTournamentHeldStatus();
-            }
         }
 
         /**
@@ -68,7 +63,7 @@ if ( ! class_exists('ChangeTournamentHeldStatus') )
                     ->select()
                     ->where('lan_id', $event->id)
                     ->get();
-                    
+
                 // if there are tournaments and todays date are greater than the end date of the event, change the status of the tournaments to held
                 if ( count($tournaments) && $today > strtotime($event->end) ) {
                     foreach ( $tournaments as $tournament ) {

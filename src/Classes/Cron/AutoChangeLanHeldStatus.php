@@ -31,14 +31,8 @@ if ( ! class_exists('AutoChangeLanHeldStatus') )
          */
         public function __construct()
         {
-            $this->tournamentRepository = new TournamentRepository();
             $this->lanRepository = new LanRepository();
             $this->logger = (new Core())->getUtility('Logger');
-            
-            if ( isset($_GET["action"]) && $_GET["action"] == "dxl_lan_events_change_held_status" ) {
-                $this->logger->logCronReport("Calling CRON action: " . $_GET["action"] . ", hold on..");
-                $this->call();
-            }
         }
 
         /**

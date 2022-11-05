@@ -108,8 +108,9 @@ if( !class_exists('DxlEvent') ){
          */
         public function register_cron_tasks()
         {
-            foreach($this->commands as $command) {
-                return new $command;
+            if ( isset($_GET["action"]) ) {
+                $cronFactory = new \DxlEvents\Classes\Factories\CronTasksFactory();
+                $cronFactory->get($_GET["action"])->call();
             }
         }
 
