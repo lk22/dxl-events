@@ -8,7 +8,7 @@
     use DxlEvents\Classes\Repositories\TournamentRepository;
     use DxlEvents\Classes\Repositories\LanRepository;
 
-    if ( !defind("ABSPATH") ) die("Access denied");
+    if ( !defined("ABSPATH") ) die("Access denied");
 
     if ( ! class_exists("TournamentAttachLanEvent") ) 
     {
