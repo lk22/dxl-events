@@ -43,9 +43,9 @@
              */
             public function call() 
             {
-                $logger = Logger::getInstance();
+                $logger = Logger::getInstance();;
                 $attached = $this->tournamentRepository->update([
-                    "lan_id" => $_REQUEST["event"]["lan_id"]
+                    "lan_id" => $_REQUEST["event"]["lan"]
                 ], $_REQUEST["event"]["id"]);
 
                 if ( ! $attached ) {
