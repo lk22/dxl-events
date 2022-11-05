@@ -2,7 +2,7 @@
 namespace DxlEvents\Classes\Cron;
 
 use DxlEvents\Classes\Repositories\LanRepository;
-// use DxlEvents\Classes\Mails\CronTournamentsHeldStatusChanged;
+use DxlEvents\Classes\Mails\CronLanEventHeldStatusChanged;
 
 use DXL\Classes\Core;
 
@@ -36,6 +36,7 @@ if ( ! class_exists('AutoChangeLanHeldStatus') )
             $this->logger = (new Core())->getUtility('Logger');
             
             if ( isset($_GET["action"]) && $_GET["action"] == "dxl_events_change_tournament_held_status" ) {
+                $this->logger->logCronReport("Calling CRON action: dxl_events_change_tournament_held_status, hold on..");
                 $this->changeTournamentHeldStatus();
             }
         }
@@ -45,34 +46,32 @@ if ( ! class_exists('AutoChangeLanHeldStatus') )
          */
         public function changeTournamentHeldStatus()
         {
-            $this->logger->logCronReport("Changing LAN event held status, hold on...");
             $today = strtotime(date("Y-m-d"));
-            $lanEvents = $this->lanRepository->select(['id', 'end'])->get();
+            $lanEvents = $this->lanRepository
+                ->select(['id', 'title', 'end'])
+                ->where('is_held', 0)
+                ->get();
 
             $eventsData = [];
+            
             // for each lan event that is held from end date of the event
             if ( count($lanEvents) > 0) {
+                $count = count($lanEvents);
                 foreach ( $lanEvents as $event) {
                     if ( $today > $event->end ) {
+                        $this->logger->logCronReport("Changing LAN event {$event->title} held status");
                         $this->lanRepository->update([
                             "is_held" => 1
                         ], $event->id);
                     }
                 }
+                $mail = (new CronLanEventHeldStatusChanged($eventsData))->setReciever("knudsenudvikling@gmail.com")->send();
+
              } else {
                 $this->logger->logCronReport("Found no events to update");
+                return false;
             }
-
-            // $mail = (new CronTournamentsHeldStatusChanged($eventData))
-            //     ->setSubject("Cron job: Tournaments held status changed")
-            //     ->setReciever("knudsenudvikling@gmail.com")
-            //     ->send();
-
-            if ( ! $lanEvents ) {
-                $this->logger->logCronReport("Could not find any events to update");
-                return;
-            }
-
+            
             return true;
         }
     }
