@@ -318,8 +318,10 @@ if( !class_exists('EventController'))
         public function renderEventParticipate($event)
         {
             global $current_user;
-
-            $details = $this->lanRepository->select(["title", "seats_available", "extra_description", "slug"])->where('id', $event)->getRow();
+            $details = $this->lanRepository
+                ->select(["id", "title", "seats_available", "extra_description", "slug"])
+                ->where('slug', "'$event'")
+                ->getRow();
 
             $member = $this->memberRepository
                 ->select()
@@ -331,7 +333,7 @@ if( !class_exists('EventController'))
             $tournaments = $this->tournamentRepository
                 ->select()
                 ->where('has_lan', 1)
-                ->whereAnd('lan_id', $event)
+                ->whereAnd('lan_id', $details->id)
                 ->get();
 
             require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/lan/participate.php";

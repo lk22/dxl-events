@@ -40,7 +40,7 @@
                                 <?php
                             } else if( !$participated && $member ) {
                                 ?>
-                                    <a href="events/?action=participate&event=<?php echo $event->id; ?>" class="btn btn-success">Deltag</a>
+                                    <a href="events/?action=participate&event=<?php echo $event->slug; ?>" class="btn btn-success">Deltag</a>
                                 <?php
                             }
                         ?>

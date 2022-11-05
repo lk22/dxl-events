@@ -15,7 +15,7 @@
             <div class="col-lg-6 col-xl-6">
                 <form action="#" class="lan-participate-form">
                     <div class="form-hiddens">
-                        <input type="hidden" name="event" id="event" value="<?php echo $_GET["event"]; ?>">
+                        <input type="hidden" name="event" id="event" value="<?php echo $details->id; ?>">
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" name="participant-name" value="<?php echo $member->name ?>" class="form-control" id="floatingInput participant-name" disabled>
