@@ -247,7 +247,7 @@ if( !class_exists('EventController'))
             global $current_user;
             
             if( $current_user->ID !== 0 ) {
-                $member = $this->memberRepository->select(["id", "email", "gamertag"])->where('user_id', $current_user->ID)->getRow();
+                $member = $this->memberRepository->select(["id", "user_id", "email", "gamertag"])->where('user_id', $current_user->ID)->getRow();
             } else {
                 $member = false;
             }

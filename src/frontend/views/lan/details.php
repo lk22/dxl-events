@@ -121,6 +121,7 @@
                                             class="btn btn-success tournament-button" 
                                             data-bs-toggle="modal"
                                             data-bs-target="#lanTournamentModal"
+                                            data-member="<?php echo $participant->member_id; ?>"
                                             data-event="<?php echo $event->id; ?>"
                                             data-tournament="<?php echo $tournament->id; ?>"
                                         >
@@ -192,7 +193,8 @@
                         ?>
                             <button
                                 class="participate-tournament-btn btn btn-success"
-                                data-member="<?php echo $member->id; ?>"
+                                data-member="<?php echo $member->user_id; ?>"
+                                data-event="<?php echo $event->id; ?>"
                             >Tilmeld</button>
                         <?php
                     }
