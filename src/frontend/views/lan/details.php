@@ -9,23 +9,23 @@
                 <div class="row meta">
                     <div class="col-12 location">
                         <p class="lead text-white fw-bold">
-                            <?php echo $settings->event_location; ?>
+                            <strong>Lokation: </strong> <?php echo $settings->event_location; ?>
                         </p>
                     </div>
                     <div class="col-12 start-date">
-                        <p>Start dato: <?php echo date("j F Y", $event->start); ?></p>
+                        <p><strong>Start dato:</strong> <?php echo date("j F Y", $event->start); ?></p>
                     </div>
                     <div class="col-12 end-date">
-                        <p>Slut dato: <?php echo date("j F Y", $event->end); ?></p>
+                        <p><strong>Slut dato:</strong> <?php echo date("j F Y", $event->end); ?></p>
                     </div>
                     <div class="participation-start meta__field">
                     <p>
-                        Tilmelding åbner: <?php echo date("j F Y", $settings->participation_opening_date); ?>
+                        <strong>Tilmelding åbner:</strong> <?php echo date("j F Y", $settings->participation_opening_date); ?>
                     </p>
                 </div>
                 <div class="latest-participation-date meta__field">
                     <p>
-                        Seneste tilmeldings frist: <?php echo date("j F Y", $settings->latest_participation_date); ?>
+                        <strong>Seneste tilmeldings frist:</strong> <?php echo date("j F Y", $settings->latest_participation_date); ?>
                     </p>
                 </div>
                 </div>
@@ -78,27 +78,87 @@
                     <?php echo $event->extra_description; ?>
                 </p>
             </div>
-    
+            
             <div class="event-food-details info-field">
                 <h4>Mad priser</h4>
-                <p>
-                    Fredag (Aftensmad): <?php echo $settings->breakfast_friday_price; ?>,-
-                </p>
-                <p>
-                    Lørdag:
-                    <ul>
-                        <li>
-                            Morgenmad: <?php echo $settings->breakfast_saturday_price; ?>,-
-                        </li>
-                        <li>
-                            Frokost: <?php echo $settings->lunch_saturday_price; ?>,-
-                        </li>
-                        <li>
-                            Morgenmad: <?php echo $settings->dinner_saturday_price; ?>,-
-                        </li>
-                    </ul>
-                </p>
-                <p>Søndag (Morgenmad): <?php echo $settings->breakfast_sunday_price ?>,-</p>
+                <?php 
+
+                    if( 
+                        $settings->breakfast_friday_price !== "0" || 
+                        $settings->breakfast_saturday_price !== "0" || 
+                        $settings->breakfast_sunday_price !== "0" ||
+                        $settings->lunch_saturday_price !== "0" ||
+                        $settings->dinner_saturday_price !== "0"
+                    ) {
+                        ?>
+                            <ul class="food-list">
+                                <?php 
+
+                                    // check friday dinner is enabled
+                                    if ( $settings->breakfast_friday_price !== "0" ) {
+                                        ?>
+                                            <li>
+                                                <p>
+                                                    <span class="fw-bold">Aftensmad fredag:</span> <?php echo $settings->breakfast_friday_price; ?> kr.
+                                                </p>
+                                            </li>
+                                        <?php
+                                    }
+
+                                    // check saturday breakfast is enabled
+                                    if ( $settings->breakfast_saturday_price !== "0" ) {
+                                        ?>
+                                            <li>
+                                                <p>
+                                                    <span class="fw-bold">Morgenmad lørdag:</span> <?php echo $settings->breakfast_saturday_price; ?> kr.
+                                                </p>
+                                            </li>
+                                        <?php
+                                    }
+
+                                    // check saturday lunch is enabled
+                                    if ( $settings->lunch_saturday_price !== "0" ) {
+                                        ?>
+                                            <li>
+                                                <p>
+                                                    <span class="fw-bold">Frokost lørdag:</span> <?php echo $settings->lunch_saturday_price; ?> kr.
+                                                </p>
+                                            </li>
+                                        <?php
+                                    }
+
+                                    // check saturday dinner is enabled
+                                    if ( $settings->dinner_saturday_price !== "0" ) {
+                                        ?>
+                                            <li>
+                                                <p>
+                                                <span class="fw-bold">Aftensmad lørdag:</span> <?php echo $settings->dinner_saturday_price; ?> kr.
+                                            </p>
+                                            </li>
+                                        <?php
+                                    }
+
+                                    // check sunday breakfast is enabled
+                                    if ( $settings->breakfast_sunday_price !== "0" ) {
+                                        ?>
+                                            <li>
+                                                <p>
+                                                    <span class="fw-bold">Morgenmad søndag:</span> <?php echo $settings->breakfast_sunday_price; ?> kr.
+                                                </p>
+                                            </li>
+                                        <?php
+                                    }
+                                ?>
+                            </ul>
+                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#lanFoodOrderingModal">Tilføj mad bestilling</button>
+                        <?php
+                    } else {
+                        ?>
+                            <p class="lead fw-bold mb-0">Mad bestilling kommer snart</p>
+                            <p class="lead">Du vil hurtigst muligt vide besked når du kan bestille mad</p>
+                        <?php
+                    }
+                ?>
             </div>
             </div>
             <div class="col col-xl-5 p-4 rounded rounded-md">
@@ -121,7 +181,7 @@
                                             class="btn btn-success tournament-button" 
                                             data-bs-toggle="modal"
                                             data-bs-target="#lanTournamentModal"
-                                            data-member="<?php echo $participant->member_id; ?>"
+                                            data-member="<?php echo $participant->member_id ?? "0"; ?>"
                                             data-event="<?php echo $event->id; ?>"
                                             data-tournament="<?php echo $tournament->id; ?>"
                                         >
@@ -233,6 +293,107 @@
                 <button class="close-modal btn btn-success" data-bs-dismiss="modal">Luk</button>
                 <button
                     class="unparticipate-lan-btn btn btn-success"
+                    data-member="<?php echo $member->id; ?>"
+                    data-event="<?php echo $event->id; ?>"
+                >Afmeld</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-lg fade fadeInUp" id="lanFoodOrderingModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Ønsker du at bestille mad til <?php echo $event->title; ?> ?</h2>
+            </div>
+            <div class="modal-body">
+                <p class="lead">Vælg dine mad ønsker udfra listen nedenfor</p>
+                <ul class="list-group food-list-group">
+                    <?php 
+                        if ( $settings->breakfast_friday_price !== "0" ) {
+                            ?>
+                                <li class="list-group-item food-item">
+                                    <input 
+                                        type="checkbox" 
+                                        class="form-check-input me-1"
+                                        value=""
+                                        id="friday-dinner-check"
+                                    >
+                                    <label class="form-check-label" for="friday-dinner-check">
+                                        <strong>Aftensmad fredag</strong> - <?php echo $settings->breakfast_friday_price; ?> kr.
+                                    </label>
+                                </li>
+                            <?php
+                        }
+
+                        if ( $settings->breakfast_saturday_price !== "0" ) {
+                            ?>
+                                <li class="list-group-item food-item">
+                                    <input 
+                                        type="checkbox" 
+                                        class="form-check-input me-1"
+                                        value=""
+                                        id="saturday-breakfast-check"
+                                    >
+                                    <label class="form-check-label" for="saturday-breakfast-check">
+                                        <strong>Morgenmad Lørdag</strong> - <?php echo $settings->breakfast_saturday_price; ?> kr.
+                                    </label>
+                                </li>
+                            <?php
+                        }
+                        if ( $settings->lunch_saturday_price !== "0" ) {
+                            ?>
+                                <li class="list-group-item food-item">
+                                    <input 
+                                        type="checkbox" 
+                                        class="form-check-input me-1"
+                                        value=""
+                                        id="saturday-lunch-check"
+                                    >
+                                    <label class="form-check-label" for="saturday-lunch-check">
+                                        <strong>Frokost Lørdag</strong> - <?php echo $settings->lunch_saturday_price; ?> kr.
+                                    </label>
+                                </li>
+                            <?php
+                        }
+                        if ( $settings->dinner_saturday_price !== "0" ) {
+                            ?>
+                                <li class="list-group-item food-item">
+                                    <input 
+                                        type="checkbox" 
+                                        class="form-check-input me-1"
+                                        value=""
+                                        id="saturday-dinner-check"
+                                    >
+                                    <label class="form-check-label" for="saturday-dinner-check">
+                                        <strong>Aftensmad Lørdag</strong> - <?php echo $settings->dinner_saturday_price; ?> kr.
+                                    </label>
+                                </li>
+                            <?php
+                        }
+                        if ( $settings->breakfast_sunday_price !== "0" ) {
+                            ?>
+                                <li class="list-group-item food-item">
+                                    <input 
+                                        type="checkbox" 
+                                        class="form-check-input me-1"
+                                        value=""
+                                        id="sunday-breakfast-check"
+                                    >
+                                    <label class="form-check-label" for="sunday-breakfast-check">
+                                        <strong>Morgenmad Søndag</strong> - <?php echo $settings->breakfast_sunday_price; ?> kr.
+                                    </label>
+                                </li>
+                            <?php
+                        }
+                    ?>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button class="close-modal btn btn-success" data-bs-dismiss="modal">Luk</button>
+                <button
+                    class="accept-food-ordering-btn"
                     data-member="<?php echo $member->id; ?>"
                     data-event="<?php echo $event->id; ?>"
                 >Afmeld</button>
