@@ -150,7 +150,14 @@
                                     }
                                 ?>
                             </ul>
-                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#lanFoodOrderingModal">Tilføj mad bestilling</button>
+                            <?php 
+                                if ( $participated ) {
+                                    ?>
+
+                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#lanFoodOrderingModal">Tilføj mad bestilling</button>
+                                    <?php
+                                }
+                            ?>
                         <?php
                     } else {
                         ?>
