@@ -269,6 +269,19 @@ if( !class_exists('EventController'))
                             ->whereAnd('member_id', $member->id)
                             ->getRow() : [];
 
+                        if ( 
+                            ! $participant->has_friday_breakfast == "1" && 
+                            ! $participant->has_friday_lunch == "1" && 
+                            ! $participant->has_saturday_breakfast == "1" &&
+                            ! $participant->has_saturday_lunch == "1" &&
+                            ! $participant->has_saturday_dinner == "1" &&
+                            ! $participant->has_sunday_breakfast == "1" 
+                        ) {
+                            $hasOrderedFood = false;
+                        } else {
+                            $hasOrderedFood = true;
+                        }
+
                     $participated = ($participant) 
                         ? true
                         : false;

@@ -152,10 +152,25 @@
                             </ul>
                             <?php 
                                 if ( $participated ) {
-                                    ?>
-
-                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#lanFoodOrderingModal">Tilføj mad bestilling</button>
-                                    <?php
+                                    if (!$hasOrderedFood) {
+                                        ?>
+                                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#lanFoodOrderingModal">Tilføj mad bestilling</button>
+                                        <?php
+                                    } else {
+                                        ?>
+                                            <p class="lead mb-0 fw-bold">Din mad bestilling</p>
+                                            <small>Dine madvalg</small>
+                                            <ul>    
+                                                <?php
+                                                    echo ($participant->has_friday_breakfast == "1") ? "<li><strong>Morgenmad (fredag / Lørdag)</strong></li>" : "";
+                                                    echo ($participant->has_saturday_breakfast == "1") ? "<li><strong>Morgenmad (Lørdag)</strong></li>" : "";
+                                                    echo ($participant->has_saturday_lunch == "1") ? "<li><strong>Frokost (Lørdag)</strong></li>" : "";
+                                                    echo ($participant->has_saturday_dinner == "1") ? "<li><strong>Aftensmad (Lørdag)</strong></li>" : "";
+                                                    echo ($participant->has_sunday_breakfast == "1") ? "<li><strong>Morgenmad (Søndag)</strong></li>" : "";
+                                                ?>
+                                            </ul>
+                                        <?php
+                                    }
                                 }
                             ?>
                         <?php
