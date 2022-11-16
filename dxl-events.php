@@ -121,7 +121,7 @@ if( !class_exists('DxlEvent') ){
          */
         public function enqueeuFrontendEventScripts()
         {
-
+            
         }
 
         public function register_event_participants_widget()
