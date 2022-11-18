@@ -137,9 +137,6 @@ if( !class_exists('EventController'))
 
         /**
          * manage frontend event views determing the 
-         * @todo: 1: render list of events for list page
-         * @todo: 2: render details page for single event
-         * @todo: 3: add participate view for LAN events
          * @return void
          */
         public function manageFrontendEventViews() 
@@ -269,18 +266,22 @@ if( !class_exists('EventController'))
                             ->whereAnd('member_id', $member->id)
                             ->getRow() : [];
 
-                        if ( 
-                            ! $participant->has_friday_breakfast == "1" && 
-                            ! $participant->has_friday_lunch == "1" && 
-                            ! $participant->has_saturday_breakfast == "1" &&
-                            ! $participant->has_saturday_lunch == "1" &&
-                            ! $participant->has_saturday_dinner == "1" &&
-                            ! $participant->has_sunday_breakfast == "1" 
-                        ) {
-                            $hasOrderedFood = false;
-                        } else {
-                            $hasOrderedFood = true;
+                        // if the participant is not empty, we need to get the food preferences
+                        if ($participant) {
+                            if ( 
+                                ! $participant->has_friday_breakfast == "1" && 
+                                ! $participant->has_friday_lunch == "1" && 
+                                ! $participant->has_saturday_breakfast == "1" &&
+                                ! $participant->has_saturday_lunch == "1" &&
+                                ! $participant->has_saturday_dinner == "1" &&
+                                ! $participant->has_sunday_breakfast == "1" 
+                            ) {
+                                $hasOrderedFood = false;
+                            } else {
+                                $hasOrderedFood = true;
+                            }
                         }
+
 
                     $participated = ($participant) 
                         ? true
@@ -335,6 +336,8 @@ if( !class_exists('EventController'))
                 ->select(["id", "title", "seats_available", "extra_description", "slug"])
                 ->where('slug', "'$event'")
                 ->getRow();
+
+            $settings = $this->lanRepository->settings()->find($details->id);
 
             $member = $this->memberRepository
                 ->select()

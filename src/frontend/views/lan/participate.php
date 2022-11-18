@@ -37,20 +37,34 @@
                         <label for="floatingInput">Email</label>
                     </div>
 
-                    <div class="form-check form-switch mt-4">
-                        <input class="form-check-input" type="checkbox" role="switch" name="participant-breakfast" id="participant-breakfast" checked>
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Brunch (Lørdag, Søndag)</label>
-                    </div>
+                    <?php 
+                        if ($settings->breakfast_friday_price != "0") {
+                            ?>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" name="participant-dinner-friday" id="participant-dinner-friday">
+                                    <label class="form-check-label" for="participant-dinner-friday">Aftensmad (Fredag)</label>
+                                </div>
+                            <?php
+                        } 
+                        
+                        if ($settings->breakfast_saturday_price != "0" && $settings->breakfast_sunday_price != "0") {
+                            ?>
+                                <div class="form-check form-switch mt-0">
+                                    <input class="form-check-input" type="checkbox" role="switch" name="participant-breakfast" id="participant-breakfast">
+                                    <label class="form-check-label" for="flexSwitchCheparticipant-breakfastckChecked">Brunch (Lørdag, Søndag)</label>
+                                </div>
+                            <?php
+                        } 
 
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" name="participant-dinner-friday" id="participant-dinner-friday" checked>
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Aftensmad (Fredag)</label>
-                    </div>
-
-                    <div class="form-check form-switch mb-4">
-                        <input class="form-check-input" type="checkbox" role="switch" name="participant-dinner-saturday" id="participant-dinner-saturday" checked>
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Aftensmad (Lørdagg)</label>
-                    </div>
+                        if ( $settings->dinner_saturday_price != "0") {
+                            ?>
+                                <div class="form-check form-switch mb-4">
+                                    <input class="form-check-input" type="checkbox" role="switch" name="participant-dinner-saturday" id="participant-dinner-saturday">
+                                    <label class="form-check-label" for="participant-dinner-saturday">Aftensmad (Lørdag)</label>
+                                </div>
+                            <?php
+                        }
+                    ?>
 
                     <div class="form-check form-switch mb-4">
                         <input type="checkbox" role="switch" name="participant-has-companion-field" id="participant-companion" class="form-check-input">

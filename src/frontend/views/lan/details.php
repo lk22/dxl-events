@@ -162,7 +162,7 @@
                                             <small>Dine madvalg</small>
                                             <ul>    
                                                 <?php
-                                                    echo ($participant->has_friday_breakfast == "1") ? "<li><strong>Morgenmad (fredag / Lørdag)</strong></li>" : "";
+                                                    echo ($participant->has_friday_lunch == "1") ? "<li><strong>Aftensmad(fredag)</strong></li>" : "";
                                                     echo ($participant->has_saturday_breakfast == "1") ? "<li><strong>Morgenmad (Lørdag)</strong></li>" : "";
                                                     echo ($participant->has_saturday_lunch == "1") ? "<li><strong>Frokost (Lørdag)</strong></li>" : "";
                                                     echo ($participant->has_saturday_dinner == "1") ? "<li><strong>Aftensmad (Lørdag)</strong></li>" : "";
@@ -266,7 +266,7 @@
 
             </div>
             <div class="modal-body">
-
+                <i class="fa-duotone fa-loader"></i>
             </div>
             <div class="modal-footer">
                 <button class="close-modal btn btn-success" data-bs-dismiss="modal">Luk</button>
