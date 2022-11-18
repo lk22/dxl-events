@@ -265,16 +265,14 @@
             <div class="modal-header">
 
             </div>
-            <div class="modal-body">
-                <i class="fa-duotone fa-loader"></i>
-            </div>
+            <div class="modal-body"></div>
             <div class="modal-footer">
                 <button class="close-modal btn btn-success" data-bs-dismiss="modal">Luk</button>
                 <?php 
                     if( $participated ) {
                         ?>
                             <button
-                                class="participate-tournament-btn btn btn-success"
+                                class="bulk-participate-tournament-btn btn btn-success"
                                 data-member="<?php echo $member->user_id; ?>"
                                 data-event="<?php echo $event->id; ?>"
                             >Tilmeld</button>
