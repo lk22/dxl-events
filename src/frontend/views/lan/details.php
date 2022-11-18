@@ -419,7 +419,7 @@
                     class="accept-food-ordering-btn"
                     data-member="<?php echo $member->id; ?>"
                     data-event="<?php echo $event->id; ?>"
-                >Afmeld</button>
+                >Tilføj</button>
             </div>
         </div>
     </div>
