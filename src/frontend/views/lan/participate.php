@@ -35,36 +35,7 @@
                     <div class="form-floating mb-3">
                         <input type="text" value="<?php echo $member->address; ?>" class="form-control" name="participant-address" id="floatingInput participant-address" disabled>
                         <label for="floatingInput">Email</label>
-                    </div>
-
-                    <?php 
-                        if ($settings->breakfast_friday_price != "0") {
-                            ?>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch" name="participant-dinner-friday" id="participant-dinner-friday">
-                                    <label class="form-check-label" for="participant-dinner-friday">Aftensmad (Fredag)</label>
-                                </div>
-                            <?php
-                        } 
-                        
-                        if ($settings->breakfast_saturday_price != "0" && $settings->breakfast_sunday_price != "0") {
-                            ?>
-                                <div class="form-check form-switch mt-0">
-                                    <input class="form-check-input" type="checkbox" role="switch" name="participant-breakfast" id="participant-breakfast">
-                                    <label class="form-check-label" for="flexSwitchCheparticipant-breakfastckChecked">Brunch (Lørdag, Søndag)</label>
-                                </div>
-                            <?php
-                        } 
-
-                        if ( $settings->dinner_saturday_price != "0") {
-                            ?>
-                                <div class="form-check form-switch mb-4">
-                                    <input class="form-check-input" type="checkbox" role="switch" name="participant-dinner-saturday" id="participant-dinner-saturday">
-                                    <label class="form-check-label" for="participant-dinner-saturday">Aftensmad (Lørdag)</label>
-                                </div>
-                            <?php
-                        }
-                    ?>
+                    </div
 
                     <div class="form-check form-switch mb-4">
                         <input type="checkbox" role="switch" name="participant-has-companion-field" id="participant-companion" class="form-check-input">

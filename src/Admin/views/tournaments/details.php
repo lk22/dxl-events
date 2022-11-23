@@ -43,6 +43,10 @@
                 }
 
             ?>
+
+            <button class="button-primary update-tournament-button" data-bs-toggle="modal" data-bs-target="#updateAdminTournamentModal">
+                Opdater
+            </button>
         </div>
     </div>
     <div class="content mt-4">
