@@ -63,6 +63,8 @@
                   $template .= "<p>" . $translated ."</p>";
                 }
 
+                $template .= "<p>Du vil modtage en faktura inden længe.</p>";
+
                 return $template;
             }
         }
