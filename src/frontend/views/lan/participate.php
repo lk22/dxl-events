@@ -35,7 +35,7 @@
                     <div class="form-floating mb-3">
                         <input type="text" value="<?php echo $member->address; ?>" class="form-control" name="participant-address" id="floatingInput participant-address" disabled>
                         <label for="floatingInput">Email</label>
-                    </div
+                    </div>
 
                     <div class="form-check form-switch mb-4">
                         <input type="checkbox" role="switch" name="participant-has-companion-field" id="participant-companion" class="form-check-input">
