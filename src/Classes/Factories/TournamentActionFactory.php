@@ -9,6 +9,7 @@
     use DxlEvents\Classes\Actions\TournamentUpdateDescription;
     use DxlEvents\Classes\Actions\TournamentSetMaxTeamSize;
     use DxlEvents\Classes\Actions\TournamentSetHeldStatus;
+    use DxlEvents\Classes\Actions\TournamentUpdateDetails;
     use Dxl\Classes\Utilities\Logger;
 
     if ( ! defined('ABSPATH') ) exit;
@@ -21,6 +22,8 @@
             {
                 $logger = Logger::getInstance("calling {$action} action");
                 switch($action) {
+                    case 'update-tournament-details':
+                        return new TournamentUpdateDetails();
                     case "bulk-update-description":
                         return new TournamentUpdateDescription();
                     case "attach_game":

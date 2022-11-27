@@ -23,6 +23,7 @@ jQuery(function($) {
             this.exportParticipantsButton = this.container.find('.export-participants')
             this.setTeamMaxSizeButton = this.container.find('.set-team-size-btn')
             this.setHeldStatusButton = this.container.find('.isheld-tournament-btn')
+            this.updateTournamnentButton = this.container.find('.update-tournament-btn')
             this.eventModals = {
                 deleteLanModal: $('deleteLanModal'),
                 createLanEventModal: $('#createLanModal'),
@@ -33,7 +34,8 @@ jQuery(function($) {
                 updateTournamentModal: $('#updateTournamentModal'),
                 deleteTournamentModal: $('.deleteTournamentModal'),
                 createGameModal: $('#createGameModal'),
-                createGameTypeModal: $('#createGameTypeModal')
+                createGameTypeModal: $('#createGameTypeModal'),
+                updateTournamentDetailsModal: $('#updateAdminTournamentModal'),
             }
             this.initializeActions();
         },
@@ -99,6 +101,50 @@ jQuery(function($) {
                             action: "details",
                             id: json.data.id
                         });
+                    }
+                })
+            })
+
+            /**
+             * Updating tournament date and time information
+             */
+            self.eventModals.updateTournamentDetailsModal.find('.update-tournament-btn').click((e) => {
+                e.preventDefault();
+
+                const tournamentID = self.eventModals.updateTournamentDetailsModal.find('.update-tournament-btn').data('tournament');
+
+                self.dxl.request.data = {
+                    action: "dxl_admin_tournament_update",
+                    dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                    event: {
+                        action: "update-tournament-details",
+                        id: tournamentID,
+                        title: self.eventModals.updateTournamentDetailsModal.find('#title').val(),
+                        startdate: self.eventModals.updateTournamentDetailsModal.find('#start-date').val(),
+                        enddate: self.eventModals.updateTournamentDetailsModal.find('#end-date').val(),
+                        starttime: self.eventModals.updateTournamentDetailsModal.find('#start-time').val(),
+                        endtime: self.eventModals.updateTournamentDetailsModal.find('#endt-time').val(),
+                    }
+                }
+
+                $.ajax({
+                    method: "POST",
+                    url: self.dxl.request.url,
+                    data: self.dxl.request.data,
+                    success: (response) => {
+                        console.log(response);
+
+                        self.dxl.closeModal();
+
+                        $.toast({
+                            title: "Success",
+                            text: "Turneringen er blevet opdateret",
+                            icon: "success",
+                            position: "bottom-right"
+                        });
+                    }, 
+                    error: (error) => {
+                        console.log(error)
                     }
                 })
             })

@@ -149,7 +149,7 @@
                         /**
                          * show options for team tournaments
                          */
-                        if ( $tournament->is_team_tournament ) {
+                        /*if ( $tournament->is_team_tournament ) {
                             ?>
                                 <p class="lead fw-bold">
                                     Angiv max størrelse pr hold
@@ -157,7 +157,7 @@
                                 <input type="number" class="form-control w-25" name="max-team-size" id="max-team-size" value="<?php echo $settings->max_team_size ?? 0; ?>">
                                 <button class="button-primary mt-2 set-team-size-btn" data-tournament="<?php echo $tournament->id; ?>">Sæt hold størrelse</button>
                             <?php
-                        }
+                        }*/
                     ?>
                 <div class="col-md-12">
                     <?php require dirname(__FILE__) . "/partials/tournament-participants.php"; ?>
@@ -188,6 +188,49 @@
             <div class="modal-footer">
                  <button class="button-primary update-tournament-description-btn" data-tournament="<?php echo $tournament->id; ?>" data-action="bulk-update-description">Opdater <span class="dashicons dashicons-edit"></span></button>
                 <button class="button-primary close-modal" data-bs-dismiss="modal">Luk <span class="dashicons dashicons-no"></span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-lg fade fadeInUp modal-open" id="updateAdminTournamentModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Opdater informationer på: <?php echo $tournament->title ?></h2>
+            </div>
+            <div class="modal-body">
+                <form action="#" class="tournamentDescriptionForm">
+                    <div class="form-group">
+                        <label for="">Titel</label>
+                        <input type="text" class="form-control" name="title" id="title" value="<?php echo $tournament->title; ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Start dato</label>
+                        <input type="date" class="form-control" name="start" id="start-date" value="<?php echo $tournament->start; ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Slut dato</label>
+                        <input type="date" class="form-control" name="end" id="end-date" value="<?php echo $tournament->end; ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Start tidspunkt</label>
+                        <input type="time" class="form-control" name="starttime" id="start-time" value="<?php echo $tournament->starttime; ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Slut tidspunkt</label>
+                        <input type="time" class="form-control" name="endtime" id="start-time" value="<?php echo $tournament->endtime; ?>">
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                 <button class="button-primary update-tournament-btn mr-4" data-tournament="<?php echo $tournament->id; ?>" data-action="bulk-update-description">Opdater <span class="dashicons dashicons-edit"></span></button>
+                <button class="button-primary ml-4 close-modal" data-bs-dismiss="modal">Luk <span class="dashicons dashicons-no"></span></button>
             </div>
         </div>
     </div>

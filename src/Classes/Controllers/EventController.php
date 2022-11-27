@@ -174,7 +174,7 @@ if( !class_exists('EventController'))
         {
             $events = [];
             $lan = $this->lanRepository->select()->where('is_draft', 0)->get();
-            $tournaments = $this->tournamentRepository->all();
+            $tournaments = $this->tournamentRepository->select()->where('has_lan', 0)->get();
             $training = $this->trainingRepository->all();
             
             if( $lan > 0 ) {
