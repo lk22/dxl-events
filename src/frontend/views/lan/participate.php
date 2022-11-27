@@ -106,6 +106,7 @@
                 <p>Kunne du tænke dig at være med i nogle af vores LAN turneringer, skal du trykke tilmeld under hver turnering vi viser</p>
                 <?php
                     foreach($tournaments as $tournament) {
+                        $member = $this->memberRepository->select(['id'])->where('user_id', $current_user->ID)->getRow(); // temp fix to get member id
                         ?>
                             <div class="tournament d-flex justify-content-between my-4">
                                 <div class="title">
@@ -118,7 +119,7 @@
                                     <button
                                         class="btn btn-success participate-tournament-btn"
                                         data-tournament="<?php echo $tournament->id; ?>"
-                                        data-member="<?php echo $current_user->ID; ?>"
+                                        data-member="<?php echo $member->id; ?>"
                                         data-event="<?php echo $_GET["event"]; ?>"
                                     >
                                         Tilmeld

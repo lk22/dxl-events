@@ -331,20 +331,19 @@ if( !class_exists('EventController'))
          */
         public function renderEventParticipate($event)
         {
-            global $current_user;
+            global $current_user, $wpdb;
             $details = $this->lanRepository
                 ->select(["id", "title", "seats_available", "extra_description", "slug"])
                 ->where('slug', "'$event'")
                 ->getRow();
 
             $settings = $this->lanRepository->settings()->find($details->id);
-
+            
             $member = $this->memberRepository
                 ->select()
                 ->where('user_id', $current_user->ID)
                 ->getRow();
-
-            $members = $this->memberRepository->all();
+            $members = $this->memberRepository->select()->where('is_payed', 1)->get();
 
             $tournaments = $this->tournamentRepository
                 ->select()
