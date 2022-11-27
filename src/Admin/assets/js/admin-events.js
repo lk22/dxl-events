@@ -378,6 +378,7 @@ jQuery(function($) {
                     },
                     success: (response) => {
                         console.log(response);
+                        location.reload();
                     },
                     error: (error) => {
                         console.log(error)
