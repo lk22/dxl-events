@@ -37,7 +37,7 @@
                 $event = (int) $_REQUEST["event"]["id"];
 
                 $attached = $this->tournamentSettingRepository->update([
-                    "game_mode" => isset($game["mode"]) ? (int) $game["mode"] : 0,
+                    "game_mode" => $game["mode"],
                     "game_id" => (int) $game["id"]
                 ], $event);
 

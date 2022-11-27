@@ -104,6 +104,7 @@
                                     <div>
                                         <select class="hidden" name="game-mode" id="game-mode"></select>
                                     </div>
+                                    <small>Valgt spilletilstand: <?php echo $attachedGameMode->name ?></small>
                                     <div class="divider"></div>
                                     <div>
                                         <button class="attachGameButton button-primary" data-tournament="<?php echo $tournament->id; ?>">Opdater</button>

@@ -7,6 +7,7 @@ use DxlEvents\Classes\Repositories\TournamentSettingRepository as TournamentSett
 use DxlEvents\Classes\Repositories\ParticipantRepository as Participant;
 use DxlEvents\Classes\Repositories\LanRepository as Lan;
 use DxlEvents\Classes\Repositories\GameRepository as Game;
+use DxlEvents\Classes\Repositories\GameModeRepository;
 use DxlEvents\Classes\Services\EventService;
 
 use DxlEvents\Classes\Actions\TournamentPublishAction;
@@ -63,6 +64,13 @@ if( ! class_exists('TournamentController') )
         public $gameRepository;
 
         /**
+         * Game Mode Repository
+         *
+         * @var \DxlEvents\Classes\Repositories\GameModeRepository
+         */
+        public $gameModeRepository;
+
+        /**
          * Event Service
          *
          * @var \DxlEvents\Classes\Services\EventService
@@ -82,6 +90,7 @@ if( ! class_exists('TournamentController') )
             $this->gameRepository = new Game();
             $this->dxl = new Core;
             $this->eventService = new EventService();
+            $this->gameModeRepository = new GameModeRepository();
             $this->registerAdminActions();
             $this->registerGuestActions();
         }
@@ -165,6 +174,7 @@ if( ! class_exists('TournamentController') )
             $lan = $this->lan->select(['id', 'title'])->get();
             $games = $this->gameRepository->all();
             $attachedGame = $this->gameRepository->find($settings->game_id);
+            $attachedGameMode = $this->gameModeRepository->find($settings->game_mode);
             $type = ($tournament->type == 2) ? "Online Turnering" : "LAN Turnering";
             $participants = $this->participant->findByEvent($tournament->id);
             require_once ABSPATH . "wp-content/plugins/dxl-events/src/Admin/views/tournaments/details.php";
