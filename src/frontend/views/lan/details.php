@@ -304,7 +304,7 @@
                     <h3 class="text-left text-success">
                         Du er nu afmeldt <?php echo $event->title; ?>
                     </h3>
-                    <p>Du modtager en mail med din afmeldelses bekræftelse inden for kort.</p>
+                    <p>Du modtager en mail med din afmeldelses bekræftelse inden for kort tid.</p>
                     <p>Vi er kede af du ikke kan deltage alligevel</p>
                     <p>vi håber på at se dig næste gang!</p>
                 </div>

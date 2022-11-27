@@ -157,6 +157,8 @@ jQuery(function($) {
                 const action = $('.update-tournament-description-btn').data('action');
                 const tournament = $('.update-tournament-description-btn').data('tournament');
 
+                console.log(tinyMCE.activeEditor.getContent());
+
                 self.dxl.request.data = {
                     action: "dxl_admin_tournament_update",
                     dxl_core_nonce: dxl_core_vars.dxl_core_nonce,

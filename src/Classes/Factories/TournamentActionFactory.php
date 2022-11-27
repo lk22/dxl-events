@@ -26,7 +26,7 @@
                         return new TournamentUpdateDetails();
                     case "bulk-update-description":
                         return new TournamentUpdateDescription();
-                    case "attach_game":
+                    case "attach-game":
                         return new TournamentAttachGame();
                     case "publish-tournament":
                         return new TournamentPublishAction();
