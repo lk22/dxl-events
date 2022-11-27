@@ -7,7 +7,7 @@
 
     use DxlEvents\Classes\Repositories\TournamentRepository;
 
-    if ( !defind("ABSPATH") ) die("Access denied");
+    if ( !defined("ABSPATH") ) die("Access denied");
 
     if ( ! class_exists("TournamentBulkUpdateDescription") ) 
     {

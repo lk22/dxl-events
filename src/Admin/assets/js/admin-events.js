@@ -164,7 +164,7 @@ jQuery(function($) {
                     dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
                     event: {
                         id: tournament,
-                        action: action,
+                        action: "bulk-update-description",
                         description: tinyMCE.activeEditor.getContent()
                     },
                 }

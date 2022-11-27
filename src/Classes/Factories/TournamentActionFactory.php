@@ -6,7 +6,7 @@
     use DxlEvents\Classes\Actions\TournamentUnpublishAction; 
     use DxlEvents\Classes\Actions\TournamentAttachGame;
     use DxlEvents\Classes\Actions\TournamentAttachLanEvent;
-    use DxlEvents\Classes\Actions\TournamentUpdateDescription;
+    use DxlEvents\Classes\Actions\TournamentBulkUpdateDescription;
     use DxlEvents\Classes\Actions\TournamentSetMaxTeamSize;
     use DxlEvents\Classes\Actions\TournamentSetHeldStatus;
     use DxlEvents\Classes\Actions\TournamentUpdateDetails;
@@ -25,7 +25,7 @@
                     case 'update-tournament-details':
                         return new TournamentUpdateDetails();
                     case "bulk-update-description":
-                        return new TournamentUpdateDescription();
+                        return new TournamentBulkUpdateDescription();
                     case "attach-game":
                         return new TournamentAttachGame();
                     case "publish-tournament":
