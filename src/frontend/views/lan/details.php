@@ -410,6 +410,14 @@
                         }
                     ?>
                 </ul>
+                <div class="mb-3">
+                    <label for="" class="form-label heading-size-4">
+                        Noget særligt vi skal være opmærksomme på?<br>
+                        <small class="mb-0"><strong>Bestilling af mad til ledsager?</strong></small><br>
+                        <small><strong>Nogle særlig allergener der skal tages hensyn til?</strong></small>
+                    </label>
+                    <textarea class="form-control" name="foodOrderNote" id="foodOrderNote" rows="3"></textarea>
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="close-modal btn btn-success" data-bs-dismiss="modal">Luk</button>

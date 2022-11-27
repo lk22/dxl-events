@@ -20,16 +20,19 @@
              */
             public $foodOrder;
 
+            public $note;
+
             /**
              * Mail constructor
              *
              * @param [type] $event
              * @param [type] $participant
              */
-            public function __construct($foodOrder, $participant) 
+            public function __construct($foodOrder, $participant, $note) 
             {
                 $this->foodOrder = $foodOrder;
                 $this->participant = $participant;
+                $this->note = $note;
             }
 
             /**
@@ -63,7 +66,10 @@
                   $template .= "<p>" . $translated ."</p>";
                 }
 
-                $template .= "<p>Du vil modtage en faktura inden længe.</p>";
+                if ( ! empty($this->note) ) {
+                    $template .= "<p>Notat af mad bestilling</p>";
+                    $template .= "<p>" . $this->note . "</p>";
+                }
 
                 return $template;
             }
