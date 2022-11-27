@@ -186,6 +186,7 @@ jQuery(function($) {
                         $('.description-label').addClass('hidden');
                         $('.right-details').find('.tournament-description').html("").html(tinyMCE.activeEditor.getContent());
                         self.dxl.closeModal();
+                        location.reload();
                     }
                 });
             });
