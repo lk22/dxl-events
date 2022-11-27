@@ -117,7 +117,7 @@
                                 </div>
                                 <div class="action">
                                     <button
-                                        class="btn btn-success participate-tournament-btn"
+                                        class="btn btn-success lan-participate-tournament-btn"
                                         data-tournament="<?php echo $tournament->id; ?>"
                                         data-member="<?php echo $member->id; ?>"
                                         data-event="<?php echo $_GET["event"]; ?>"
