@@ -55,12 +55,12 @@
                     <div class="row mb-4">
 
                         <div class="form-group tournament-title col-12">
-                            <label for="tournament-name" class="w-100">
+                            <label for="tournament-name" class="w-100 lead">
                                 Turnerings titel
                                 <input type="text" class="form-control" name="tournament-name" id="tournament-name" required>
                             </label>
                         </div>
-                        <div class="form-group tournament-type col-12 mt-2">
+                        <div class="form-group tournament-type col-12 mt-3">
                             <h4>Vælg type turnering</h4>
                             <label for="tournament-type">
                                 Online turnering
@@ -71,7 +71,7 @@
                                 <input type="radio" class="form-control" name="tournament-type" id="tournament-type" value="3" required>
                             </label>
                         </div>
-                        <div class="form-group is-team-tournament-field col-12 mt-2">
+                        <div class="form-group is-team-tournament-field col-12 mt-3">
                             <h4>Er det en hold turnering?</h4>
                             <label for="is-team-tournament">
                                 Ja
@@ -82,7 +82,7 @@
                                 <input type="radio" class="form-control" name="is-team-tournament" id="is-team-tournament" value="0" required>
                             </label>
                         </div>
-                        <div class="form-group tournament-minimum-participants col-12">
+                        <div class="form-group tournament-minimum-participants col-12 mt-3">
                             <label for="tournament-min-participants" class="w-100">
                                 Minimum antal deltagere
                                 <input type="number" class="form-control" id="tournament-min-participants" name="tournament-min-participants">
@@ -98,19 +98,19 @@
                 
                     <h3 class="h-3">Tidsindstillinger</h3>
                     <div class="row">
-                        <div class="form-group start-date">
+                        <div class="form-group start-date mb-2">
                             <label for="tournament-startdate" class="w-100">
                                 Start dato: 
                                 <input type="date" class="form-control" name="tournament-startdate" id="tournament-startdate" required>
                             </label>
                         </div>
-                        <div class="form-group end-date">
+                        <div class="form-group end-date mb-2">
                             <label for="tournament-startdate" class="w-100">
                                 Slut dato: 
                                 <input type="date" class="form-control" name="tournament-enddate" id="tournament-enddate" required>
                             </label>
                         </div>
-                        <div class="form-group start-time">
+                        <div class="form-group start-time mb-2">
                             <label for="tournament-starttime" class="w-100">
                                 Start tidspunkt: 
                                 <input type="time" class="form-control" name="tournament-starttime" id="tournament-starttime" required>
@@ -126,7 +126,7 @@
                 
             </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer gap-2">
                 <button class="button-primary close-modal" data-bs-dismiss="modal">Luk <span class="dashicons dashicons-no"></span></button>
                 <button class="button-primary create-tournament-button">Opret <span class="dashicons dashicons-calendar"></span></button>
             </div>
