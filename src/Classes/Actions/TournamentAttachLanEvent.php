@@ -34,6 +34,7 @@
             public function __construct()
             {
                 $this->tournamentRepository = new TournamentRepository();
+                $this->lanRepository = new LanRepository();
             }
 
             /**
@@ -48,6 +49,8 @@
                     "lan_id" => $_REQUEST["event"]["lan"]
                 ], $_REQUEST["event"]["id"]);
 
+                $lanEvent = $this->lanRepository->find($_REQUEST["event"]["lan"]);
+
                 if ( ! $attached ) {
                     return [
                         "response" => "Der opstod en fejl, kunne ikke tilføje LAN",
@@ -56,6 +59,10 @@
                     $logger->log(__METHOD__ . " Failed to perform event: " . $_REQUEST["event"]["action"]);
                     wp_die();
                 }
+
+                $this->lanRepository->update([
+                    "tournaments_count" => $lanEvent->tournaments_count + 1
+                ], $_REQUEST["event"]["lan"]);
 
                 return [
                     "response" => "Event er tilknyttet"
