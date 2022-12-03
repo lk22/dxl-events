@@ -188,7 +188,8 @@ if( !class_exists('EventController'))
                         "endtime" => $settings->end_at,
                         "tournaments_count" => $event->tournaments_count,
                         "participants_count" => $event->participants_count,
-                        "available_seats" => $event->seats_available,
+                        "total_seats" => $event->seats_available,
+                        "seats_available" => $event->seats_available - $event->participants_count,
                         "latest_participation_date" => $settings->latest_participation_date,
                         "link" => "?action=details&type=lan&event=" . $event->slug,
                         "type" => "LAN"
