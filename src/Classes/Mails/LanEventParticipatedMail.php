@@ -90,24 +90,10 @@
                     <p>Info om deltager</p>
                     <ul>
                         <li>Gamertag: " . $this->participant->gamertag . "</li>
+                        <li>Navn: " . $this->participant->name . "</li>
+                    </ul>
                 ";
 
-                if( $this->getParticipantDetails()->has_friday_lunch ) {
-                    $template .= "<li>Ønsker aftensmad (fredag): ja</li>";
-                }
-
-                if( 
-                    $this->getParticipantDetails()->has_saturday_breakfast &&
-                    $this->getParticipantDetails()->has_sunday_breakfast
-                 ) {
-                    $template .= "<li>Ønsker brunch (lørdag / søndag): ja</li>";
-                }
-
-                if( $this->getParticipantDetails()->has_saturday_dinner ) {
-                    $template .= "<li>Ønsker aftensmad (Lørdag): ja</li>";
-                }
-
-                
                 if ( $this->companion ) {
                     $template .= "<p>Info om ledsager</p>\n";
                     $template .= "<ul>\n";
@@ -125,8 +111,9 @@
                     foreach( $this->seatedMembers as $member ) {
                         $template .= "<li>" . $member . "</li>";
                     }
-                    $template .= "</ul>\n\n";
                 }
+
+                $template .= "</ul>\n\n";
 
                 if( strlen($this->notice) ) {
                     $template .= "<h3>Bemærkning: </h3>\n";

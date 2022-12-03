@@ -84,7 +84,7 @@
             {
                 $template = "<h2><strong>Kære " . $this->participant->name . "</strong><h2>\n\n";
                 $template .= "<p>Vi har modtaget din tilmelding til " . $this->event->title . ",</p>\n";
-                $template .= "<p>Du vil inden længe modtage en faktura</p>\n\n";
+                
                 $template .= "<p>OBS: vær opmærksom på prisen kan variere efter madvalg</p>\n\n";
 
                 if( $this->seatedMembers) {
