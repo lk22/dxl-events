@@ -11,15 +11,14 @@
                         <div class="event-header"><h4><?php echo $lan["title"] ?></h4></div>
                         <div class="event-body">
                             <p>Dato: 
-                                    <span class="startdate">
-                                        <?php echo date("d", $lan["startdate"]); ?>
-                                    </span>
-                                    - 
-                                    <span class="enddate">
-                                        <?php echo date("d", $lan["enddate"]); ?>
-                                    </span>
-                                    <?php echo date("F", $lan["enddate"]); ?>
-                                </p>
+                                <span class="startdate">
+                                    <?php echo date("d/m/Y", $lan["startdate"]); ?>
+                                </span>
+                                - 
+                                <span class="enddate">
+                                    <?php echo date("d/m/", $lan["enddate"]); ?>
+                                </span>
+                            </p>
                         </div>
                     </div>
                 <?php

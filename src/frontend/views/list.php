@@ -11,21 +11,21 @@
                 <div class="col-12 col-sm-6 col-md-4">
                     <div class="row event-filters">
                         <div class="col-4">
-                            <label for="event-type">
+                            <label for="event-type-lan">
                                 LAN
-                                <input type="checkbox" name="event-type" id="event-type" value="LAN" checked>
+                                <input type="checkbox" name="event-type" id="event-type-lan" value="LAN" checked>
                             </label>
                         </div>
                         <div class="col-4">
-                            <label for="event-type">
+                            <label for="event-type-tournament">
                                 Turneringer
-                                <input type="checkbox" name="event-type" id="event-type" value="Turnering" checked>
+                                <input type="checkbox" name="event-type" id="event-type-tournament" value="Turnering" checked>
                             </label>
                         </div>
                         <div class="col-4">
-                            <label for="event-type">
+                            <label for="event-type-training">
                                 Træning
-                                <input type="checkbox" name="event-type" id="event-type" value="Træning" checked>
+                                <input type="checkbox" name="event-type" id="event-type-training" value="Træning" checked>
                             </label>
                         </div>
                     </div>
