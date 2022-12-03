@@ -334,13 +334,13 @@
                         if ( $settings->breakfast_friday_price !== "0" ) {
                             ?>
                                 <li class="list-group-item food-item">
-                                    <input 
-                                        type="checkbox" 
-                                        class="form-check-input me-1"
-                                        value=""
-                                        id="has_friday_breakfast"
-                                    >
                                     <label class="form-check-label" for="friday-dinner-check">
+                                        <input 
+                                            type="checkbox" 
+                                            class="form-check-input me-1"
+                                            value=""
+                                            id="has_friday_breakfast"
+                                        >
                                         <strong>Aftensmad fredag</strong> - <?php echo $settings->breakfast_friday_price; ?> kr.
                                     </label>
                                 </li>
@@ -350,13 +350,13 @@
                         if ( $settings->breakfast_saturday_price !== "0" ) {
                             ?>
                                 <li class="list-group-item food-item">
-                                    <input 
-                                        type="checkbox" 
-                                        class="form-check-input me-1"
-                                        value=""
-                                        id="has_saturday_breakfast"
-                                    >
                                     <label class="form-check-label" for="saturday-breakfast-check">
+                                        <input 
+                                            type="checkbox" 
+                                            class="form-check-input me-1"
+                                            value=""
+                                            id="has_saturday_breakfast"
+                                        >
                                         <strong>Morgenmad Lørdag</strong> - <?php echo $settings->breakfast_saturday_price; ?> kr.
                                     </label>
                                 </li>
@@ -365,13 +365,13 @@
                         if ( $settings->lunch_saturday_price !== "0" ) {
                             ?>
                                 <li class="list-group-item food-item">
-                                    <input 
-                                        type="checkbox" 
-                                        class="form-check-input me-1"
-                                        value=""
-                                        id="has_saturday_lunch"
-                                    >
                                     <label class="form-check-label" for="saturday-lunch-check">
+                                        <input 
+                                            type="checkbox" 
+                                            class="form-check-input me-1"
+                                            value=""
+                                            id="has_saturday_lunch"
+                                        >
                                         <strong>Frokost Lørdag</strong> - <?php echo $settings->lunch_saturday_price; ?> kr.
                                     </label>
                                 </li>
@@ -380,14 +380,14 @@
                         if ( $settings->dinner_saturday_price !== "0" ) {
                             ?>
                                 <li class="list-group-item food-item">
-                                    <input 
-                                        type="checkbox" 
-                                        class="form-check-input me-1"
-                                        value=""
-                                        id="has_saturday_dinner"
-                                    >
                                     <label class="form-check-label" for="saturday-dinner-check">
-                                        <strong>Aftensmad Lørdag</strong> - <?php echo $settings->dinner_saturday_price; ?> kr.
+                                        <input 
+                                            type="checkbox" 
+                                            class="form-check-input me-1"
+                                            value=""
+                                            id="has_saturday_dinner"
+                                        >
+                                    <strong>Aftensmad Lørdag</strong> - <?php echo $settings->dinner_saturday_price; ?> kr.
                                     </label>
                                 </li>
                             <?php
@@ -395,14 +395,14 @@
                         if ( $settings->breakfast_sunday_price !== "0" ) {
                             ?>
                                 <li class="list-group-item food-item">
-                                    <input 
-                                        type="checkbox" 
-                                        class="form-check-input me-1"
-                                        value=""
-                                        id="has_sunday_breakfast"
-                                        data-type="has_sunday_breakfast"
-                                    >
                                     <label class="form-check-label" for="sunday-breakfast-check">
+                                        <input 
+                                            type="checkbox" 
+                                            class="form-check-input me-1"
+                                            value=""
+                                            id="has_sunday_breakfast"
+                                            data-type="has_sunday_breakfast"
+                                        >
                                         <strong>Morgenmad Søndag</strong> - <?php echo $settings->breakfast_sunday_price; ?> kr.
                                     </label>
                                 </li>
