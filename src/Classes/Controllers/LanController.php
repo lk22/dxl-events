@@ -365,7 +365,7 @@ if( !class_exists('LanController') )
          */
         public function getEvents()
         {
-            return $this->lanRepository->select()->where('is_draft', 0)->limit(5)->get();
+            return $this->lanRepository->select()->where('is_draft', 0)->limit(1)->get();
         }
 
         /**
