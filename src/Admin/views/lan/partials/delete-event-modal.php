@@ -7,7 +7,7 @@
             <div class="modal-body">
                 <p>Er du sikker på du gerne vil slette begivenheden, <?php echo $event->title; ?>?</p>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer gap-2">
                 <button class="button-primary close-modal" data-bs-dismiss="modal">Luk <span class="dashicons dashicons-no"></span></button>
                 <button class="button-primary delete-lan-modal-btn" data-event="<?php echo $event->id; ?>">Slet begivenhed</button>
             </div>

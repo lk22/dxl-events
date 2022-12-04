@@ -134,7 +134,7 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer gap-2">
                 <button class="button-primary close-modal" data-bs-dismiss="modal">Luk</button>
                 <button class="button-primary update-event-button">Opdater <span class="dashicons dashicons-calendar"></span></button>
             </div>
