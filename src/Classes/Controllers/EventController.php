@@ -190,7 +190,7 @@ if( !class_exists('EventController'))
                         "participants_count" => $event->participants_count,
                         "total_seats" => $event->seats_available,
                         "seats_available" => $event->seats_available - $event->participants_count,
-                        "latest_participation_date" => $settings->latest_participation_date,
+                        "latest_participation_date" => date("d-m-Y", $settings->latest_participation_date),
                         "link" => "?action=details&type=lan&event=" . $event->slug,
                         "type" => "LAN"
                     ];

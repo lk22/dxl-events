@@ -78,7 +78,7 @@
                                         <p>Antal deltagere: <?php echo $event["participants_count"]; ?> deltagere</p>
                                     </div>
                                     <div class="row latest-participation_date">
-                                        <p>Seneste tilmeldingsfrist: <?php echo date("d/m", strtotime($event["latest_participation_date"])) ?></p>
+                                        <p>Seneste tilmeldingsfrist: <?php echo $event["latest_participation_date"] ?></p>
                                     </div>
                                 </div>
                                 <div class="event-footer">
