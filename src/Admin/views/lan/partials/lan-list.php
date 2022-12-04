@@ -2,7 +2,7 @@
     if( $events ) {
         foreach($events as $event) {
             ?>
-                <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3 mb-4 rounded border-2 ">
+                <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4 mb-4 rounded border-2 ">
                     <div class="card-header flex row">
                         <div class="col-md-12">
                             <div class="row">

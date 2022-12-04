@@ -73,7 +73,7 @@
                 <p>Udfyld formularen nedenfor for at oprette et nyt spil </p>
                 <p>Spillet kan bruges til håndtering af dine turneringer eller andre events</p>
                 <form action="#" class="createGameForm">
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="game-name">
                             Spil titel
                             <input type="text" id="game-name" required>
@@ -95,7 +95,7 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer gap-2">
                 <button class="button-primary close-modal" data-bs-dismiss="modal">Luk</button>
                 <button class="button-primary create-game-btn">Opret spil</button>
             </div>
