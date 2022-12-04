@@ -47,7 +47,7 @@
                                         <div class="col-6 start-date-time">
                                             <p> Starter:
                                                 <?php 
-                                                    echo date("d-m", strtotime($event["startdate"]));
+                                                    echo date("d-m-Y", strtotime($event["startdate"]));
                                                 ?>
                                                 -
                                                 <?php 
@@ -58,7 +58,7 @@
                                         <div class="col-6 end-date-time">
                                             <p> Slutter: 
                                                 <?php 
-                                                    echo date("d-m", strtotime($event["enddate"]));
+                                                    echo date("d-m-Y", strtotime($event["enddate"]));
                                                 ?>
                                                 -
                                                 <?php 
