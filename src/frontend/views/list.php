@@ -138,11 +138,11 @@
                                     </div>
                                     <div class="row start-date">
                                         <div class="col-6">
-                                            <p>Start dato: <?php echo date("d/m/Y", strtotime($event["startdate"])) ?> - <?php echo date("H:i", strtotime($event["starttime"])) ?></p>
+                                            <p>Start dato: <?php echo $event["startdate"] ?> - <?php echo $event["starttime"]; ?></p>
                                         </div>
 
                                         <div class="col-6">
-                                            <p>Slut dato: <?php echo date("d/m/Y", strtotime($event["enddate"])) ?> - <?php echo date("H:i", strtotime($event["endtime"])) ?></p>
+                                            <p>Slut dato: <?php echo $event["enddate"] ?> - <?php echo $event["endtime"] ?></p>
                                         </div>
                                     </div>
                                     <div class="row participants-count">
