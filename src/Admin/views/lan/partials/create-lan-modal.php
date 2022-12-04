@@ -21,7 +21,7 @@
                                 <p class="lead">Beskrivelse</p>
                                 <?php 
                                     wp_editor('Udfyld begivenheds beskrivelse', 'event-description', array(
-                                        "textarea_rows" => 100,
+                                        "textarea_rows" => 5,
                                         "height" => 400
                                     ));
                                 ?>
@@ -32,8 +32,13 @@
                             <label for="event-description-extra">
                                 <p class="lead">Beskrivelse (ekstra):</p>
                                 <?php 
-                                    wp_editor('Udfyld ekstra beskrivelse, evt medbringningsliste.', 'event-description-extra', array(
-                                        "textarea_rows" => 100,
+                                    wp_editor('En Xbox med strøm og HDMI-kabel, HUSK en controller og headset
+                                    Minimum 5 M netkabel
+                                    Maksimum en 32” monitor eller tv, med strømkabel.
+                                    Der er 3 strømstik til dig, så der er plads til en harddisk også.
+                                    En sovepose og et liggeunderlag/madras eller lignende
+                                    Rent tøj, håndklæde til et bad, og glem nu ikke din tandbørste', 'event-description-extra', array(
+                                        "textarea_rows" => 5,
                                         "height" => 400
                                     ))
                                 ?>
