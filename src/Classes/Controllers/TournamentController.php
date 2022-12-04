@@ -175,6 +175,7 @@ if( ! class_exists('TournamentController') )
             $games = $this->gameRepository->all();
             $attachedGame = $this->gameRepository->find($settings->game_id);
             $attachedGameMode = $this->gameModeRepository->find($settings->game_mode);
+            $attachedLanEvent = $this->lan->find($tournament->lan_id);
             $type = ($tournament->type == 2) ? "Online Turnering" : "LAN Turnering";
             $participants = $this->participant->findByEvent($tournament->id);
             require_once ABSPATH . "wp-content/plugins/dxl-events/src/Admin/views/tournaments/details.php";

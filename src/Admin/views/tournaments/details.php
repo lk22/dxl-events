@@ -104,7 +104,7 @@
                                     <div>
                                         <select class="hidden" name="game-mode" id="game-mode"></select>
                                     </div>
-                                    <small>Valgt spilletilstand: <?php echo $attachedGameMode->name ?></small>
+                                    <small>Valgt spilletilstand: <strong><?php echo $attachedGameMode->name ?></strong></small>
                                     <div class="divider"></div>
                                     <div>
                                         <button class="attachGameButton button-primary" data-tournament="<?php echo $tournament->id; ?>">Opdater</button>
@@ -133,7 +133,9 @@
                                                 }
                                             ?>
                                         </select>
-        
+                                        <div class="divider"></div>
+                                        <small>Tilnyttet LAN: <strong><?php echo $attachedLanEvent->title ?></strong></small>
+                                        <div class="divider"></div>
                                         <button class="button-primary attach-event-btn" data-tournament="<?php echo $tournament->id ?>">Tilknyt</button>
                                     </form>
                                     <div class="divider"></div>
@@ -178,7 +180,7 @@
                     <div class="form-group">
                         <?php
                             wp_editor((!empty($tournament->description) ? $tournament->description : ''), 'tournament-description', [
-                                "textarea_rows" => 100,
+                                "textarea_rows" => 5,
                                 "height" => "100%"
                             ]);
                         ?>
