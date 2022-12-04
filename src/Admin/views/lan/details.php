@@ -47,7 +47,8 @@
                             ?>
                                 <div class="event-description">
                                     <h2>Beskrivelse</h2>
-                                    <?php echo $event->description; ?>
+                                    <?php echo str_replace("\\", "<br>", $event->description); ?>
+                                    <?php //echo $event->description; ?>
                                 </div>
                             <?php
                         }
@@ -56,7 +57,8 @@
                             ?>
                                 <div class="event-description-extra mt-4">
                                     <h2>Ekstra beskrivelse</h2>
-                                    <?php echo $event->extra_description; ?>
+                                    <?php echo str_replace("\\", "<br>", $event->extra_description); ?>
+                                    <?php //echo $event->extra_description; ?>
                                 </div>
                             <?php
                         }

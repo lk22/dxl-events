@@ -68,14 +68,14 @@
             <div class="descriptions info-field mb-5">
                 <h2>Beskrivelse</h2>
                 <?php 
-                    echo $event->description;
+                    echo str_replace("\\", "<br>", $event->description);
                 ?>
             </div>
     
             <div class="extra-information info-field mb-5">
                 <h2>Huskeliste</h2>
                 <p>
-                    <?php echo $event->extra_description; ?>
+                    <?php echo str_replace("\\", "<br>", $event->extra_description); ?>
                 </p>
             </div>
             
