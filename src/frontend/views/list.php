@@ -34,7 +34,6 @@
         </div>
         <div class="col-12 pt-4">
             <div class="row px-0">
-
                 <?php 
                     foreach($events["lan"] as $event) {
                         ?>
@@ -69,10 +68,7 @@
                                     </div>
                                     <div class="row available-seats">
                                         <div class="col-6">
-                                            <p>total Antal pladser: <?php echo $event["total_seats"]; ?></p>
-                                        </div>
-                                        <div class="col-6">
-                                            <p>Ledige pladser: <?php echo $event["seats_available"]; ?></p>
+                                            <p>Ledige pladser: <?php echo $event["total_seats"]; ?></p>
                                         </div>
                                     </div>
                                     <div class="row tournaments-count">
