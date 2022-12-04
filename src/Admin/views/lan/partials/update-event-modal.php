@@ -22,8 +22,8 @@
                                 <p class="lead">Beskrivelse</p>
                                 <?php 
                                     wp_editor($event->description, 'event-description', array(
-                                        "textarea_rows" => 100,
-                                        "height" => 400
+                                        "textarea_rows" => 5,
+                                        "height" => 100
                                     ));
                                 ?>
                             </label>
@@ -34,8 +34,8 @@
                                 <p class="lead">Beskrivelse (ekstra):</p>
                                 <?php 
                                     wp_editor($event->extra_description, 'event-description-extra', array(
-                                        "textarea_rows" => 100,
-                                        "height" => 400
+                                        "textarea_rows" => 5,
+                                        "height" => 100
                                     ))
                                 ?>
                             </label>
