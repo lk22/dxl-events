@@ -39,7 +39,7 @@
                         ?>
                             <div class="col-12 col-md-6 col-lg-4 event-card event-<?php echo $event["type"]; ?>" data-event-type="<?php echo $event["type"]; ?>">
                                 <div class="event-header">
-                                    <h3><?php echo $event["title"] ?></h3>
+                                    <h4><?php echo $event["title"] ?></h4>
                                 </div>
                                 <div class="event-meta">
                                     <div class="row event-dates">
@@ -92,7 +92,7 @@
                         ?>
                             <div class="col-4 event-card event-<?php echo $event["type"] ?>" data-event-type="<?php echo $event["type"] ?>">
                                 <div class="event-header">
-                                    <h3><?php echo $event["title"] ?></h3>
+                                    <h4><?php echo $event["title"] ?></h4>
                                 </div>
                                 <div class="event-meta">
                                     <div class="row event-type">
@@ -127,7 +127,7 @@
                         ?>
                             <div class="col-4 event-card event-<?php echo $event["type"] ?>" data-event-type="<?php echo $event["type"] ?>">
                                 <div class="event-header">
-                                    <h3><?php echo $event["title"] ?></h3>
+                                    <h4><?php echo $event["title"] ?></h4>
                                 </div>
                                 <div class="event-meta">
                                     <div class="row event-type">
