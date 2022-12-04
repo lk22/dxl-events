@@ -46,22 +46,22 @@
                                         <div class="col-6 start-date-time">
                                             <p> Starter:
                                                 <?php 
-                                                    echo date("d-m-Y", strtotime($event["startdate"]));
+                                                    echo $event["startdate"];
                                                 ?>
                                                 -
                                                 <?php 
-                                                    echo date("H:i", strtotime($event["starttime"]));
+                                                    echo $event["starttime"];
                                                 ?>
                                             </p>
                                         </div>
                                         <div class="col-6 end-date-time">
                                             <p> Slutter: 
                                                 <?php 
-                                                    echo date("d-m-Y", strtotime($event["enddate"]));
+                                                    echo $event["enddate"];
                                                 ?>
                                                 -
                                                 <?php 
-                                                    echo date("H:i", strtotime($event["endtime"]));
+                                                    echo $event["endtime"]
                                                 ?>
                                             </p>
                                         </div>

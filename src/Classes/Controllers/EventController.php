@@ -179,13 +179,17 @@ if( !class_exists('EventController'))
             
             if( $lan > 0 ) {
                 foreach($lan as $l => $event) {
+                    var_dump([
+                        date(strtotime($event->start)),
+                        date(strtotime($event->end)),
+                    ]);
                     $settings = $this->lanRepository->settings()->find($event->id);
                     $events["lan"][$l] = [
                         "title" => $event->title,
-                        "startdate" => $event->start,
-                        "enddate" => $event->end,
-                        "starttime" => $settings->start_at,
-                        "endtime" => $settings->end_at,
+                        "startdate" => date("d-m-Y", $event->start),
+                        "enddate" => date("d-m-Y", $event->end),
+                        "starttime" => date("H:i", $settings->start_at),
+                        "endtime" => date("H:i", $settings->end_at),
                         "tournaments_count" => $event->tournaments_count,
                         "participants_count" => $event->participants_count,
                         "total_seats" => $event->seats_available,
