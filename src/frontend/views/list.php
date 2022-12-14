@@ -123,37 +123,39 @@
                         <?php 
                     }
 
-                    foreach ($events["tournaments"] as $event) {
-                        ?>
-                            <div class="col-4 event-card event-<?php echo $event["type"] ?>" data-event-type="<?php echo $event["type"] ?>">
-                                <div class="event-header">
-                                    <h4><?php echo $event["title"] ?></h4>
-                                </div>
-                                <div class="event-meta">
-                                    <div class="row event-type">
-                                        <p>Event type: <?php echo $event["type"] ?></p>
+                    if( count($events["tournaments"]) ) {
+                        foreach ($events["tournaments"] as $event) {
+                            ?>
+                                <div class="col-4 event-card event-<?php echo $event["type"] ?>" data-event-type="<?php echo $event["type"] ?>">
+                                    <div class="event-header">
+                                        <h4><?php echo $event["title"] ?></h4>
                                     </div>
-                                    <div class="row organizer">
-                                        <p>Arrangør: <?php echo $event["author"]->user_name; ?></p>
-                                    </div>
-                                    <div class="row start-date">
-                                        <div class="col-6">
-                                            <p>Start dato: <?php echo $event["startdate"] ?> - <?php echo $event["starttime"]; ?></p>
+                                    <div class="event-meta">
+                                        <div class="row event-type">
+                                            <p>Event type: <?php echo $event["type"] ?></p>
                                         </div>
-
-                                        <div class="col-6">
-                                            <p>Slut dato: <?php echo $event["enddate"] ?> - <?php echo $event["endtime"] ?></p>
+                                        <div class="row organizer">
+                                            <p>Arrangør: <?php echo $event["author"]->user_name; ?></p>
+                                        </div>
+                                        <div class="row start-date">
+                                            <div class="col-6">
+                                                <p>Start dato: <?php echo $event["startdate"] ?> - <?php echo $event["starttime"]; ?></p>
+                                            </div>
+    
+                                            <div class="col-6">
+                                                <p>Slut dato: <?php echo $event["enddate"] ?> - <?php echo $event["endtime"] ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row participants-count">
+                                            <p>Antal deltagere: <?php echo $event["participants_count"] ?></p>
                                         </div>
                                     </div>
-                                    <div class="row participants-count">
-                                        <p>Antal deltagere: <?php echo $event["participants_count"] ?></p>
+                                    <div class="event-footer">
+                                        <a href="<?php echo $event["link"]; ?>" class="btn btn-primary">Se begivenhed</a>
                                     </div>
                                 </div>
-                                <div class="event-footer">
-                                    <a href="<?php echo $event["link"]; ?>" class="btn btn-primary">Se begivenhed</a>
-                                </div>
-                            </div>
-                        <?php
+                            <?php
+                        }
                     }
                 ?>
 
