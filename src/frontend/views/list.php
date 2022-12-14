@@ -123,7 +123,7 @@
                         <?php 
                     }
 
-                    if( count($events["tournaments"]) ) {
+                    if( is_array($events["tournaments"]) || is_object($events["tournaments"]) && count($events["tournaments"]) ) {
                         foreach ($events["tournaments"] as $event) {
                             ?>
                                 <div class="col-4 event-card event-<?php echo $event["type"] ?>" data-event-type="<?php echo $event["type"] ?>">
