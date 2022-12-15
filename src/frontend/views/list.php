@@ -90,7 +90,7 @@
 
                     foreach ($events["training"] as $event) {
                         ?>
-                            <div class="col-4 event-card event-<?php echo $event["type"] ?>" data-event-type="<?php echo $event["type"] ?>">
+                            <div class="col-12 col-md-6 col-lg-4 event-card event-<?php echo $event["type"] ?>" data-event-type="<?php echo $event["type"] ?>">
                                 <div class="event-header">
                                     <h4><?php echo $event["title"] ?></h4>
                                 </div>
@@ -126,7 +126,7 @@
                     if( is_array($events["tournaments"]) || is_object($events["tournaments"]) && count($events["tournaments"]) ) {
                         foreach ($events["tournaments"] as $event) {
                             ?>
-                                <div class="col-4 event-card event-<?php echo $event["type"] ?>" data-event-type="<?php echo $event["type"] ?>">
+                                <div class="col-12 col-md-6 col-lg-4 event-card event-<?php echo $event["type"] ?>" data-event-type="<?php echo $event["type"] ?>">
                                     <div class="event-header">
                                         <h4><?php echo $event["title"] ?></h4>
                                     </div>
