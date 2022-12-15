@@ -1,4 +1,4 @@
-<?php 
+    <?php 
         if( $tournaments ) {
     ?>
     <table class="widefat fixed striped">

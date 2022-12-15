@@ -100,7 +100,7 @@
                     $template .= "<p>Vi har noteret os du gerne vil have følgende med som ledsager:</p>\n";
                     $template .= "<ul>";
                     $template .= "<li>" . $this->companion["name"] . "</li>";
-                    $template .= (!empty($this->companion["mail"])) ? "<li>" . $this->companion["email"] . "</li>" : "";
+                    $template .= (!empty($this->companion["mail"])) ? "<li>" . $this->companion["mail"] . "</li>" : "";
                     $template .= (!empty($this->companion["phone"])) ? "<li>" . $this->companion["phone"] . "</li>" : "";
                     $template .= "</ul>\n";
                 }
