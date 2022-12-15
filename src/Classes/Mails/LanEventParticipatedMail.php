@@ -98,8 +98,8 @@
                     $template .= "<p>Info om ledsager</p>\n";
                     $template .= "<ul>\n";
                     $template .= "<li>Navn: " . $this->companion["name"] . "</li>\n";
-                    $template .= (!empty($this->companion["email"])) ? "<li>Navn: " . $this->companion["name"] . "</li>\n" : "";
-                    $template .= (!empty($this->companion["phone"])) ? "<li>Navn: " . $this->companion["phone"] . "</li>\n" : "";
+                    $template .= (!empty($this->companion["name"])) ? "<li>Navn: " . $this->companion["name"] . "</li>\n" : "";
+                    $template .= (!empty($this->companion["phone"])) ? "<li>Telefonnummer: " . $this->companion["phone"] . "</li>\n" : "";
                     $template .= (!empty($this->companion["email"])) ? "<li>Email: " . $this->companion["email"] . "</li>\n" : "";
                     $template .= "</ul>\n\n";
                 }
