@@ -249,7 +249,7 @@ if( !class_exists('GameController'))
                 $logger->log("Failed to delete game type, could not find type identifier, " . __METHOD__ . 'events');
             }
 
-            $deleted = $this->gameRepository->gameType()->delete((int) $this->get('type'));
+            $deleted = $this->gameRepository->gameType()->delete((int) $_REQUEST["type"]);
 
             if( ! $deleted ) {
                 $logger->log("Failed to delete game type, delete query failed");
