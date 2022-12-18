@@ -111,7 +111,7 @@ if( !class_exists('GameController'))
                 "error" => falase,
                 "response" => "Spil oprettet"
             ]);
-            wp_die(201);
+            wp_die();
         }
 
         /**
