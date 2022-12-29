@@ -39,8 +39,8 @@
 
                 $updated = $this->tournamentRepository->update([
                   "title" => $details["title"],
-                  "start" => strtotime($details["start"]),
-                  "end" => strtotime($details["end"]),
+                  "start" => strtotime($details["startdate"]),
+                  "end" => strtotime($details["enddate"]),
                   "starttime" => strtotime($details["starttime"]),
                   "endtime" => strtotime($details["endtime"]),
                 ], $_REQUEST["event"]["id"]);
