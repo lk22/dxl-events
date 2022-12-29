@@ -142,6 +142,8 @@ jQuery(function($) {
                             icon: "success",
                             position: "bottom-right"
                         });
+
+                        window.location.reload();
                     }, 
                     error: (error) => {
                         console.log(error)

@@ -104,7 +104,7 @@
                                     <div>
                                         <select class="hidden" name="game-mode" id="game-mode"></select>
                                     </div>
-                                    <small>Valgt spilletilstand: <strong><?php echo $attachedGameMode->name ?></strong></small>
+                                    <small>Valgt spilletilstand: <strong><?php echo $attachedGameMode->name ?? "Kunne ikke finde spille tilstand" ?></strong></small>
                                     <div class="divider"></div>
                                     <div>
                                         <button class="attachGameButton button-primary" data-tournament="<?php echo $tournament->id; ?>">Opdater</button>
