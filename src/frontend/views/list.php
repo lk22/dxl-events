@@ -35,57 +35,59 @@
         <div class="col-12 pt-4">
             <div class="row px-0">
                 <?php 
-                    foreach($events["lan"] as $event) {
-                        ?>
-                            <div class="col-12 col-md-6 col-lg-4 event-card event-<?php echo $event["type"]; ?>" data-event-type="<?php echo $event["type"]; ?>">
-                                <div class="event-header">
-                                    <h4><?php echo $event["title"] ?></h4>
-                                </div>
-                                <div class="event-meta">
-                                    <div class="row event-dates">
-                                        <div class="col-6 start-date-time">
-                                            <p> Starter:
-                                                <?php 
-                                                    echo $event["startdate"];
-                                                ?>
-                                                -
-                                                <?php 
-                                                    echo $event["starttime"];
-                                                ?>
-                                            </p>
+                    if( is_array($events["lan"]) && count($events["lan"]) ) {
+                        foreach($events["lan"] as $event) {
+                            ?>
+                                <div class="col-12 col-md-6 col-lg-4 event-card event-<?php echo $event["type"]; ?>" data-event-type="<?php echo $event["type"]; ?>">
+                                    <div class="event-header">
+                                        <h4><?php echo $event["title"] ?></h4>
+                                    </div>
+                                    <div class="event-meta">
+                                        <div class="row event-dates">
+                                            <div class="col-6 start-date-time">
+                                                <p> Starter:
+                                                    <?php 
+                                                        echo $event["startdate"];
+                                                    ?>
+                                                    -
+                                                    <?php 
+                                                        echo $event["starttime"];
+                                                    ?>
+                                                </p>
+                                            </div>
+                                            <div class="col-6 end-date-time">
+                                                <p> Slutter: 
+                                                    <?php 
+                                                        echo $event["enddate"];
+                                                    ?>
+                                                    -
+                                                    <?php 
+                                                        echo $event["endtime"]
+                                                    ?>
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="col-6 end-date-time">
-                                            <p> Slutter: 
-                                                <?php 
-                                                    echo $event["enddate"];
-                                                ?>
-                                                -
-                                                <?php 
-                                                    echo $event["endtime"]
-                                                ?>
-                                            </p>
+                                        <div class="row available-seats">
+                                            <div class="col-6">
+                                                <p>Ledige pladser: <?php echo $event["total_seats"]; ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row tournaments-count">
+                                            <p>Antal turneringer: <?php echo $event["tournaments_count"]; ?> turneringer</p>
+                                        </div>
+                                        <div class="row participants-count">
+                                            <p>Antal deltagere: <?php echo $event["participants_count"]; ?> deltagere</p>
+                                        </div>
+                                        <div class="row latest-participation_date">
+                                            <p>Seneste tilmeldingsfrist: <?php echo $event["latest_participation_date"] ?></p>
                                         </div>
                                     </div>
-                                    <div class="row available-seats">
-                                        <div class="col-6">
-                                            <p>Ledige pladser: <?php echo $event["total_seats"]; ?></p>
-                                        </div>
-                                    </div>
-                                    <div class="row tournaments-count">
-                                        <p>Antal turneringer: <?php echo $event["tournaments_count"]; ?> turneringer</p>
-                                    </div>
-                                    <div class="row participants-count">
-                                        <p>Antal deltagere: <?php echo $event["participants_count"]; ?> deltagere</p>
-                                    </div>
-                                    <div class="row latest-participation_date">
-                                        <p>Seneste tilmeldingsfrist: <?php echo $event["latest_participation_date"] ?></p>
+                                    <div class="event-footer">
+                                        <a href="<?php echo $event["link"]; ?>" class="btn btn-primary">Se begivenhed</a>
                                     </div>
                                 </div>
-                                <div class="event-footer">
-                                    <a href="<?php echo $event["link"]; ?>" class="btn btn-primary">Se begivenhed</a>
-                                </div>
-                            </div>
-                        <?php
+                            <?php
+                        }
                     }
 
                     foreach ($events["training"] as $event) {
