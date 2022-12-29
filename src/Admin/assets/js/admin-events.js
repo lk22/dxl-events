@@ -143,7 +143,7 @@ jQuery(function($) {
                             position: "bottom-right"
                         });
 
-                        window.location.reload();
+                        window.location.href = window.location.href;
                     }, 
                     error: (error) => {
                         console.log(error)
