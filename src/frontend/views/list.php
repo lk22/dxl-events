@@ -90,39 +90,41 @@
                         }
                     }
 
-                    foreach ($events["training"] as $event) {
-                        ?>
-                            <div class="col-12 col-md-6 col-lg-4 event-card event-<?php echo $event["type"] ?>" data-event-type="<?php echo $event["type"] ?>">
-                                <div class="event-header">
-                                    <h4><?php echo $event["title"] ?></h4>
-                                </div>
-                                <div class="event-meta">
-                                    <div class="row event-type">
-                                        <p>Event type: <?php echo $event["type"] ?></p>
+                    if (isset($events["training"]) && count($events["training"])) {
+                        foreach ($events["training"] as $event) {
+                            ?>
+                                <div class="col-12 col-md-6 col-lg-4 event-card event-<?php echo $event["type"] ?>" data-event-type="<?php echo $event["type"] ?>">
+                                    <div class="event-header">
+                                        <h4><?php echo $event["title"] ?></h4>
                                     </div>
-                                    <div class="row start-date">
-                                        <div class="col-6">
-                                            <p>Start dato: <?php echo date("d/m/Y", strtotime($event["startdate"])) ?></p>
+                                    <div class="event-meta">
+                                        <div class="row event-type">
+                                            <p>Event type: <?php echo $event["type"] ?></p>
                                         </div>
-                                        <?php 
-                                            if ($event["is_recurring"]) {
-                                                ?>
-                                                    <div class="col-6">
-                                                        <p>Hver: <?php echo $event["event_day"] ?></p>
-                                                    </div>
-                                                <?php
-                                            }
-                                        ?>
+                                        <div class="row start-date">
+                                            <div class="col-6">
+                                                <p>Start dato: <?php echo date("d/m/Y", strtotime($event["startdate"])) ?></p>
+                                            </div>
+                                            <?php 
+                                                if ($event["is_recurring"]) {
+                                                    ?>
+                                                        <div class="col-6">
+                                                            <p>Hver: <?php echo $event["event_day"] ?></p>
+                                                        </div>
+                                                    <?php
+                                                }
+                                            ?>
+                                        </div>
+                                        <div class="row participants-count">
+                                            <p>Antal deltagere: <?php echo $event["participants_count"] ?></p>
+                                        </div>
                                     </div>
-                                    <div class="row participants-count">
-                                        <p>Antal deltagere: <?php echo $event["participants_count"] ?></p>
+                                    <div class="event-footer">
+                                        <a href="<?php echo $event["link"]; ?>" class="btn btn-primary">Se begivenhed</a>
                                     </div>
                                 </div>
-                                <div class="event-footer">
-                                    <a href="<?php echo $event["link"]; ?>" class="btn btn-primary">Se begivenhed</a>
-                                </div>
-                            </div>
-                        <?php 
+                            <?php 
+                        }
                     }
 
                     if( is_array($events["tournaments"]) || is_object($events["tournaments"]) && count($events["tournaments"]) ) {
