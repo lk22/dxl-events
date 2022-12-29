@@ -231,7 +231,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                 <button class="button-primary update-tournament-btn mr-4" data-tournament="<?php echo $tournament->id; ?>" data-action="bulk-update-description">Opdater <span class="dashicons dashicons-edit"></span></button>
+                 <button class="button-primary update-tournament-btn mr-4" data-tournament="<?php echo $tournament->id; ?>" data-action="update-tournament-details">Opdater <span class="dashicons dashicons-edit"></span></button>
                 <button class="button-primary ml-4 close-modal" data-bs-dismiss="modal">Luk <span class="dashicons dashicons-no"></span></button>
             </div>
         </div>
