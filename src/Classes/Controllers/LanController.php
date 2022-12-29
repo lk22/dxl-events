@@ -411,7 +411,7 @@ if( !class_exists('LanController') )
             foreach($tournaments as $t => $tournament) {
                 $tournamentData[$t] = [
                     "title" => $tournament->title,
-                    "participants_count" => $tournament->participants_count
+                    "participants_count" => $tournament->participants_count,
                     "startdate" => $tournament->start,
                 ];
             } 
