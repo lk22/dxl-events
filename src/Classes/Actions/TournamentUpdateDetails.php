@@ -41,7 +41,7 @@
                   "title" => $details["title"],
                   "start" => strtotime($details["start"]),
                   "end" => strtotime($details["end"]),
-                  "starttime" => strottime($details["starttime"]),
+                  "starttime" => strtotime($details["starttime"]),
                   "endtime" => strtotime($details["endtime"]),
                 ], $_REQUEST["event"]["id"]);
 
