@@ -35,7 +35,7 @@
         <div class="col-12 pt-4">
             <div class="row px-0">
                 <?php 
-                    if( is_array($events["lan"]) && count($events["lan"]) ) {
+                    if( is_array($events["lan"]) || is_object($events["lan"]) && count($events["lan"]) ) {
                         foreach($events["lan"] as $event) {
                             ?>
                                 <div class="col-12 col-md-6 col-lg-4 event-card event-<?php echo $event["type"]; ?>" data-event-type="<?php echo $event["type"]; ?>">
