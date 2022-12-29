@@ -64,7 +64,7 @@
             }
         ?>
         <div class="row gx-5 gy-5 tournaments">
-            <div class="col col-xl-7 p-5 rounded rounded-md">
+            <div class="col-12 col-xl-7 p-5 rounded rounded-md">
             <div class="descriptions info-field mb-5">
                 <h2>Beskrivelse</h2>
                 <?php 
@@ -183,7 +183,7 @@
                 ?>
             </div>
             </div>
-            <div class="col col-xl-5 p-4 rounded rounded-md">
+            <div class="col-12 col-xl-5 p-4 rounded rounded-md">
                 <?php 
                     foreach( $tournaments as $t => $tournament) {
                         ?>
