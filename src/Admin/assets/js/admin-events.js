@@ -123,7 +123,7 @@ jQuery(function($) {
                         startdate: self.eventModals.updateTournamentDetailsModal.find('#start-date').val(),
                         enddate: self.eventModals.updateTournamentDetailsModal.find('#end-date').val(),
                         starttime: self.eventModals.updateTournamentDetailsModal.find('#start-time').val(),
-                        endtime: self.eventModals.updateTournamentDetailsModal.find('#endt-time').val(),
+                        endtime: self.eventModals.updateTournamentDetailsModal.find('#end-time').val(),
                     }
                 }
 

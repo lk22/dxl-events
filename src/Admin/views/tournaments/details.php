@@ -225,7 +225,7 @@
 
                     <div class="form-group">
                         <label for="">Slut tidspunkt</label>
-                        <input type="time" class="form-control" name="endtime" id="start-time" value="<?php echo $tournament->endtime; ?>">
+                        <input type="time" class="form-control" name="endtime" id="end-time" value="<?php echo $tournament->endtime; ?>">
                     </div>
 
                 </form>
