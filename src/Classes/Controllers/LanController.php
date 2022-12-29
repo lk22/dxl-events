@@ -412,6 +412,7 @@ if( !class_exists('LanController') )
                 $tournamentData[$t] = [
                     "title" => $tournament->title,
                     "participants_count" => $tournament->participants_count
+                    "startdate" => $tournament->start,
                 ];
             } 
 

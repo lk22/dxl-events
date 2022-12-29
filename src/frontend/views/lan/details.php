@@ -196,7 +196,7 @@
                                         <p>Antal deltagere: <?php echo $tournament->participants_count; ?></p>
                                     </div>
                                     <div class="tournament__meta--field">
-                                        <p>Starter D. <?php echo date("d F, H:i", strtotime($tournament->start));?></p>
+                                        <p>Starter D. <?php echo date("d F, H:i", $tournament->start);?></p>
                                     </div>
                                     <div class="tournament__meta--field">
                                         <button
