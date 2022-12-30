@@ -87,6 +87,16 @@
                                 <?php require_once dirname(__FILE__) . "/partials/participant-list.php"; ?>
                             </div>
                         </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                Mad bestillinger (<?php echo count($participantsWithFood); ?>)
+                            </button>
+                            </h2>
+                            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#eventAccordion">
+                                <?php require_once dirname(__FILE__) . "/partials/participant-food-list.php"; ?>
+                            </div>
+                        </div>
                     </div>
                     <div class="lan-export-participants mt-4">
                         <button class="button-primary export-participants" data-event="<?php echo $event->id; ?>">

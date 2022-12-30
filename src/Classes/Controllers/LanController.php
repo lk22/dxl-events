@@ -405,9 +405,10 @@ if( !class_exists('LanController') )
             $settings = $this->lanRepository->settings()->find($this->getUriKey('id'));
             $tournaments = $this->tournamentRepository->select()->where('lan_id', $event->id)->get() ?? [];
             $participants = $this->lanParticipantRepository->findByEvent($event->id);
+            $participantsWithFood = $this->lanParticipantRepository->select()->where('event_id', $event->id)->whereAnd('food_ordered', 1)->get();
 
             $tournamentData = [];
-
+            
             foreach($tournaments as $t => $tournament) {
                 $tournamentData[$t] = [
                     "title" => $tournament->title,
@@ -415,7 +416,7 @@ if( !class_exists('LanController') )
                     "startdate" => $tournament->start,
                 ];
             } 
-
+            
             $breakfast_friday = $settings->breakfast_friday_price;
             $breakfast_saturday = $settings->breakfast_saturday_price;
             $lunch_saturday = $settings->lunch_saturday_price;
