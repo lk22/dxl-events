@@ -2,7 +2,7 @@
     <div class="row event-header p-5 align-items-end">
         <div class="container pb-5">
             <div class="col-lg-5 col-xl-5 text-white">
-                <div class="row title mb-5">
+                <div class="row title mb-0">
                     <h1 class="text-white display-5 fw-bold"><?php echo strtoupper($event->title); ?></h1>
                 </div>
 

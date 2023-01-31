@@ -50,9 +50,9 @@
                 foreach ( $this->eventsData as $e => $event ) {
                     $template .= "<li>{$event['name']}";
                     $template .= "<ul>";
-                    if (isset($event["tournaments"]) && count($event["tournaments"]) > 0) {
-                        foreach ( $event['tournaments'] as $t => $tournament ) {
-                            $template .= "<li>{$tournament['name']}</li>";
+                    if (isset($eventData["tournaments"]) && count($eventData["tournaments"]) > 0) {
+                        foreach ( $eventData['tournaments'] as $t => $tournament ) {
+                            $template .= "<li>{$tournament[$t]}</li>";
                         }
                     }
                     $template .= "</ul>";
