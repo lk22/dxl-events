@@ -315,6 +315,12 @@ if( !class_exists('LanController') )
                 ->where('event_id', $_REQUEST["event"])
                 ->get();
 
+            $tournaments = $this->tournamentRepository
+                ->select()
+                ->where('has_lan', 1)
+                ->whereAnd('lan_id', $_REQUEST["event"])
+                ->get();
+
             if ( count($participants) < 1) {
                 echo $this->dxl->response('event', [
                     "error" => true,
@@ -323,7 +329,7 @@ if( !class_exists('LanController') )
                 wp_die();
             }
 
-            $export = $this->eventService->exportParticipants($participants, $_REQUEST["event"]);
+            $export = $this->eventService->exportParticipants($participants, $tournaments, $_REQUEST["event"]);
             echo $this->dxl->response('event', [
                 "error" => false,
                 "response" => "Deltagere eksporteret",

@@ -65,9 +65,9 @@
                     <h4>Slut dato</h4>
                     <p class="lead"><?php echo date("d-m-Y", $tournament->end); ?></p>
                     <h4>Start tidspunkt</h4>
-                    <p class="lead"><?php echo date("H:s", $tournament->starttime); ?></p>
+                    <p class="lead"><?php echo date("H:i", $tournament->starttime); ?></p>
                     <h4>Slut tidspunkt</h4>
-                    <p class="lead"><?php echo date("H:s", $tournament->endtime); ?></p>
+                    <p class="lead"><?php echo date("H:i", $tournament->endtime); ?></p>
                 </div>
                 <div class="col-md-8">
 

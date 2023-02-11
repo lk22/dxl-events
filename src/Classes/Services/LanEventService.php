@@ -4,6 +4,8 @@
     use DxlEvents\Classes\Repositories\LanRepository as Event;
     use DxlEvents\Classes\Repositories\LanSettingsRepository as Settings;
     use DxlEvents\Classes\Repositories\LanParticipantRepository as LanParticipant;
+    // use DxlEvents\Classes\Repositories\LanTournamentRepository;
+    use DxlEvents\Classes\Repositories\ParticipantRepository;
 
     use PhpOffice\PhpSpreadsheet\Spreadsheet;
     use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -15,6 +17,11 @@
     {
         class LanEventService extends EventService
         {
+
+            public function __construct() 
+            {
+                $this->tournamentParticipantsrepository = new ParticipantRepository();
+            }
 
             public function createEvent(array $event) : bool
             {
@@ -93,7 +100,7 @@
                 return $configured ? true : false;
             }
 
-            public function exportParticipants(array $participants, $event)
+            public function exportParticipants(array $participants, array $tournaments, $event)
             {
                 $spreadsheet = new Spreadsheet();
                 $sheet = $spreadsheet->getActiveSheet();
@@ -122,6 +129,28 @@
 
                     $row++;
                 }
+
+                // if ( count($tournaments) > 0) {
+
+                //     $tournamentSheet = clone $sheet->getActiveSheet();
+                //     foreach ( $tournaments as $tournament ) {
+                //         // clone the sheet
+                //         $tournamentSheet->setTitle($tournament->title);
+                //         $sheet->addSheet($tournamentSheet);
+    
+                //         $tournamentSheet->setCellValue('A1', 'navn')->getColumnDimension('A')->setAutoSize(true);
+                //         $tournamentSheet->setCellValue('B1', 'gamertag')->getColumnDimension('B')->setAutoSize(true);
+    
+                //         $tournamentParticipants = $this->participantRepositiory->select()->where('event_id', $tournament->id)->get();
+    
+                //         $tRow = 2;
+                //         foreach($tournamentParticipants as $participants ) {
+                //             $tournamentSheet->setCellValue('A' . $tRow, $participant->name);
+                //             $tournamentSheet->setCellValue('B' . $tRow, $participant->gamertag);
+                //             $row++;
+                //         }
+                //     }
+                // }
 
                 $writer = new Xlsx($spreadsheet);
 
