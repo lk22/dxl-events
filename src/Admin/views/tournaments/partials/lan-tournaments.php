@@ -1,7 +1,7 @@
     <?php 
         if( $tournaments ) {
     ?>
-    <table class="widefat fixed striped">
+    <table class="widefat fixed striped tournaments-list">
         <thead>
             <tr>
                 <th>Titel</th>

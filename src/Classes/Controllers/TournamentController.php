@@ -311,11 +311,13 @@ if( ! class_exists('TournamentController') )
          */
         public function ajaxDeleteTournament()
         {
+            
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("Triggering event: " . __METHOD__, 'events');
 
             $tournament = $this->tournament->find($_REQUEST['event']['tournament']);
-            if( $tournamnet && $tournament->has_lan && $tournamnet->lan_id != 0 ) {
+
+            if( $tournament && $tournament->has_lan && $tournament->lan_id != 0 ) {
                 $lan = $this->lan->find($tournament->lan_id);
                 $tournaments_count = $lan->tournaments_count;
                 $this->lan->update(["tournaments_count" => $tournaments_count - 1], $lan->id);

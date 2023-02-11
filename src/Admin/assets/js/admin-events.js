@@ -261,56 +261,59 @@ jQuery(function($) {
                     }
                 });
             });
-
+            
             // delete tournament action
-            self.container.find('.delete-tournament-btn').click((e) => {
-                e.preventDefault();
+            self.container.find('table.tournaments-list tbody tr').each((i, el) => {
+                console.log(el)
+                $(el).find('.delete-tournament-btn').click((e) => {
+                    e.preventDefault();
 
-                const tournament = self.container.find('.delete-tournament-btn').data('tournament');
-                
-                self.dxl.request.data.dxl_core_nonce = dxl_core_vars.dxl_core_nonce;
-                
-                self.dxl.request.data = {
-                    action: "dxl_admin_tournament_delete",
-                    dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
-                    event: {
-                        tournament: tournament
-                    }
-                }
-
-                $.ajax({
-                    method: "POST", 
-                    url: self.dxl.request.url,
-                    data: self.dxl.request.data,
-                    success: (response) => {
-                        const json = JSON.parse(response).event;
-                        if(json.error) {
-                            $.toast({
-                                title: 'Fejl',
-                                text: "Der opstod en fejl i fjernelse af turnering",
-                                icon: "error",
-                                position: "bottom-right"
-                            });
-                        } else {
-                            $.toast({
-                                title: 'Success',
-                                text: "Turnering fjernet",
-                                icon: "success",
-                                position: "bottom-right"
-                            });
+                    const tournament = $(el).find('.delete-tournament-btn').data('tournament');
+                    self.dxl.request.data.dxl_core_nonce = dxl_core_vars.dxl_core_nonce;
+                    
+                    self.dxl.request.data = {
+                        action: "dxl_admin_tournament_delete",
+                        dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                        event: {
+                            tournament: tournament
                         }
-                    },
-                    error: (error) => {
-
-                    },
-                    beforeSend: () => {
-                        $.toast({
-                            title: "Fjerner turnering",
-                            icon: "info",
-                            position: "bottom-right"
-                        })
                     }
-                })
+    
+                    $.ajax({
+                        method: "POST", 
+                        url: self.dxl.request.url,
+                        data: self.dxl.request.data,
+                        success: (response) => {
+                            console.log(response)
+                            const json = JSON.parse(response).event;
+                            if(json.error) {
+                                $.toast({
+                                    title: 'Fejl',
+                                    text: "Der opstod en fejl i fjernelse af turnering",
+                                    icon: "error",
+                                    position: "bottom-right"
+                                });
+                            } else {
+                                $.toast({
+                                    title: 'Success',
+                                    text: "Turnering fjernet",
+                                    icon: "success",
+                                    position: "bottom-right"
+                                });
+                            }
+                        },
+                        error: (error) => {
+    
+                        },
+                        beforeSend: () => {
+                            $.toast({
+                                title: "Fjerner turnering",
+                                icon: "info",
+                                position: "bottom-right"
+                            })
+                        }
+                    })
+                });
             });
 
             /**
