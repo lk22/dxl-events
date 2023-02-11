@@ -113,12 +113,12 @@
                     // only show if terms are accepted
                     if ( $participant->event_terms_accepted ) {
                         $sheet->setCellValue('D' . $row, "Accepteret");
-                    } else {
-                        $sheet->setCellValue('D', $row, '');
                     }
-
+                    
                     $seat_members = explode(",", $participant->seat_companions);
-                    $sheet->setCellValue('E', $row, implode(", ", $seat_members));
+                    if (count($seat_members) > 0) {
+                        $sheet->setCellValue('E' . $row, implode(", ", $seat_members));
+                    }
 
                     $row++;
                 }
