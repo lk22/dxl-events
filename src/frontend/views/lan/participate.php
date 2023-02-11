@@ -74,6 +74,11 @@
                         <label for="floatingTextarea2">Noget vi særligt skal være opmærksom på?</label>
                     </div>
 
+                    <div class="form-check form-switch mb-2 mt-2">
+                        <input type="checkbox" role="switch" checked="checked" name="participant-accept-event-terms" id="participant-event-terms" class="form-check-input">
+                        <label for="participant-event-terms" class="form-check-label">Acceptere du begivenheds betingelserne?</label>
+                    </div>
+
                     <div class="form-group my-4">
                         <input type="submit" class="btn btn-success participate-btn" value="Tilmeld mig">
                     </div>
@@ -90,6 +95,13 @@
                 </ul>
                 <h3 class="border-bottom border-white pb-2">Huskeliste</h3>
                 <p><?php echo $details->extra_description; ?></p>
+                <h3>Begivenhedsbetingelser</h3>
+                <p>
+                    Udover de generelle vilkår i vores privatlivs politik, accepterer du ved deltagelse til dette event at foreningen tager billeder af forsamlingen til brug på hjemmeside, sociale medier etc
+                </p>
+                <p>
+                    Udover billeder og video af forsamlingen, tager vi også billeder og video af individer fx ved turneringer, præmie overrækkelser eller andre relevante situationer <strong>(accept påkrævet)</strong> 
+                </p>
             </div>
         </div>
     </div>

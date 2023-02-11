@@ -53,11 +53,16 @@
             public $companion;
 
             /**
+             * Event terms accepted
+             */
+            public $eventTermsAccepted;
+
+            /**
              * Constructor
              *
              * @param [type] $participant
              */
-            public function __construct($participant, $event, $seatedMembers = [], $notice = "", $companion = null)
+            public function __construct($participant, $event, $seatedMembers = [], $notice = "", $companion = null, $eventTermsAccepted)
             {
                 $this->participant = $participant;
                 $this->event = $event;
@@ -65,6 +70,7 @@
                 $this->notice = $notice;
                 $this->companion = $companion;
                 $this->lanParticipantRepository = new LanParticipantRepository();
+                $this->eventTermsAccepted = $eventTermsAccepted;
             }
 
             /**
@@ -118,6 +124,14 @@
                 if( strlen($this->notice) ) {
                     $template .= "<h3>Bemærkning: </h3>\n";
                     $template .= "<p>" . $this->notice . "</p>";
+                }
+
+                // accepted event terms 
+                $template .= "<h3>Accepteret betingelser</h3>\n";
+                if ( $this->eventTermsAccepted ) {
+                    $template .= "<p>betingelser accepteret</p>";
+                } else {
+                    $template .= "<p>betingelser ikke accepteret</p>";
                 }
 
                 return $template;
