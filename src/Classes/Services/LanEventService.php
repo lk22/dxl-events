@@ -102,6 +102,7 @@
                 $sheet->setCellValue('B1', 'Name')->getColumnDimension('B')->setAutoSize(true);
                 $sheet->setCellValue('C1', 'Gamertag')->getColumnDimension('C')->setAutoSize(true);
                 $sheet->setCellValue("D1", "Betingelser")->getColumnDimension('D')->setAutoSize(true);
+                $sheet->setCellValue("E1", "Medlemmer at sidde sammen med")->getColumnDimension("E")->setAutoSize(true);
 
                 $row = 2;
                 foreach ( $participants as $participant ) {
@@ -112,7 +113,12 @@
                     // only show if terms are accepted
                     if ( $participant->event_terms_accepted ) {
                         $sheet->setCellValue('D' . $row, "Accepteret");
+                    } else {
+                        $sheet->setCellValue('D', $row, '');
                     }
+
+                    $seat_members = explode(",", $participant->seat_companions);
+                    $sheet->setCellValue('E', $row, implode(", ", $seat_members));
 
                     $row++;
                 }
