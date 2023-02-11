@@ -60,7 +60,6 @@
                 $seatedMembers = [], 
                 $notice, 
                 $companion,
-                $eventTermsAccepted
             )
             {
                 $this->participant = $participant;
@@ -68,7 +67,6 @@
                 $this->seatedMembers = $seatedMembers;
                 $this->notice = $notice;
                 $this->companion = $companion;
-                $this->eventTermsAccepted = $eventTermsAccepted;
             }
 
             /**
