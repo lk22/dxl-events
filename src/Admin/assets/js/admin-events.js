@@ -263,7 +263,7 @@ jQuery(function($) {
             });
 
             // delete tournament action
-            self.deleteTournamentButton.click((e) => {
+            self.container.find('.delete-tournament-btn').click((e) => {
                 e.preventDefault();
 
                 const tournament = self.container.find('.delete-tournament-btn').data('tournament');
