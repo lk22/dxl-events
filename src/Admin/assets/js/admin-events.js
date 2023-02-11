@@ -264,7 +264,6 @@ jQuery(function($) {
             
             // delete tournament action
             self.container.find('table.tournaments-list tbody tr').each((i, el) => {
-                console.log(el)
                 $(el).find('.delete-tournament-btn').click((e) => {
                     e.preventDefault();
 
