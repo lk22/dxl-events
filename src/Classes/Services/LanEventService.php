@@ -101,12 +101,19 @@
                 $sheet->setCellValue('A1', 'ID')->getColumnDimension('A')->setAutoSize(true);
                 $sheet->setCellValue('B1', 'Name')->getColumnDimension('B')->setAutoSize(true);
                 $sheet->setCellValue('C1', 'Gamertag')->getColumnDimension('C')->setAutoSize(true);
+                $sheet->setCellValue("D1", "Betingelser")->getColumnDimension('D')->setAutoSize(true);
 
                 $row = 2;
                 foreach ( $participants as $participant ) {
                     $sheet->setCellValue('A' . $row, $participant->id);
                     $sheet->setCellValue('B' . $row, $participant->name);
                     $sheet->setCellValue('C' . $row, $participant->gamertag);
+
+                    // only show if terms are accepted
+                    if ( $participant->event_terms_accepted ) {
+                        $sheet->setCellValue('D' . $row, "Accepteret");
+                    }
+
                     $row++;
                 }
 
