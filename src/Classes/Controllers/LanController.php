@@ -409,7 +409,7 @@ if( !class_exists('LanController') )
         {
             $event = $this->lanRepository->find($this->getUriKey('id'));
             $settings = $this->lanRepository->settings()->find($this->getUriKey('id'));
-            $tournaments = $this->tournamentRepository->select()->where('lan_id', $event->id)->whereAnd('is_draft', 0)->get() ?? [];
+            $tournaments = $this->tournamentRepository->select()->where('lan_id', $event->id)->get() ?? [];
             $participants = $this->lanParticipantRepository->findByEvent($event->id);
             $participantsWithFood = $this->lanParticipantRepository->select()->where('event_id', $event->id)->whereAnd('food_ordered', 1)->get();
 

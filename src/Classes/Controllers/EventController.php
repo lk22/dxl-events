@@ -259,6 +259,7 @@ if( !class_exists('EventController'))
                         ->select()
                         ->where('has_lan', 1)
                         ->whereAnd('lan_id', $event->id)
+                        ->whereAnd('is_draft', 0)
                         ->get();
 
                         $participant = ($member) ? $this->lanParticipantRepository
