@@ -45,11 +45,6 @@
             public $companion;
 
             /**
-             * Event terms accepted
-             */
-            public $eventTermsAccepted;
-
-            /**
              * Constructor
              *
              * @param [type] $participant
@@ -59,8 +54,7 @@
                 $event, 
                 $seatedMembers = [], 
                 $notice, 
-                $companion,
-            )
+                $companion)
             {
                 $this->participant = $participant;
                 $this->event = $event;
