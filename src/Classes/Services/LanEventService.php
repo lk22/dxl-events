@@ -115,7 +115,7 @@
                         $sheet->setCellValue('D' . $row, "Accepteret");
                     }
                     
-                    $seat_members = explode(",", $participant->seat_companions);
+                    $seat_members = str_replace("[]" , "", explode(",", $participant->seat_companions));
                     if (count($seat_members) > 0) {
                         $sheet->setCellValue('E' . $row, implode(", ", $seat_members));
                     }
