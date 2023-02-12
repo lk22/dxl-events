@@ -158,19 +158,15 @@
                         $tournamentSheet->setTitle($tournament->title);
                         $spreadsheet->addSheet($tournamentSheet);
     
-                        $spreadsheet->setCellValue('A1', 'navn')->getColumnDimension('A')->setAutoSize(true);
-                        $spreadsheet->setCellValue('B1', 'gamertag')->getColumnDimension('B')->setAutoSize(true);
+                        $tournamentSheet->setCellValue('A1', 'navn')->getColumnDimension('A')->setAutoSize(true);
+                        $tournamentSheet->setCellValue('B1', 'gamertag')->getColumnDimension('B')->setAutoSize(true);
     
                         $tournamentParticipants = $this->tournamentParticipantRepository->select()->where('event_id', $tournament->id)->get();
-
-                        $pRow = 2;
-                        foreach($tournamentParticipants as $participants ) {
-                            $spreadsheet->setCellValue('A' . $pRow, $participant->name);
-                            $spreadsheet->setCellValue('B' . $pRow, $participant->gamertag);
-                            $pRow++;
+                        foreach( $tournamentParticipants as $participants ) {
+                            $tournamentSheet->setCellValue('A' . $tRow, $participant->name);
+                            $tournamentSheet->setCellValue('B' . $tRow, $participant->gamertag);
+                            $tRow++;
                         }
-
-                        $tRow++;
                     }
                 }
 
