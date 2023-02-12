@@ -20,7 +20,7 @@
 
             public function __construct() 
             {
-                $this->tournamentParticipantsrepository = new ParticipantRepository();
+                $this->tournamentParticipantRepository = new ParticipantRepository();
             }
 
             public function createEvent(array $event) : bool
@@ -129,7 +129,6 @@
                         $sheet->setCellValue('E' . $row, str_replace("[]", "", implode(", ", $seat_members)));
                     }
 
-                    
                     if ( $participant->has_saturday_breakfast ) {
                         $sheet->setCellValue('G' . $row, "bestilt");
                     }
@@ -141,27 +140,27 @@
                     $row++;
                 }
 
-                // if ( count($tournaments) > 0) {
+                if ( count($tournaments) > 0) {
 
-                //     $tournamentSheet = clone $sheet->getActiveSheet();
-                //     foreach ( $tournaments as $tournament ) {
-                //         // clone the sheet
-                //         $tournamentSheet->setTitle($tournament->title);
-                //         $sheet->addSheet($tournamentSheet);
+                    foreach ( $tournaments as $tournament ) {
+                        // clone the sheet
+                        $tournamentSheet = clone $spreadsheet->getActiveSheet();
+                        $tournamentSheet->setTitle($tournament->title);
+                        $spreadsheet->addSheet($tournamentSheet);
     
-                //         $tournamentSheet->setCellValue('A1', 'navn')->getColumnDimension('A')->setAutoSize(true);
-                //         $tournamentSheet->setCellValue('B1', 'gamertag')->getColumnDimension('B')->setAutoSize(true);
+                        $tournamentSheet->setCellValue('A1', 'navn')->getColumnDimension('A')->setAutoSize(true);
+                        $tournamentSheet->setCellValue('B1', 'gamertag')->getColumnDimension('B')->setAutoSize(true);
     
-                //         $tournamentParticipants = $this->participantRepositiory->select()->where('event_id', $tournament->id)->get();
+                        $tournamentParticipants = $this->tournamentParticipantRepository->select()->where('event_id', $tournament->id)->get();
     
-                //         $tRow = 2;
-                //         foreach($tournamentParticipants as $participants ) {
-                //             $tournamentSheet->setCellValue('A' . $tRow, $participant->name);
-                //             $tournamentSheet->setCellValue('B' . $tRow, $participant->gamertag);
-                //             $row++;
-                //         }
-                //     }
-                // }
+                        $tRow = 2;
+                        foreach($tournamentParticipants as $participants ) {
+                            $tournamentSheet->setCellValue('A' . $tRow, $participant->name);
+                            $tournamentSheet->setCellValue('B' . $tRow, $participant->gamertag);
+                            $row++;
+                        }
+                    }
+                }
 
                 $writer = new Xlsx($spreadsheet);
 
