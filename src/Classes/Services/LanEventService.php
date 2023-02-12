@@ -104,6 +104,7 @@
             {
                 $spreadsheet = new Spreadsheet();
                 $sheet = $spreadsheet->getActiveSheet();
+                $sheet->setTitle('LAN Deltagere');
 
                 $sheet->setCellValue('A1', 'ID')->getColumnDimension('A')->setAutoSize(true);
                 $sheet->setCellValue('B1', 'Name')->getColumnDimension('B')->setAutoSize(true);
