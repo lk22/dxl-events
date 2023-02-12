@@ -167,7 +167,7 @@
                         foreach($tournamentParticipants as $participants ) {
                             $tournamentSheet->setCellValue('A' . $tRow, $participant->name);
                             $tournamentSheet->setCellValue('B' . $tRow, $participant->gamertag);
-                            $row++;
+                            $tRow++;
                         }
                     }
                 }
