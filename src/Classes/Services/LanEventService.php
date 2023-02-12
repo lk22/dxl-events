@@ -110,6 +110,8 @@
                 $sheet->setCellValue('C1', 'Gamertag')->getColumnDimension('C')->setAutoSize(true);
                 $sheet->setCellValue("D1", "Betingelser")->getColumnDimension('D')->setAutoSize(true);
                 $sheet->setCellValue("E1", "Medlemmer at sidde sammen med")->getColumnDimension("E")->setAutoSize(true);
+                $sheet->setCellValue("G1", "Morgenmad (Lørdag)")->getColumnDimension("G")->setAutoSize(true);
+                $sheet->setCellValue("H1", "Morgenmad (Søndag)")->getColumnDimension("H")->setAutoSize(true);
 
                 $row = 2;
                 foreach ( $participants as $participant ) {
@@ -125,6 +127,15 @@
                     $seat_members = preg_replace('/\[\[(\w+)\[\]/' , '$1',  explode(",", $participant->seat_companions));
                     if (count($seat_members) > 0) {
                         $sheet->setCellValue('E' . $row, str_replace("[]", "", implode(", ", $seat_members)));
+                    }
+
+                    
+                    if ( $participant->has_saturday_breakfast ) {
+                        $sheet->setCellValue('G' . $row, "Ja");
+                    }
+
+                    if ( $participant->has_sunday_breakfast ) {
+                        $sheet->setCellValue('H' . $row, "Ja");
                     }
 
                     $row++;
