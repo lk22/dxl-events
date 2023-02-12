@@ -151,10 +151,10 @@
                 }
 
                 if ( count($tournaments) > 0) {
-
+                    $tournamentSheet = clone $spreadsheet->getActiveSheet();
                     foreach ( $tournaments as $tournament ) {
                         // clone the sheet
-                        $tournamentSheet = clone $spreadsheet->getActiveSheet();
+                        
                         $tournamentSheet->setTitle($tournament->title);
                         $spreadsheet->addSheet($tournamentSheet);
     
