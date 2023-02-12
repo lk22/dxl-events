@@ -131,11 +131,11 @@
 
                     
                     if ( $participant->has_saturday_breakfast ) {
-                        $sheet->setCellValue('G' . $row, "Ja");
+                        $sheet->setCellValue('G' . $row, "bestilt");
                     }
 
                     if ( $participant->has_sunday_breakfast ) {
-                        $sheet->setCellValue('H' . $row, "Ja");
+                        $sheet->setCellValue('H' . $row, "bestilt");
                     }
 
                     $row++;
