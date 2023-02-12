@@ -162,13 +162,13 @@
                         $tournamentSheet->setCellValue('B1', 'gamertag')->getColumnDimension('B')->setAutoSize(true);
     
                         $tournamentParticipants = $this->tournamentParticipantRepository->select()->where('event_id', $tournament->id)->get();
-    
-                        
+
+                        $pRow = 2;
                         foreach($tournamentParticipants as $participants ) {
-                            $tournamentSheet->setCellValue('A' . $tRow, $participant->name);
-                            $tournamentSheet->setCellValue('B' . $tRow, $participant->gamertag);
-                            
+                            $tournamentSheet->setCellValue('A' . $pRow, $participant->name);
+                            $tournamentSheet->setCellValue('B' . $pRow, $participant->gamertag);
                         }
+
                         $tRow++;
                     }
                 }
