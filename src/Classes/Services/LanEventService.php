@@ -100,6 +100,15 @@
                 return $configured ? true : false;
             }
 
+            /**
+             * Exporting participants to excel
+             * exporting tournaments participants in seperate sheets
+             *
+             * @param array $participants
+             * @param array $tournaments
+             * @param Int $event
+             * @return void
+             */
             public function exportParticipants(array $participants, array $tournaments, $event)
             {
                 $spreadsheet = new Spreadsheet();
@@ -168,7 +177,7 @@
                 $filename = ABSPATH . "wp-content/plugins/dxl-events/csv/lan_" . $event->title . "_participants_" . date("d_m_Y", strtotime('today')) . ".xlsx";
                 $writer->save($filename);
 
-                return str_replace(ABSPATH, '', $filename);
+                return str_replace(ABSPATH . "wp-content/plugins/dxl-events/csv/", '', $filename);
             }
         }
     }
