@@ -177,7 +177,7 @@
                 $filename = ABSPATH . "wp-content/plugins/dxl-events/csv/lan_" . $event->title . "_participants_" . date("d_m_Y", strtotime('today')) . ".xlsx";
                 $writer->save($filename);
 
-                return str_replace(ABSPATH . "wp-content/plugins/dxl-events/csv/", '', $filename);
+                return str_replace(ABSPATH, '', $filename);
             }
         }
     }
