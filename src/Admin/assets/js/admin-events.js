@@ -430,6 +430,8 @@ jQuery(function($) {
                                 icon: "success",
                                 position: "bottom-right"
                             });
+
+                            location.reload();
                         }
                     }
                 })
