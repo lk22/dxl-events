@@ -36,6 +36,7 @@ jQuery(function($) {
                 createGameModal: $('#createGameModal'),
                 createGameTypeModal: $('#createGameTypeModal'),
                 updateTournamentDetailsModal: $('#updateAdminTournamentModal'),
+                updateEventTimeplanModal: $('#createTimeplanModal')
             }
             this.initializeActions();
         },
@@ -809,6 +810,77 @@ jQuery(function($) {
                 })
 
             });
+
+            const addPlanItemButton = self.eventModals.updateEventTimeplanModal.find('.add-plan-item');
+            console.log(addPlanItemButton)
+            let timeplanItemCount = 0;
+            addPlanItemButton.each((index, button) => {
+                $(button).click((e) => {
+                    e.preventDefault();
+                    timeplanItemCount++;
+                    const timeplanday = $(button).data('timeplan-day');
+    
+                    console.log([
+                        timeplanday,
+                        $('#timeplan-' + timeplanday)
+                    ]);
+                    
+                    self.eventModals.updateEventTimeplanModal.find('#timeplan-' + timeplanday + ' .item-wrapper').append(
+                        "<div class='form-group row mt-3 timeplan-item' data-plan-item='" + timeplanItemCount + "'>" +
+                            "<div class='col-4'>" +
+                                "<label for='event-timeplan-start-time'>Start tid:</label>" +
+                                "<input type='time' name='" + timeplanday + "-timeplan-start-time[]' id='event-timeplan-start-time' class='form-control'>" +
+                            "</div>" +
+                            "<div class='col-8'>" +
+                            "<label for='" + timeplanday + "-timeplan-description' class='event-timeplan-description'>Hvad skald der ske?</label>" +
+                                "<input type='text' name='" + timeplanday + "-timeplan-event[]'>" +
+                                "<span class='dashicons dashicons-no remove-timeplan-item' data-item='" + timeplanItemCount + "'></span>" +
+                            "</div"+
+                        "</div>"
+                    )
+                })
+            })
+
+            self.eventModals.updateEventTimeplanModal.on('click', '.remove-timeplan-item', (e) => {
+                e.preventDefault();
+                const item = $(e.target).data('item');
+                console.log(item)
+                self.eventModals.updateEventTimeplanModal.find('[data-plan-item="' + item + '"]').remove();
+            })
+            
+
+            self.eventModals.updateEventTimeplanModal.find('.update-event-timeplan-button').click(() => {
+                console.log("Updating timeplan");
+                // disabling button
+                const timeplanObj = {
+                    friday: [],
+                    saturday: [],
+                    sunday: []
+                }
+
+                self.eventModals.updateEventTimeplanModal.find('#timeplan-friday .timeplan-item').each((index, item) => {
+                    timeplanObj.friday.push({
+                        start: $(item).find('input[name="friday-timeplan-start-time[]"]').val(),
+                        description: $(item).find('input[name="friday-timeplan-event[]"]').val()
+                    })
+                })
+
+                self.eventModals.updateEventTimeplanModal.find('#timeplan-saturday .timeplan-item').each((index, item) => {
+                    timeplanObj.saturday.push({
+                        start: $(item).find('input[name="saturday-timeplan-start-time[]"]').val(),
+                        description: $(item).find('input[name="saturday-timeplan-event[]"]').val()
+                    })
+                });
+
+                self.eventModals.updateEventTimeplanModal.find('#timeplan-sunday .timeplan-item').each((index, item) => {
+                    timeplanObj.sunday.push({
+                        start: $(item).find('input[name="sunday-timeplan-start-time[]"]').val(),
+                        description: $(item).find('input[name="sunday-timeplan-event[]"]').val()
+                    })
+                });
+
+                console.log(timeplanObj);
+            })
         },
 
         /**
