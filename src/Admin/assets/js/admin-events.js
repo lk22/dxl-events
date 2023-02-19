@@ -36,7 +36,7 @@ jQuery(function($) {
                 createGameModal: $('#createGameModal'),
                 createGameTypeModal: $('#createGameTypeModal'),
                 updateTournamentDetailsModal: $('#updateAdminTournamentModal'),
-                updateEventTimeplanModal: $('#createTimeplanModal')
+                updateEventTimeplanModal: $('#createTimeplanModal, #updateTimeplanModal'),
             }
             this.initializeActions();
         },
@@ -811,36 +811,46 @@ jQuery(function($) {
 
             });
 
+            /**
+             * Adding timeplan items
+             */
             const addPlanItemButton = self.eventModals.updateEventTimeplanModal.find('.add-plan-item');
-            console.log(addPlanItemButton)
             let timeplanItemCount = 0;
             addPlanItemButton.each((index, button) => {
                 $(button).click((e) => {
                     e.preventDefault();
                     timeplanItemCount++;
                     const timeplanday = $(button).data('timeplan-day');
-    
-                    console.log([
-                        timeplanday,
-                        $('#timeplan-' + timeplanday)
-                    ]);
+
+                    const starttime = self.eventModals.updateEventTimeplanModal.find('#timeplan-' + timeplanday + ' .item-wrapper').find('input[name="' + timeplanday + '-timeplan-start-time[]"]').last().val();
+                    const event = self.eventModals.updateEventTimeplanModal.find('#timeplan-' + timeplanday + ' .item-wrapper').find('input[name="' + timeplanday + '-timeplan-event[]"]').last().val();
+
+                    if ( starttime && event ) {
+                        self.eventModals.updateEventTimeplanModal.find('#timeplan-' + timeplanday + ' .item-wrapper').append(
+                            "<div class='form-group row mt-3 timeplan-item' data-plan-item='" + timeplanItemCount + "'>" +
+                                "<div class='col-4'>" +
+                                    "<label for='event-timeplan-start-time'>Start tid:</label>" +
+                                    "<input type='time' name='" + timeplanday + "-timeplan-start-time[]' id='event-timeplan-start-time' class='form-control'>" +
+                                "</div>" +
+                                "<div class='col-8'>" +
+                                "<label for='" + timeplanday + "-timeplan-description' class='event-timeplan-description'>Hvad skald der ske?</label>" +
+                                    "<input type='text' name='" + timeplanday + "-timeplan-event[]'>" +
+                                    "<span class='dashicons dashicons-no remove-timeplan-item' data-item='" + timeplanItemCount + "'></span>" +
+                                "</div"+
+                            "</div>"
+                        )
+                    } else if ( ! starttime && event ) {
+                        // add error focus to last item
+                        self.eventModals.updateEventTimeplanModal.find('#timeplan-' + timeplanday + ' .item-wrapper').find('input[name="' + timeplanday + '-timeplan-event[]"]').addClass('was-validated').last().focus();
+                    } else if ( starttime && ! event ) {
+                        // add error focus to last item
+                        self.eventModals.updateEventTimeplanModal.find('#timeplan-' + timeplanday + ' .item-wrapper').find('input[name="' + timeplanday + '-timeplan-event[]"]').addClass('was-validated').last().focus();
+                    }
                     
-                    self.eventModals.updateEventTimeplanModal.find('#timeplan-' + timeplanday + ' .item-wrapper').append(
-                        "<div class='form-group row mt-3 timeplan-item' data-plan-item='" + timeplanItemCount + "'>" +
-                            "<div class='col-4'>" +
-                                "<label for='event-timeplan-start-time'>Start tid:</label>" +
-                                "<input type='time' name='" + timeplanday + "-timeplan-start-time[]' id='event-timeplan-start-time' class='form-control'>" +
-                            "</div>" +
-                            "<div class='col-8'>" +
-                            "<label for='" + timeplanday + "-timeplan-description' class='event-timeplan-description'>Hvad skald der ske?</label>" +
-                                "<input type='text' name='" + timeplanday + "-timeplan-event[]'>" +
-                                "<span class='dashicons dashicons-no remove-timeplan-item' data-item='" + timeplanItemCount + "'></span>" +
-                            "</div"+
-                        "</div>"
-                    )
                 })
             })
 
+            // removing timeplan items
             self.eventModals.updateEventTimeplanModal.on('click', '.remove-timeplan-item', (e) => {
                 e.preventDefault();
                 const item = $(e.target).data('item');
@@ -848,9 +858,12 @@ jQuery(function($) {
                 self.eventModals.updateEventTimeplanModal.find('[data-plan-item="' + item + '"]').remove();
             })
             
-
+            // updating timeplan
             self.eventModals.updateEventTimeplanModal.find('.update-event-timeplan-button').click(() => {
                 console.log("Updating timeplan");
+                $(this).prop('disabled', true)
+
+                const event = self.eventModals.updateEventTimeplanModal.find('.update-event-timeplan-button').data('event');
                 // disabling button
                 const timeplanObj = {
                     friday: [],
@@ -880,6 +893,27 @@ jQuery(function($) {
                 });
 
                 console.log(timeplanObj);
+
+                $.ajax({
+                    method: "POST",
+                    url: self.dxl.request.url,
+                    data: {
+                        action: "dxl_event_create_update_timeplanner",
+                        dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                        timeplan: timeplanObj,
+                        event: event
+                    },
+                    success: (response) => {
+                        console.log(response);
+                    },
+                    beforeSend: () => {
+                        console.log("updating timeplan");
+                    },
+
+                    error: (error) => {
+                        console.log(error);
+                    }
+                })
             })
         },
 

@@ -66,6 +66,10 @@
                                 <p class="lead">Der er ingen registreret tidsplan</p>
                                 <button class="button-primary" data-bs-toggle="modal" data-bs-target="#createTimeplanModal">Udfyld tidsplan</button>
                             <?php 
+                        } else {
+                            ?>
+                                <button class="button-primary" data-bs-toggle="modal" data-bs-target="#updateTimeplanModal">Opdater tidsplan</button>
+                            <?php
                         }
                     ?>
         
@@ -115,7 +119,13 @@
         </div>
     </div>
 </div>
-<?php require dirname(__FILE__) . "/partials/lan-timeplan-modal.php"; ?>
+<?php 
+    if ( $event->has_timeplan ) {
+        require dirname(__FILE__) . "/partials/lan-update-timeplan-modal.php";
+    } else {
+        require dirname(__FILE__) . "/partials/lan-timeplan-modal.php"; 
+    }
+?>
 <?php require dirname(__FILE__) . "/partials/config-event-modal.php"; ?>
 <?php require dirname(__FILE__) . "/partials/update-event-modal.php"; ?>
 <?php require dirname(__FILE__) . "/partials/delete-event-modal.php"; ?>

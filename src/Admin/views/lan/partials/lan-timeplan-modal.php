@@ -79,7 +79,7 @@
                                 <input 
                                   type="text" 
                                   name="sunday-timeplan-event[]" 
-                                  id="sunday-timeplan-event" 
+                                  id="sunday-timeplan-event"
                                 >
                               </div>
                             </div>
@@ -92,7 +92,7 @@
             </div>
             <div class="modal-footer gap-2">
                 <button class="button-primary close-modal" data-bs-dismiss="modal">Luk</button>
-                <button class="button-primary update-event-timeplan-button">Opdater <span class="dashicons dashicons-calendar"></span></button>
+                <button class="button-primary update-event-timeplan-button" data-event="<?php echo $event->id ?>">Udfyld tidsplan <span class="dashicons dashicons-calendar"></span></button>
             </div>
         </div>
     </div>

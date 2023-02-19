@@ -5,6 +5,7 @@ namespace DxlEvents\Classes\Repositories;
 use Dxl\Classes\Abstracts\AbstractRepository as Repository;
 use DxlEvents\Classes\Repositories\LanSettingsRepository;
 use DxlEvents\Classes\Repositories\LanParticipantRepository;
+use DxlEvents\Classes\Repositories\LanTimeplannerRepository;
 use Dxl\Classes\Traits\TrashableTrait;
 
 if( ! class_exists('LanRepository') )
@@ -55,6 +56,11 @@ if( ! class_exists('LanRepository') )
         public function participants(): LanParticipantRepository
         {
             return new LanParticipantRepository();
+        }
+
+        public function timeplan(): LanTimeplannerRepository
+        {
+            return new LanTimeplannerRepository();
         }
     }
 }

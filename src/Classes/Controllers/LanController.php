@@ -82,6 +82,7 @@ if( !class_exists('LanController') )
             add_action("wp_ajax_dxl_event_publish", [$this, 'ajaxPublishEvent']);
             add_action("wp_ajax_dxl_event_unpublish", [$this, 'ajaxUnpublishEvent']);
             add_action("wp_ajax_dxl_event_export_participants", [$this, 'ajaxExportParticipants']);
+            add_action("wp_ajax_dxl_event_create_update_timeplanner", [$this, 'ajaxCreateTimeplanner']);
         }
 
         /**
@@ -338,6 +339,23 @@ if( !class_exists('LanController') )
             wp_die();
         }
 
+        public function ajaxCreateTimeplanner(): void {
+            $logger = $this->dxl->getUtility('Logger');
+            $logger->log("triggering action: " . __METHOD__);
+            echo json_encode($_REQUEST["timeplan"]);
+
+            $this->lanRepository->update([
+                "has_timeplan" => 1
+            ], (int) $_REQUEST["event"]);
+            
+            $timeplanCreated = $this->lanRepository->timeplan()->create([
+                "event_id" => $_REQUEST["event"],
+                "content" => json_encode($_REQUEST["timeplan"]),
+            ]);
+            echo json_encode($timeplanCreated);
+            wp_die();
+        }
+
         /**
          * rendering LAN managing views
          *
@@ -412,7 +430,8 @@ if( !class_exists('LanController') )
             $tournaments = $this->tournamentRepository->select()->where('lan_id', $event->id)->get() ?? [];
             $participants = $this->lanParticipantRepository->findByEvent($event->id);
             $participantsWithFood = $this->lanParticipantRepository->select()->where('event_id', $event->id)->whereAnd('food_ordered', 1)->get();
-
+            $timeplan = $this->lanRepository->timeplan()->select()->where('event_id', $event->id)->get() ?? [];
+            $timeplan = json_decode($timeplan[0]->content) ?? [];
             $tournamentData = [];
             
             foreach($tournaments as $t => $tournament) {
