@@ -36,7 +36,7 @@ jQuery(function($) {
                 createGameModal: $('#createGameModal'),
                 createGameTypeModal: $('#createGameTypeModal'),
                 updateTournamentDetailsModal: $('#updateAdminTournamentModal'),
-                updateEventTimeplanModal: $('#createTimeplanModal, #updateTimeplanModal'),
+                updateEventTimeplanModal: $('#createTimeplanModal, #updateTimeplanModal, #confirmPublishTimeplanModal'),
             }
             this.initializeActions();
         },
@@ -815,7 +815,7 @@ jQuery(function($) {
              * Adding timeplan items
              */
             const addPlanItemButton = self.eventModals.updateEventTimeplanModal.find('.add-plan-item');
-            let timeplanItemCount = 0;
+            let timeplanItemCount = self.eventModals.updateEventTimeplanModal.find('.timeplan-item').length;
             addPlanItemButton.each((index, button) => {
                 $(button).click((e) => {
                     e.preventDefault();
@@ -857,69 +857,87 @@ jQuery(function($) {
                 console.log(item)
                 self.eventModals.updateEventTimeplanModal.find('[data-plan-item="' + item + '"]').remove();
             })
+
             
             // updating timeplan
-            self.eventModals.updateEventTimeplanModal.find('.update-event-timeplan-button').click(() => {
+            self.eventModals.updateEventTimeplanModal.find('.timeplan-button').click((e) => {
                 console.log("Updating timeplan");
                 $(this).prop('disabled', true)
-
-                const event = self.eventModals.updateEventTimeplanModal.find('.update-event-timeplan-button').data('event');
+                
+                const event = e.target.dataset.event;
+                const action = e.target.dataset.action;
+                
+                console.log({event, action})
                 // disabling button
                 const timeplanObj = {
                     friday: [],
                     saturday: [],
                     sunday: []
                 }
-
+                
                 self.eventModals.updateEventTimeplanModal.find('#timeplan-friday .timeplan-item').each((index, item) => {
                     timeplanObj.friday.push({
                         start: $(item).find('input[name="friday-timeplan-start-time[]"]').val(),
                         description: $(item).find('input[name="friday-timeplan-event[]"]').val()
                     })
                 })
-
+                
                 self.eventModals.updateEventTimeplanModal.find('#timeplan-saturday .timeplan-item').each((index, item) => {
                     timeplanObj.saturday.push({
                         start: $(item).find('input[name="saturday-timeplan-start-time[]"]').val(),
                         description: $(item).find('input[name="saturday-timeplan-event[]"]').val()
                     })
                 });
-
+                
                 self.eventModals.updateEventTimeplanModal.find('#timeplan-sunday .timeplan-item').each((index, item) => {
                     timeplanObj.sunday.push({
                         start: $(item).find('input[name="sunday-timeplan-start-time[]"]').val(),
                         description: $(item).find('input[name="sunday-timeplan-event[]"]').val()
                     })
                 });
+                
+                const timeplanData = {
+                    action: "dxl_event_create_update_timeplanner",
+                    dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                    timeplanAction: action,
+                    timeplan: timeplanObj,
+                    event: event
+                };
 
-                console.log(timeplanObj);
+                self.updatingTimeplanforEvent(
+                    timeplanData, 
+                    self.dxl.request.url,
+                    );
+                })
 
-                $.ajax({
-                    method: "POST",
-                    url: self.dxl.request.url,
-                    data: {
+                /**
+                 * Publishing timeplan for LAN event
+                 */
+                self.eventModals.updateEventTimeplanModal.find('.confirm-publish-timeplan-button').click((e) => {
+                    console.log("publishing timeplan");
+                    $(this).prop('disabled', true);
+        
+                    const event = e.target.dataset.event;
+                    const action = e.target.dataset.action;
+    
+                    const timeplanData = {
                         action: "dxl_event_create_update_timeplanner",
                         dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
-                        timeplan: timeplanObj,
+                        timeplanAction: action,
                         event: event
-                    },
-                    success: (response) => {
-                        console.log(response);
-                    },
-                    beforeSend: () => {
-                        console.log("updating timeplan");
-                    },
-
-                    error: (error) => {
-                        console.log(error);
-                    }
+                    };
+    
+                    self.updatingTimeplanforEvent(
+                        timeplanData,
+                        self.dxl.request.url
+                    )
                 })
-            })
-        },
-
-        /**
-         * trigger all event game actions
-         */
+            },
+            
+            
+            /**
+             * trigger all event game actions
+            */
         triggerGameEvents: function() {
             const self = this;
 
@@ -1259,6 +1277,37 @@ jQuery(function($) {
                 success: (response) => {
                     console.log(response);
                 }
+            });
+        },
+
+
+        updatingTimeplanforEvent: (timeplan, url) => {
+            $.ajax({
+                method: "POST",
+                url: url,
+                data: timeplan,
+                success: (response) => {
+                    console.log(response);
+
+                    if ( timeplan.timeplanAction === "create" ) {
+                        // close modal
+                        $('#createTimeplanModal').modal('hide', () => {
+                            // clear modal
+                            $('#createTimeplanModal').find('form').trigger('reset');
+                        });
+    
+                        location.reload();
+                    }
+
+                    // reload when uodate action is "publish" or "sendAndPublish"
+                    if ( timeplan.timeplanAction === "publish" || timeplan.timeplanAction === "sendAndPublish" ) {
+                        $('#confirmPublishTimeplanModal').modal('hide', () => {
+                            localtion.reload();
+                        })
+                    }
+                },
+                error: (error) => console.log(error),
+                beforeSend: () => console.log("Updating timeplan")
             });
         }
     }

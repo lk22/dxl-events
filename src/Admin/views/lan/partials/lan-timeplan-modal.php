@@ -89,10 +89,14 @@
                     </div>
                   </div>
                 </form>
+                <!-- create success message -->
+                <div class="alert alert-success alert-dismissible fade show timeplan-complete d-none" role="alert">
+                  <strong>Tidsplan oprettet!</strong> Du kan nu se tidsplanen på LAN siden.
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <div class="modal-footer gap-2">
                 <button class="button-primary close-modal" data-bs-dismiss="modal">Luk</button>
-                <button class="button-primary update-event-timeplan-button" data-event="<?php echo $event->id ?>">Udfyld tidsplan <span class="dashicons dashicons-calendar"></span></button>
+                <button class="button-primary timeplan-button create-event-timeplan-button" data-action="create" data-event="<?php echo $event->id ?>">Udfyld tidsplan <span class="dashicons dashicons-calendar"></span></button>
             </div>
         </div>
     </div>
