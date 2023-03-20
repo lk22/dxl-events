@@ -152,7 +152,13 @@
                 </h5>
             </div>
             <div class="modal-body">
-                <p class="lead">Ønsker du og sende tidsplanen til alle deltagere via mail?</p>
+              <?php 
+                if ( ! $timeplanIsDraft ) {
+                  echo "<p class='lead'>Tidsplanen er allerede offentliggjort, ønsker du at sende tidsplanen ud til alle deltagere?</p>";
+                } else {
+                  echo "<p class='lead'>Ønsker du at offentliggøre tidsplanen for {$event->title}?</p>";
+                }
+              ?>
             </div>
             <div class="modal-footer gap-2">
               <button class="button-primary close-modal" data-bs-dismiss="modal">Luk</button>

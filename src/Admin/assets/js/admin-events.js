@@ -1299,11 +1299,23 @@ jQuery(function($) {
                         location.reload();
                     }
 
+                    if ( timeplan.timeplanAction === "delete" ) {
+                        $('#deleteTimeplanModal').modal('hide', () => {
+                            location.reload();
+                        });
+                    }
+
+                    if ( timeplan.timeplanAction === "update" ) {
+                        $('#updateTimeplanModal').modal('hide', () => {
+                            location.reload();
+                        })
+                    }
+
                     // reload when uodate action is "publish" or "sendAndPublish"
                     if ( timeplan.timeplanAction === "publish" || timeplan.timeplanAction === "sendAndPublish" ) {
                         $('#confirmPublishTimeplanModal').modal('hide', () => {
                             localtion.reload();
-                        })
+                        });
                     }
                 },
                 error: (error) => console.log(error),
