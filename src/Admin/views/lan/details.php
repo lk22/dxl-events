@@ -57,6 +57,8 @@
                                 <div class="event-description-extra mt-4">
                                     <h2>Ekstra beskrivelse</h2>
                                     <?php echo str_replace("\\", "\n", $event->extra_description); ?>
+                                    <br>
+                                    <br>
                                 </div>
                             <?php
                         }
@@ -70,6 +72,11 @@
                             ?>
                                 <button class="button-primary" data-bs-toggle="modal" data-bs-target="#updateTimeplanModal">Opdater tidsplan</button>
                             <?php
+                            if ( $timeplanIsDraft ) {
+                                echo "<p>Tidsplanen er ikke offentliggjort</p>";
+                            } else {
+                                echo "<p>Tidsplanen er offentliggjort</p>";
+                            }
                         }
                     ?>
         

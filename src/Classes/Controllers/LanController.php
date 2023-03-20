@@ -496,6 +496,7 @@ if( !class_exists('LanController') )
             $participants = $this->lanParticipantRepository->findByEvent($event->id);
             $participantsWithFood = $this->lanParticipantRepository->select()->where('event_id', $event->id)->whereAnd('food_ordered', 1)->get();
             $timeplan = $this->lanRepository->timeplan()->select()->where('event_id', $event->id)->get();
+            $timeplanIsDraft = $timeplan->is_draft ?? 0;
             $timeplan = ($timeplan) ? json_decode($timeplan[0]->content) : [];
             $tournamentData = [];
             

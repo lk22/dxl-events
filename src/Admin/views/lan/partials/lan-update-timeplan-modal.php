@@ -118,10 +118,29 @@
               <button class="button-primary close-modal" data-bs-dismiss="modal">Luk</button>
               <button class="button-primary" data-bs-toggle="modal" data-bs-target="#confirmPublishTimeplanModal">Offentliggør tidsplan <span class="dashicons dashicons-calendar"></span></button>
               <button class="button-primary timeplan-button update-event-timeplan-button" data-action="update" data-event="<?php echo $event->id ?>">Opdater tidsplan <span class="dashicons dashicons-calendar"></span></button>
-                <button class="button-primary timeplan-button update-event-timeplan-button" data-action="delete" data-event="<?php echo $event->id ?>">Slet tidsplan <span class="dashicons dashicons-no"></span></button>
+              <button class="button-primary" data-bs-toggle="modal" data-bs-target="#deleteTimeplanModal">Slet tidsplan <span class="dashicons dashicons-no"></span></button>
             </div>
+          </div>
         </div>
+      </div>
+      
+<div class="modal modal-lg fade fadeInUp" id="deleteTimeplanModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          Slet tidsplan for <?php echo $event->title; ?>
+        </h5>
+      </div>
+      <div class="modal-body">
+        <p class="lead">Er du sikker på at du vil slette tidsplanen for <?php echo $event->title; ?>?</p>
+      </div>
+      <div class="modal-footer gap-2">
+        <button class="button-primary close-modal" data-bs-dismiss="modal">Luk</button>
+        <button class="button-primary timeplan-button delete-event-timeplan-button" data-action="delete" data-event="<?php echo $event->id ?>">Slet tidsplan <span class="dashicons dashicons-no"></span></button>
+      </div>
     </div>
+  </div>
 </div>
 
 <div class="modal modal-lg fade fadeInUp" id="confirmPublishTimeplanModal" tabindex="-1">
@@ -137,8 +156,18 @@
             </div>
             <div class="modal-footer gap-2">
               <button class="button-primary close-modal" data-bs-dismiss="modal">Luk</button>
-              <button class="button-primary confirm-publish-timeplan-button" data-action="publish" data-event="<?php echo $event->id ?>">Offentliggør <span class="dashicons dashicons-calendar"></span></button>
-              <button class="button-primary confirm-publish-timeplan-button" data-action="sendAndPublish" data-event="<?php echo $event->id ?>">Send og offentliggør tidsplan <span class="dashicons dashicons-calendar"></span></button>
+              <?php 
+                if ( $timeplanIsDraft ) {
+                  ?>
+                    <button class="button-primary confirm-publish-timeplan-button" data-action="publish" data-event="<?php echo $event->id ?>">Offentliggør <span class="dashicons dashicons-calendar"></span></button>
+                    <button class="button-primary confirm-publish-timeplan-button" data-action="sendAndPublish" data-event="<?php echo $event->id ?>">Send og offentliggør tidsplan <span class="dashicons dashicons-calendar"></span></button>
+                  <?php
+                } else {
+                  ?>
+                    <button class="button-primary confirm-publish-timeplan-button" data-action="send" data-event="<?php echo $event->id ?>">Send tidsplan <span class="dashicons dashicons-calendar"></span></button>
+                  <?php
+                }
+              ?>
             </div>
         </div>
     </div>

@@ -36,7 +36,7 @@ jQuery(function($) {
                 createGameModal: $('#createGameModal'),
                 createGameTypeModal: $('#createGameTypeModal'),
                 updateTournamentDetailsModal: $('#updateAdminTournamentModal'),
-                updateEventTimeplanModal: $('#createTimeplanModal, #updateTimeplanModal, #confirmPublishTimeplanModal'),
+                updateEventTimeplanModal: $('#createTimeplanModal, #updateTimeplanModal, #confirmPublishTimeplanModal, #deleteTimeplanModal'),
             }
             this.initializeActions();
         },
