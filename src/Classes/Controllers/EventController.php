@@ -262,27 +262,37 @@ if( !class_exists('EventController'))
                         ->whereAnd('is_draft', 0)
                         ->get();
 
-                        $participant = ($member) ? $this->lanParticipantRepository
-                            ->select()
-                            ->where('event_id', $event->id)
-                            ->whereAnd('member_id', $member->id)
-                            ->getRow() : [];
+                    $participant = ($member) ? $this->lanParticipantRepository
+                        ->select()
+                        ->where('event_id', $event->id)
+                        ->whereAnd('member_id', $member->id)
+                        ->getRow() : [];
 
-                        // if the participant is not empty, we need to get the food preferences
-                        if ($participant) {
-                            if ( 
-                                ! $participant->has_friday_breakfast == "1" && 
-                                ! $participant->has_friday_lunch == "1" && 
-                                ! $participant->has_saturday_breakfast == "1" &&
-                                ! $participant->has_saturday_lunch == "1" &&
-                                ! $participant->has_saturday_dinner == "1" &&
-                                ! $participant->has_sunday_breakfast == "1" 
-                            ) {
-                                $hasOrderedFood = false;
-                            } else {
-                                $hasOrderedFood = true;
-                            }
+                    $timeplan = $this->lanRepository
+                        ->timeplan()
+                        ->select()
+                        ->where('event_id', $event->id)
+                        ->get();
+
+                    $timeplanContent = ($timeplan) ? json_decode($timeplan[0]->content) : [];
+                    // get the entries for each day
+                    $timeplanFriday = ($timeplanContent) ? $timeplanContent->friday : [];
+
+                    // if the participant is not empty, we need to get the food preferences
+                    if ($participant) {
+                        if ( 
+                            ! $participant->has_friday_breakfast == "1" && 
+                            ! $participant->has_friday_lunch == "1" && 
+                            ! $participant->has_saturday_breakfast == "1" &&
+                            ! $participant->has_saturday_lunch == "1" &&
+                            ! $participant->has_saturday_dinner == "1" &&
+                            ! $participant->has_sunday_breakfast == "1" 
+                        ) {
+                            $hasOrderedFood = false;
+                        } else {
+                            $hasOrderedFood = true;
                         }
+                    }
 
 
                     $participated = ($participant) 

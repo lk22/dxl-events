@@ -180,6 +180,14 @@
                             <p class="lead">Du vil hurtigst muligt vide besked når du kan bestille mad</p>
                         <?php
                     }
+
+                    if ( $participated ) {
+                        ?>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#lanTimeplanModal">
+                                <i class="fas fa-calendar-alt"></i> Se tidsplan
+                            </button>
+                        <?php
+                    }
                 ?>
             </div>
             </div>
@@ -426,6 +434,104 @@
                     data-member="<?php echo $member->id; ?>"
                     data-event="<?php echo $event->id; ?>"
                 >Tilføj</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-xl fade fadeInUp" id="lanTimeplanModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Tidsplan for <?php echo $event->title; ?>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <!-- make me a accordion with 3 items for each day in the timeplan -->
+                <div class="accordion" id="accordionExample">
+                  <div class="accordion-item mb-4">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button class="accordion-button text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Fredag
+                      </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        <?php
+                            // TODO: make me a accordion with 3 items for each day in the timeplan
+                            foreach ($timeplanContent->friday as $timeplanItem ) {
+                                ?>
+                                    <div class="timeplan-item d-flex row">
+                                        <div class="timeplan-item-start col-6">
+                                            <strong><?php echo $timeplanItem->start; ?></strong>
+                                        </div>
+                                        <div class="timeplan-item-desc col-6">
+                                            <?php echo $timeplanItem->description; ?>
+                                        </div>
+                                    </div>
+                                <?php
+                            }
+                        ?>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item mb-4">
+                    <h2 class="accordion-header" id="headingTwo">
+                      <button class="accordion-button text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        Lørdag
+                      </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        <?php
+                            foreach ( $timeplanContent->saturday as $timeplanItem ) {
+                                ?>
+                                    <div class="timeplan-item d-flex row my-2">
+                                        <div class="col-6 timeplan-item-start">
+                                            <strong><?php echo $timeplanItem->start; ?></strong>
+                                        </div>
+                                        <div class="timeplan-item-desc col-6">
+                                            <?php echo $timeplanItem->description; ?>
+                                        </div>
+                                    </div>
+                                <?php
+                            }
+                        ?>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item mb-4">
+                    <h2 class="accordion-header" id="headingThree">
+                      <button class="accordion-button text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                        Søndag
+                      </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        <?php 
+                            foreach ( $timeplanContent->sunday as $timeplanItem ) {
+                                ?>
+                                    <div class="timeplan-item d-flex row">
+                                        <div class="timeplan-item-start col-6">
+                                            <strong><?php echo $timeplanItem->start; ?></strong>
+                                        </div>
+                                        <div class="timeplan-item-desc col-6">
+                                            <?php echo $timeplanItem->description; ?>
+                                        </div>
+                                    </div>
+                                <?php
+                            }
+                        ?>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button class="close-modal btn btn-success" data-bs-dismiss="modal">Luk</button>
             </div>
         </div>
     </div>
