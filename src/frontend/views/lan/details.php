@@ -462,7 +462,7 @@
                             // TODO: make me a accordion with 3 items for each day in the timeplan
                             foreach ($timeplanContent->friday as $timeplanItem ) {
                                 ?>
-                                    <div class="timeplan-item d-flex row">
+                                    <div class="timeplan-item d-flex row my-2">
                                         <div class="timeplan-item-start col-6">
                                             <strong><?php echo $timeplanItem->start; ?></strong>
                                         </div>
@@ -512,7 +512,7 @@
                         <?php 
                             foreach ( $timeplanContent->sunday as $timeplanItem ) {
                                 ?>
-                                    <div class="timeplan-item d-flex row">
+                                    <div class="timeplan-item d-flex row my-2">
                                         <div class="timeplan-item-start col-6">
                                             <strong><?php echo $timeplanItem->start; ?></strong>
                                         </div>
