@@ -350,21 +350,22 @@ if( !class_exists('LanController') )
                 ->where('event_id', $event->id)
                 ->get();
 
-            switch($_REQUEST["timeplanAction"]) {
-                case "create":
-                    $this->lanRepository->update([
-                        "has_timeplan" => 1
-                    ], (int) $_REQUEST["event"]);
-
-                    $timeplanUpdated = $this->lanRepository
+                switch($_REQUEST["timeplanAction"]) {
+                    case "create":
+                        $this->lanRepository->update([
+                            "has_timeplan" => 1
+                        ], (int) $_REQUEST["event"]);
+                        
+                        $timeplanUpdated = $this->lanRepository
                         ->timeplan()
                         ->create([
                             "event_id" => $_REQUEST["event"],
                             "content" => json_encode($_REQUEST["timeplan"]),
                             "is_draft" => 1
                         ]);
-
-                    $logger->log("Creating timeplanner for event " . $_REQUEST["event"] . " " . ($timeplanUpdated) ? "successfully" : "failed");
+                        
+                        $logger->log("Creating timeplanner for event " . $_REQUEST["event"] . " " . ($timeplanUpdated) ? "successfully" : "failed");
+                        
                     break;
                 case "update":
                     try {
@@ -413,7 +414,6 @@ if( !class_exists('LanController') )
                         ], $timeplan[0]->id);
 
                         $logger->log("Publishing timeplan for event " . $_REQUEST["event"] . " " . ($timeplanPublished) ? "successfully" : "failed");
-                    
                     break;
                 }
             

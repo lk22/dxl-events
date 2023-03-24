@@ -28,13 +28,13 @@
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10 col-xxl-10">
                 <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane show active" id="v-pills-lan" role="tabpanel" aria-labelledby="v-pills-lan-tab" tabindex="0">
+                    <div class="tab-pane show active fadeUp" id="v-pills-lan" role="tabpanel" aria-labelledby="v-pills-lan-tab" tabindex="0">
                         <?php require_once(dirname(__FILE__) . '/partials/lan-tournaments.php'); ?>
                     </div>
-                    <div class="tab-pane" id="v-pills-online" role="tabpanel" aria-labelledby="v-pills-online-tab" tabindex="0">
+                    <div class="tab-pane fadeUp" id="v-pills-online" role="tabpanel" aria-labelledby="v-pills-online-tab" tabindex="0">
                         <?php require_once(dirname(__FILE__) . '/partials/online-tournaments.php'); ?>
                     </div>
-                    <div class="tab-pane" id="v-pills-held" role="tabpanel" aria-labelledby="v-pills-online-tab" tabindex="0">
+                    <div class="tab-pane fadeUp" id="v-pills-held" role="tabpanel" aria-labelledby="v-pills-online-tab" tabindex="0">
                         <?php require_once(dirname(__FILE__) . '/partials/held-tournaments.php'); ?>
                     </div>
                 </div>
