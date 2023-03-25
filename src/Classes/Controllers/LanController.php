@@ -353,7 +353,8 @@ if( !class_exists('LanController') )
                 switch($_REQUEST["timeplanAction"]) {
                     case "create":
                         $this->lanRepository->update([
-                            "has_timeplan" => 1
+                            "has_timeplan" => 1,
+                            "is_draft" => 1
                         ], (int) $_REQUEST["event"]);
                         
                         $timeplanUpdated = $this->lanRepository
