@@ -13,6 +13,8 @@ use DxlEvents\Classes\Repositories\LanParticipantRepository;
 // services
 use DxlEvents\Classes\Services\LanEventService as Service;
 
+use DxlEvents\Classes\Factories\TimeplanFactory;
+
 if( !class_exists('LanController') ) 
 {
     class LanController extends Controller
@@ -339,85 +341,20 @@ if( !class_exists('LanController') )
             wp_die();
         }
 
+        /**
+         * Create timeplan for lan events
+         *
+         * @return void
+         */
         public function ajaxCreateTimeplanner(): void {
             $logger = $this->dxl->getUtility('Logger');
             $logger->log("triggering action: " . __METHOD__);
-
-            $event = $this->lanRepository->find($_REQUEST["event"]);
-            $timeplan = $this->lanRepository
-                ->timeplan()
-                ->select(['id'])
-                ->where('event_id', $event->id)
-                ->get();
-
-                switch($_REQUEST["timeplanAction"]) {
-                    case "create":
-                        $this->lanRepository->update([
-                            "has_timeplan" => 1,
-                            "is_draft" => 1
-                        ], (int) $_REQUEST["event"]);
-                        
-                        $timeplanUpdated = $this->lanRepository
-                        ->timeplan()
-                        ->create([
-                            "event_id" => $_REQUEST["event"],
-                            "content" => json_encode($_REQUEST["timeplan"]),
-                            "is_draft" => 1
-                        ]);
-                        
-                        $logger->log("Creating timeplanner for event " . $_REQUEST["event"] . " " . ($timeplanUpdated) ? "successfully" : "failed");
-                        
-                    break;
-                case "update":
-                    try {
-                        $new_json = json_encode($_REQUEST["timeplan"]);
-
-                        $timeplanUpdated = $this->lanRepository->timeplan()->update([
-                            "content" => json_encode($_REQUEST["timeplan"])
-                        ], $timeplan[0]->id);
-
-                        $logger->log("Updating timeplanner for event " . $_REQUEST["event"] . " successfully");
-                        
-                        echo wp_json_encode([
-                            "error" => false,
-                            "response" => "Tidsplan opdateret"
-                        ]);
-                        wp_die();
-
-                    } catch (\Exception $e) {
-                        $logger->log("Updating timeplanner for event " . $_REQUEST["event"] . " failed");
-                        echo json_encode($e->getMessage());
-                        wp_die();
-                    }
-
-                    break;
-                case "delete":
-                    $timeplanUpdated = $this->lanRepository
-                        ->timeplan()
-                        ->delete($timeplan[0]->id);
-
-                    $this->lanRepository->update([
-                        "has_timeplan" => 0
-                    ], (int) $_REQUEST["event"]);
-
-                    $logger->log("Deleting timeplan for event " . $_REQUEST["event"] . " " . ($timeplanUpdated) ? "successfully" : "failed");
-                    break;
-
-                /**
-                 * TODO: update publishment for timeplan
-                 * TODO: send timeplan to participants via mail
-                 */
-                case "publish":
-                    $timeplanUpdated = $this->lanRepository
-                        ->timeplan()
-                        ->update([
-                            "is_draft" => 0
-                        ], $timeplan[0]->id);
-
-                        $logger->log("Publishing timeplan for event " . $_REQUEST["event"] . " " . ($timeplanPublished) ? "successfully" : "failed");
-                    break;
-                }
             
+            $event = $this->lanRepository->find($_REQUEST["event"]);
+
+            $factory = new TimeplanFactory();
+            $timeplanUpdated = $factory->get($_REQUEST["timeplanAction"])->call();
+                
             echo json_encode($timeplanUpdated);
             wp_die();
         }
@@ -439,7 +376,7 @@ if( !class_exists('LanController') )
                         $this->details();
                         break;
 
-                    case 'participate':
+                        case 'participate':
                         $this->participate();
                         break;
                 }
