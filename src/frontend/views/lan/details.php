@@ -181,7 +181,7 @@
                         <?php
                     }
 
-                    if ( $participated ) {
+                    if ( $participated && $event->has_timeplan ) {
                         ?>
                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#lanTimeplanModal">
                                 <i class="fas fa-calendar-alt"></i> Se tidsplan
@@ -464,7 +464,7 @@
                                 ?>
                                     <div class="timeplan-item d-flex row my-2">
                                         <div class="timeplan-item-start col-6">
-                                            <strong><?php echo $timeplanItem->start; ?></strong>
+                                            <strong><?php echo $timeplanItem->start; ?> - <?php echo $timeplanItem->end ?></strong>
                                         </div>
                                         <div class="timeplan-item-desc col-6">
                                             <?php echo $timeplanItem->description; ?>
@@ -489,7 +489,7 @@
                                 ?>
                                     <div class="timeplan-item d-flex row my-2">
                                         <div class="col-6 timeplan-item-start">
-                                            <strong><?php echo $timeplanItem->start; ?></strong>
+                                        <strong><?php echo $timeplanItem->start; ?> - <?php echo $timeplanItem->end ?></strong>
                                         </div>
                                         <div class="timeplan-item-desc col-6">
                                             <?php echo $timeplanItem->description; ?>
@@ -514,7 +514,7 @@
                                 ?>
                                     <div class="timeplan-item d-flex row my-2">
                                         <div class="timeplan-item-start col-6">
-                                            <strong><?php echo $timeplanItem->start; ?></strong>
+                                        <strong><?php echo $timeplanItem->start; ?> - <?php echo $timeplanItem->end ?></strong>
                                         </div>
                                         <div class="timeplan-item-desc col-6">
                                             <?php echo $timeplanItem->description; ?>

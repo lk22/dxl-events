@@ -890,7 +890,7 @@ jQuery(function($) {
                 self.eventModals.updateEventTimeplanModal.find('#timeplan-saturday .timeplan-item').each((index, item) => {
                     timeplanObj.saturday.push({
                         start: $(item).find('input[name="saturday-timeplan-start-time[]"]').val(),
-                        emd: $(item).find('input[name="saturday-timeplan-end-time[]"]').val(),
+                        end: $(item).find('input[name="saturday-timeplan-end-time[]"]').val(),
                         description: $(item).find('input[name="saturday-timeplan-event[]"]').val()
                     })
                 });

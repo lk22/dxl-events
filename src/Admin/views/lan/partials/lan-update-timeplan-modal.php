@@ -175,7 +175,7 @@
             <div class="modal-footer gap-2">
               <button class="button-primary close-modal" data-bs-dismiss="modal">Luk</button>
               <?php 
-                if ( $timeplanIsDraft ) {
+                if ( ! $timeplanIsDraft ) {
                   ?>
                     <button class="button-primary confirm-publish-timeplan-button" data-action="publish" data-event="<?php echo $event->id ?>">Offentliggør <span class="dashicons dashicons-calendar"></span></button>
                     <button class="button-primary confirm-publish-timeplan-button" data-action="sendAndPublish" data-event="<?php echo $event->id ?>">Send og offentliggør tidsplan <span class="dashicons dashicons-calendar"></span></button>

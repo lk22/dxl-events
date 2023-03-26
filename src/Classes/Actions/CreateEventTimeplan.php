@@ -38,12 +38,12 @@
                 
                 $this->lanRepository->update([
                   "has_timeplan" => 1,
-                  "is_draft" => 1
                 ], $event->id);
 
                 $created = $this->lanRepository->timeplan()->create([
                   "event_id" => $_REQUEST["event"],
-                  "content" => json_encode($_REQUEST["timeplan"])
+                  "content" => json_encode($_REQUEST["timeplan"]),
+                  "is_draft" => 1
                 ]);
 
                 return wp_send_json_success([
