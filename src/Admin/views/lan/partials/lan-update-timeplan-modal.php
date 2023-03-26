@@ -21,9 +21,13 @@
                           foreach($timeplan->friday as $pi => $planItem) {
                             ?>
                               <div class="form-group row timeplan-item" data-plan-item="<?php echo $pi ?>">
-                                <div class="col-4">
+                                <div class="col-2">
                                   <label for="event-timeplan-start-time">Start tid:</label>
                                   <input type="time" name="friday-timeplan-start-time[]" id="event-timeplan-start-time" class="form-control" value="<?php echo $planItem->start ?>">
+                                </div>
+                                <div class="col-2">
+                                  <label for="event-timeplan-end-time">Slut tid:</label>
+                                  <input type="time" name="friday-timeplan-end-time[]" id="event-timeplan-end-time" class="form-control" value="<?php echo $planItem->end ?>">
                                 </div>
                                 <div class="col-8">
                                   <label for="event-timeplan-description" class="event-timeplan-description">Hvad skald der ske?</label>
@@ -55,9 +59,13 @@
                             foreach ($timeplan->saturday as $pi => $planItem) {
                               ?>
                                 <div class="form-group row timeplan-item" data-plan-item="<?php echo $pi ?>">
-                                  <div class="col-4">
+                                  <div class="col-2">
                                     <label for="event-timeplan-start-time">Start tid:</label>
                                     <input type="time" name="saturday-timeplan-start-time[]" id="event-timeplan-start-time" class="form-control" value="<?php echo $planItem->start ?>">
+                                  </div>
+                                  <div class="col-2">
+                                    <label for="event-timeplan-end-time">Start tid:</label>
+                                    <input type="time" name="saturday-timeplan-end-time[]" id="event-timeplan-end-time" class="form-control" value="<?php echo $planItem->end ?>">
                                   </div>
                                   <div class="col-8">
                                     <label for="event-timeplan-description" class="event-timeplan-description">Hvad skald der ske?</label>
@@ -89,9 +97,13 @@
                             foreach ($timeplan->sunday as $pi => $planItem) {
                               ?>
                                 <div class="form-group row timeplan-item" data-plan-item="<?php echo $pi ?>">
-                                  <div class="col-4">
+                                  <div class="col-2">
                                     <label for="event-timeplan-start-time">Start tid:</label>
                                     <input type="time" name="sunday-timeplan-start-time[]" id="event-timeplan-start-time" class="form-control" value="<?php echo $planItem->start ?>">
+                                  </div>
+                                  <div class="col-2">
+                                    <label for="event-timeplan-end-time">SLut tid:</label>
+                                    <input type="time" name="sunday-timeplan-end-time[]" id="event-timeplan-end-time" class="form-control" value="<?php echo $planItem->end ?>">
                                   </div>
                                   <div class="col-8">
                                     <label for="sunday-timeplan-description" class="event-timeplan-description">Hvad skald der ske?</label>

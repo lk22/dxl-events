@@ -828,9 +828,13 @@ jQuery(function($) {
                     if ( starttime && event ) {
                         self.eventModals.updateEventTimeplanModal.find('#timeplan-' + timeplanday + ' .item-wrapper').append(
                             "<div class='form-group row mt-3 timeplan-item' data-plan-item='" + timeplanItemCount + "'>" +
-                                "<div class='col-4'>" +
+                                "<div class='col-2'>" +
                                     "<label for='event-timeplan-start-time'>Start tid:</label>" +
                                     "<input type='time' name='" + timeplanday + "-timeplan-start-time[]' id='event-timeplan-start-time' class='form-control'>" +
+                                "</div>" +
+                                "<div class='col-2'>" +
+                                    "<label for='event-timeplan-end-time'>Slut tid:</label>" +
+                                    "<input type='time' name='" + timeplanday + "-timeplan-end-time[]' id='event-timeplan-end-time' class='form-control'>" +
                                 "</div>" +
                                 "<div class='col-8'>" +
                                 "<label for='" + timeplanday + "-timeplan-description' class='event-timeplan-description'>Hvad skald der ske?</label>" +
@@ -878,6 +882,7 @@ jQuery(function($) {
                 self.eventModals.updateEventTimeplanModal.find('#timeplan-friday .timeplan-item').each((index, item) => {
                     timeplanObj.friday.push({
                         start: $(item).find('input[name="friday-timeplan-start-time[]"]').val(),
+                        end: $(item).find('input[name="friday-timeplan-end-time[]"').val(),
                         description: $(item).find('input[name="friday-timeplan-event[]"]').val()
                     })
                 })
@@ -885,6 +890,7 @@ jQuery(function($) {
                 self.eventModals.updateEventTimeplanModal.find('#timeplan-saturday .timeplan-item').each((index, item) => {
                     timeplanObj.saturday.push({
                         start: $(item).find('input[name="saturday-timeplan-start-time[]"]').val(),
+                        emd: $(item).find('input[name="saturday-timeplan-end-time[]"]').val(),
                         description: $(item).find('input[name="saturday-timeplan-event[]"]').val()
                     })
                 });
@@ -892,6 +898,7 @@ jQuery(function($) {
                 self.eventModals.updateEventTimeplanModal.find('#timeplan-sunday .timeplan-item').each((index, item) => {
                     timeplanObj.sunday.push({
                         start: $(item).find('input[name="sunday-timeplan-start-time[]"]').val(),
+                        end: $(item).find('input[name="sunday-timeplan-end-time[]"]').val(),
                         description: $(item).find('input[name="sunday-timeplan-event[]"]').val()
                     })
                 });

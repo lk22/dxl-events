@@ -18,9 +18,13 @@
                       <div id="timeplan-friday" class="accordion-collapse collapse" aria-labelledby="timepplan-friday-heading" data-bs-parent="#eventTimeplanAccordion">
                         <div class="item-wrapper my-4">
                           <div class="form-group row timeplan-item" data-plan-item="0">
-                            <div class="col-4">
+                            <div class="col-2">
                               <label for="event-timeplan-start-time">Start tid:</label>
                               <input type="time" name="friday-timeplan-start-time[]" id="event-timeplan-start-time" class="form-control">
+                            </div>
+                            <div class="col-2">
+                              <label for="event-timeplan-end-time">Slut tid</label>
+                              <input type="time" name="friday-timeplan-end-time[]" id="event-timeplan-end-time" class="form-control">
                             </div>
                             <div class="col-8">
                               <label for="event-timeplan-description" class="event-timeplan-description">Hvad skald der ske?</label>
@@ -44,9 +48,13 @@
                       <div id="timeplan-saturday" class="accordion-collapse collapse" aria-labelledby="timeplan-saturday-heading" data-bs-parent="#eventTimeplanAccordion">
                         <div class="item-wrapper my-4">
                           <div class="form-group row timeplan-item" data-plan-item="0">
-                            <div class="col-4">
+                            <div class="col-2">
                               <label for="event-timeplan-start-time">Start tid:</label>
                               <input type="time" name="saturday-timeplan-start-time[]" id="event-timeplan-start-time" class="form-control">
+                            </div>
+                            <div class="col-2">
+                              <label for="event-timeplan-end-time">Slut tid:</label>
+                              <input type="time" name="saturday-timeplan-end-time[]" id="event-timeplan-end-time" class="form-control">
                             </div>
                             <div class="col-8">
                               <label for="event-timeplan-description" class="event-timeplan-description">Hvad skald der ske?</label>
@@ -70,9 +78,13 @@
                       <div id="timeplan-sunday" class="accordion-collapse collapse" aria-labelledby="timeplan-sunday-heading" data-bs-parent="#eventTimeplanAccordion">
                         <div class="item-wrapper my-4">
                           <div class="form-group row timeplan-item" data-plan-item="0">
-                              <div class="col-4">
+                              <div class="col-2">
                                 <label for="event-timeplan-start-time">Start tid:</label>
                                 <input type="time" name="sunday-timeplan-start-time[]" id="event-timeplan-start-time" class="form-control">
+                              </div>
+                              <div class="col-2">
+                                <label for="event-timeplan-end-time">Slut tid:</label>
+                                <input type="time" name="sunday-timeplan-end-time[]" id="event-timeplan-end-time" class="form-control">
                               </div>
                               <div class="col-8">
                                 <label for="sunday-timeplan-description" class="event-timeplan-description">Hvad skald der ske?</label>
