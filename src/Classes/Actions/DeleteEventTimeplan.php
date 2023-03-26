@@ -44,7 +44,7 @@
                 $deleted = $this->lanRepository->timeplan()->delete($timeplan[0]->id);
 
                 return wp_send_json_success([
-                    "message" => ( $delete ) ? "Timeplan deleted successfully" : "failed",
+                    "message" => ( $deleted ) ? "Timeplan deleted successfully" : "failed",
                 ]);
             }
         }
