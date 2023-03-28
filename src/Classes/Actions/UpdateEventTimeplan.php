@@ -43,6 +43,8 @@
                   "content" => json_encode($_REQUEST["timeplan"])
                 ], $timeplan[0]->id);
 
+                $logger->log("Timeplan for event " . $event->title . " updated " . ($updated ? "successfully" : "failed"));
+
                 return wp_send_json_success([
                     "message" => ( $updated ) ? "Timeplan updated successfully" : "failed",
                 ]);

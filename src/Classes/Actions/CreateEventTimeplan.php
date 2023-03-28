@@ -46,6 +46,12 @@
                   "is_draft" => 1
                 ]);
 
+                if ( $created ) {
+                  $logger->log("Timeplan created for event " . $event->title . " successfully");
+                } else {
+                  $logger->log("Timeplan created for event " . $event->title . " failed");
+                }
+                
                 return wp_send_json_success([
                     "message" => ( $created ) ? "Timeplan created successfully" : "failed",
                 ]);

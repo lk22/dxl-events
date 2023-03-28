@@ -37,11 +37,15 @@
                 $event = $this->lanRepository->find($_REQUEST["event"]);
                 $timeplan = $this->lanRepository->timeplan()->select(["id"])->where("event_id", $event->id)->get();
 
-                $this->lanRepository->update([
-                  "has_timeplan" => 0
-                ], $event->id);
-
                 $deleted = $this->lanRepository->timeplan()->delete($timeplan[0]->id);
+                
+                if ( $deleted ) {
+                  $this->lanRepository->update([
+                    "has_timeplan" => 0
+                  ], $event->id);
+                }
+
+                $logger->log("Timeplan deleted for event " . $event->id . " - " . $event->title . " " . ($deleted ? "successfully" : "failed"));
 
                 return wp_send_json_success([
                     "message" => ( $deleted ) ? "Timeplan deleted successfully" : "failed",

@@ -41,6 +41,8 @@
                   "is_draft" => 0
                 ], $timeplan[0]->id);
 
+                $logger->log("timeplan for event " . $event->id . " - " . $event->slug . " " . ($published ? "published" : "failed"));
+
                 return wp_send_json_success([
                     "message" => ( $published ) ? "Timeplan published successfully" : "failed",
                 ]);
