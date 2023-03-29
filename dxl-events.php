@@ -121,7 +121,11 @@ if( !class_exists('DxlEvent') ){
          */
         public function enqueeuFrontendEventScripts()
         {
-            
+            if ( is_page("events") ) {
+                // register admin-events.css
+                wp_register_style('dxl-events', plugins_url('dxl-events/src/frontend/assets/css/events.css'));
+                wp_enqueue_style('dxl-events');
+            }
         }
 
         public function register_event_participants_widget()
