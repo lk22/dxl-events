@@ -1,5 +1,5 @@
-<div class="row gap-4">
-    <h3>LAN begivenheder</h3>
+<div class="row gap-4 mb-4" id="lan">
+    <h3 class="fw-bold px-0">LAN begivenheder</h3>
     <?php 
         foreach ( $events["lan"] as $event ) {
             ?>
