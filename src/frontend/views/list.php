@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-12">
             <div class="filter-container">
-                <h1>Filtrering</h1>
+                <h1>Events</h1>
                 <div class="filter-group">
                     <input type="checkbox" class="btn-check" name="event-type" id="event-type-lan" value="LAN" autocomplete="off" checked>
                     <label class="btn btn-primary" for="btn-check event-type">LAN</label>
@@ -17,7 +17,7 @@
         </div>
         <div class="col-12 px-0">
             <div class="events-list">
-                <div class="container">
+                <div class="container gap-2">
                     <?php require "partials/lan-event-list.php"; ?>
                     <?php require "partials/tournament-event-list.php"; ?>
                     <?php require "partials/training-event-list.php"; ?>
