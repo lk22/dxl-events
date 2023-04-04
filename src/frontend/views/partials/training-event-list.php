@@ -1,5 +1,5 @@
-<div class="row gap-4 mb-4">
-  <h3>Trænings begivenheder</h3>
+<div class="row gap-4 mb-4" id="training">
+  <h3 class="fw-bold px-0">Trænings begivenheder</h3>
   <?php 
     if ( isset($events["training"]) && count($events["training"]) ) {
       foreach ( $events["training"] as $event ) {
@@ -43,9 +43,7 @@
                   </span>
                 </p>
               </div>
-              <div class="float-end">
-                <a href="<?php echo $event["link"]; ?>" class="btn btn-outline-success">Se begivenhed</a>
-              </div>
+              <a href="<?php echo $event["link"]; ?>" class="btn btn-outline-success">Se begivenhed</a>
             </div>
           </div>
         <?php
