@@ -6,7 +6,7 @@
                 <?php 
                     foreach ( $events["lan"] as $event ) {
                         ?>
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-3 event-item event-<?php echo $event["type"]; ?>" data-event-type="<?php echo $event["type"]; ?>">
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4 event-item event-<?php echo $event["type"]; ?>" data-event-type="<?php echo $event["type"]; ?>">
                                 <div class="event-title">
                                     <span>
                                         <h4><strong><?php echo $event["title"]; ?></strong></h4>
