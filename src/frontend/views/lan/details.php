@@ -1,6 +1,6 @@
 <div class="container-fluid event lan-event h-100"">
     <div class="row event-header p-5 align-items-end">
-        <div class="container pb-5">
+        <div class="container">
             <div class="col-lg-5 col-xl-5 text-white">
                 <div class="row title mb-0">
                     <h1 class="text-white display-5 fw-bold"><?php echo strtoupper($event->title); ?></h1>
@@ -49,7 +49,7 @@
             </div>
         </div>
     </div>
-    <div class="container py-5 px-4 my-5 overflow-hidden rounded rounded-md">
+    <div class="container py-5 px-4 mb-5 overflow-hidden rounded rounded-md">
         <?php 
             if ( $event->is_held ) {
                 ?>
@@ -63,7 +63,7 @@
                 <?php
             }
         ?>
-        <div class="row gx-5 gy-5 tournaments">
+        <div class="row tournaments my-0">
             <div class="col-12 col-xl-7 p-5 rounded rounded-md">
             <div class="descriptions info-field mb-5">
                 <h2>Beskrivelse</h2>
