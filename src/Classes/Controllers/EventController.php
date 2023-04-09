@@ -243,102 +243,105 @@ if( !class_exists('EventController'))
         public function renderEventDetails($type, $identifier) 
         {
             global $current_user;
-            
-            if( $current_user->ID !== 0 ) {
-                $member = $this->memberRepository->select(["id", "user_id", "email", "gamertag"])->where('user_id', $current_user->ID)->getRow();
-            } else {
-                $member = false;
-            }
+
+            $member = ($current_user->ID !== 0) 
+                ? $this->memberRepository->select(["id", "user_id", "email", "gamertag"])->where('user_id', $current_user->ID)->getRow()
+                : false;
 
             switch($type) {
                 case "lan":
-                    $event = $this->lanRepository->select()->where('slug', "'$identifier'")->getRow();
-                    $settings = $this->lanRepository->settings()->find($event->id);
-                    $participants = $this->lanRepository->getParticipants($event->id);
-                    $tournaments = $this->tournamentRepository
-                        ->select()
-                        ->where('has_lan', 1)
-                        ->whereAnd('lan_id', $event->id)
-                        ->whereAnd('is_draft', 0)
-                        ->get();
-
-                    $participant = ($member) ? $this->lanParticipantRepository
-                        ->select()
-                        ->where('event_id', $event->id)
-                        ->whereAnd('member_id', $member->id)
-                        ->getRow() : [];
-
-                    $timeplan = $this->lanRepository
-                        ->timeplan()
-                        ->select()
-                        ->where('event_id', $event->id)
-                        ->get();
-
-                    $timeplanContent = ($timeplan) ? json_decode($timeplan[0]->content) : [];
-                    // get the entries for each day
-                    $timeplanFriday = ($timeplanContent) ? $timeplanContent->friday : [];
-
-                    // if the participant is not empty, we need to get the food preferences
-                    if ($participant) {
-                        if ( 
-                            ! $participant->has_friday_breakfast == "1" && 
-                            ! $participant->has_friday_lunch == "1" && 
-                            ! $participant->has_saturday_breakfast == "1" &&
-                            ! $participant->has_saturday_lunch == "1" &&
-                            ! $participant->has_saturday_dinner == "1" &&
-                            ! $participant->has_sunday_breakfast == "1" 
-                        ) {
-                            $hasOrderedFood = false;
-                        } else {
-                            $hasOrderedFood = true;
-                        }
-                    }
-
-
-                    $participated = ($participant) 
-                        ? true
-                        : false;
-
-                        require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/lan/details.php";
+                    $this->getLanEventView($identifier, $member);
                     break;
 
                 case "tournament":
-                    $event = $this->tournamentRepository->select()->where('slug', "'$identifier'")->getRow();
-                    $settings = $this->tournamentSettingsRepository->find($event->id);
-                    $participants = $this->participantRepository->findByEvent($event->id);
-                    // $participated = ($member) ? $this->participantRepository->hasParticipated($event->id, $member->id) : false;
-                    $participated = ($member) ?
-                        $this->participantRepository
-                            ->select()
-                            ->where('event_id', $event->id)
-                            ->whereAnd('member_id', $member->id)
-                            ->getRow() : 
-                        false;
-                    
-                    require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/details.php";
+                    $this->getTournamentEventView($identifier, $member);
                     break;
 
                 case "training": 
-                    $event = $this->trainingRepository->select()->where('slug', "'$identifier'")->getRow();
-                    $participants = $this->participantRepository->findByEvent($event->id);
-                    $game = $this->gameRepository->find($event->game_id);
-                    $author = $this->memberRepository->select(["gamertag"])->where('user_id', $event->author)->getRow();
-                    $gameMode = ($game) ? $this->gameModeRepository->find($game->id) : false;
-                    $participated = ($member) ? 
-                        $this->participantRepository->select()
-                            ->where('member_id', $member->id)
-                            ->whereAnd('event_id', $event->id)
-                            ->getRow() : 
-                        false;
-                    require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/details.php";
+                    $this->getTrainingEventView($identifier, $member);
                     break;
             }
         }
 
         /**
-         * Rendering participate view
+         * render lan event details
          *
-         * @param [type] $event
+         * @param string $type
+         * @param string $identifier
+         * @return void
+         */
+        public function getLanEventView($identifier, $member) 
+        {
+            $event = $this->lanRepository->select()->where('slug', "'$identifier'")->getRow();
+            $settings = $this->lanRepository->settings()->find($event->id);
+            $participants = $this->lanRepository->getParticipants($event->id);
+            $tournaments = $this->tournamentRepository->select()->where('has_lan', 1)->whereAnd('lan_id', $event->id)->whereAnd('is_draft', 0)->get();
+
+            $participant = ($member) ? $this->lanParticipantRepository->select()->where('event_id', $event->id)->whereAnd('member_id', $member->id)->getRow() : [];
+
+            $timeplan = $this->lanRepository->timeplan()->select()->where('event_id', $event->id)->get();
+            $timeplanContent = ($timeplan) ? json_decode($timeplan[0]->content) : [];
+            // get the entries for each day
+            $timeplanFriday = ($timeplanContent) ? $timeplanContent->friday : [];
+
+            // if the participant is not empty, we need to get the food preferences
+            if ($participant) {
+                if ( ! $participant->has_saturday_breakfast == "1" && ! $participant->has_sunday_breakfast == "1" ) {
+                    $hasOrderedFood = false;
+                } else {
+                    $hasOrderedFood = true;
+                }
+            }
+
+            $participated = ($participant) ? true : false;
+
+            require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/lan/details.php";
+        }
+
+        /**
+         * render tournament event details
+         *
+         * @param string $type
+         * @param string $identifier
+         * @return void
+         */
+        public function getTournamentEventView($identifier, $member)
+        {
+            $event = $this->tournamentRepository->select()->where('slug', "'$identifier'")->getRow();
+            $settings = $this->tournamentSettingsRepository->find($event->id);
+            $participants = $this->participantRepository->findByEvent($event->id);
+            // $participated = ($member) ? $this->participantRepository->hasParticipated($event->id, $member->id) : false;
+            $participated = ($member) 
+                ? $this->participantRepository->select()->where('event_id', $event->id)->whereAnd('member_id', $member->id)->getRow() 
+                : false;
+            
+            require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/details.php";
+        }
+
+        /**
+         * Undocumented function
+         *
+         * @param string $identifier
+         * @param object | bool $member
+         * @return void
+         */
+        public function getTrainingEventView($identifier, $member) 
+        {
+            $event = $this->trainingRepository->select()->where('slug', "'$identifier'")->getRow();
+            $participants = $this->participantRepository->findByEvent($event->id);
+            $game = $this->gameRepository->find($event->game_id);
+            $author = $this->memberRepository->select(["gamertag"])->where('user_id', $event->author)->getRow();
+            $gameMode = ($game) ? $this->gameModeRepository->find($game->id) : false;
+            $participated = ($member) 
+                ? $this->participantRepository->select()->where('member_id', $member->id)->whereAnd('event_id', $event->id)->getRow()
+                : false;
+            require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/details.php";
+        }
+
+        /**
+         * Undocumented function
+         *
+         * @param object $event
          * @return void
          */
         public function renderEventParticipate($event)
