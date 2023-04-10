@@ -1,8 +1,8 @@
 <div class="container-fluid event lan-event h-100"">
-    <div class="row event-header p-5 align-items-end">
+    <div class="row event-header p-5 align-items-center">
         <div class="container">
             <div class="row">
-                <div class="col-lg-5 col-xl-5 text-white">
+                <div class="col-lg-8 col-xl-8 text-white">
                     <div class="row title mb-0">
                         <h1 class="text-white display-5 fw-bold"><?php echo strtoupper($event->title); ?></h1>
                     </div>
@@ -65,7 +65,7 @@
                 <?php 
                     if ( strtotime('today') > $event->latest_participation_date ) {
                         ?>
-                            <div class="col-lg-5 col-xl-5">
+                            <div class="col-lg-4 col-xl-4">
                                 <div class="alert alert-info">
                                     <p class="lead text-center mb-0 fw-bold">Der er lukket for tilmelding</p>
                                 </div>
