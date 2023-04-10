@@ -67,7 +67,7 @@
                         ?>
                             <div class="col-lg-5 col-xl-5">
                                 <div class="alert alert-info">
-                                    <p class="lead display-6 fw-bold">Der er lukket for tilmelding</p>
+                                    <p class="lead text-center mb-0 fw-bold">Der er lukket for tilmelding</p>
                                 </div>
                             </div>
                         <?php
