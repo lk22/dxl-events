@@ -50,13 +50,15 @@
                                 </div>
                             </div>
                         <?php
-                    } else {
+                    }
+                ?>
+            </div>
+            <div class="col-lg-5 col-xl-5">
+                <?php 
+                    if ( strtotime('today') > $event->latest_participation_date ) {
                         ?>
-                            <div class="row">
-                                <div class="alert alert-info">Der er lukket for tilmelding</div>
-                                <div class="col-6">
-                                    <button class="btn btn-success modal-button" data-bs-toggle="modal" data-bs-target="#lanEventParticipantsModal">Deltagerliste</button>
-                                </div>
+                            <div class="alert alert-info">
+                                <p class="lead display-6 fw-bold">Der er lukket for tilmelding</p>
                             </div>
                         <?php
                     }
