@@ -29,23 +29,38 @@
                     </p>
                 </div>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <button class="btn btn-success modal-button" data-bs-toggle="modal" data-bs-target="#lanEventParticipantsModal">Deltagerliste</button>
-                        <?php 
-                            if( $participated ) {
-                                ?>
-                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#lanUnparticipateModal">Afmeld</button>
-                                    <!-- <a href="events/?action=unparticipate&event=<?php echo $event->id; ?>" class="btn btn-success">Afmeld</a> -->
-                                <?php
-                            } else if( !$participated && $member ) {
-                                ?>
-                                    <a href="events/?action=participate&event=<?php echo $event->slug; ?>" class="btn btn-success">Deltag</a>
-                                <?php
-                            }
+                <?php 
+                    if ( ! $event->latest_participation_date > time() ) {
                         ?>
-                    </div>
-                </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <button class="btn btn-success modal-button" data-bs-toggle="modal" data-bs-target="#lanEventParticipantsModal">Deltagerliste</button>
+                                    <?php 
+                                        if( $participated ) {
+                                            ?>
+                                                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#lanUnparticipateModal">Afmeld</button>
+                                                <!-- <a href="events/?action=unparticipate&event=<?php echo $event->id; ?>" class="btn btn-success">Afmeld</a> -->
+                                            <?php
+                                        } else if( !$participated && $member ) {
+                                            ?>
+                                                <a href="events/?action=participate&event=<?php echo $event->slug; ?>" class="btn btn-success">Deltag</a>
+                                            <?php
+                                        }
+                                    ?>
+                                </div>
+                            </div>
+                        <?php
+                    } else {
+                        ?>
+                            <div class="row">
+                                <div class="alert alert-info">Der er lukket for tilmelding</div>
+                                <div class="col-6">
+                                    <button class="btn btn-success modal-button" data-bs-toggle="modal" data-bs-target="#lanEventParticipantsModal">Deltagerliste</button>
+                                </div>
+                            </div>
+                        <?php
+                    }
+                ?>
             </div>
         </div>
     </div>
