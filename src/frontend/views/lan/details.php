@@ -1,68 +1,70 @@
 <div class="container-fluid event lan-event h-100"">
     <div class="row event-header p-5 align-items-end">
         <div class="container">
-            <div class="col-lg-5 col-xl-5 text-white">
-                <div class="row title mb-0">
-                    <h1 class="text-white display-5 fw-bold"><?php echo strtoupper($event->title); ?></h1>
-                </div>
+            <div class="row">
+                <div class="col-lg-5 col-xl-5 text-white">
+                    <div class="row title mb-0">
+                        <h1 class="text-white display-5 fw-bold"><?php echo strtoupper($event->title); ?></h1>
+                    </div>
 
-                <div class="row meta">
-                    <div class="col-12 location">
-                        <p class="lead text-white fw-bold">
-                            <strong>Lokation: </strong> <?php echo $settings->event_location; ?>
+                    <div class="row meta">
+                        <div class="col-12 location">
+                            <p class="lead text-white fw-bold">
+                                <strong>Lokation: </strong> <?php echo $settings->event_location; ?>
+                            </p>
+                        </div>
+                        <div class="col-12 start-date">
+                            <p><strong>Start dato:</strong> <?php echo date("j F Y", $event->start); ?></p>
+                        </div>
+                        <div class="col-12 end-date">
+                            <p><strong>Slut dato:</strong> <?php echo date("j F Y", $event->end); ?></p>
+                        </div>
+                        <div class="participation-start meta__field">
+                        <p>
+                            <strong>Tilmelding åbner:</strong> <?php echo date("j F Y", $settings->participation_opening_date); ?>
                         </p>
                     </div>
-                    <div class="col-12 start-date">
-                        <p><strong>Start dato:</strong> <?php echo date("j F Y", $event->start); ?></p>
+                    <div class="latest-participation-date meta__field">
+                        <p>
+                            <strong>Seneste tilmeldings frist:</strong> <?php echo date("j F Y", $settings->latest_participation_date); ?>
+                        </p>
                     </div>
-                    <div class="col-12 end-date">
-                        <p><strong>Slut dato:</strong> <?php echo date("j F Y", $event->end); ?></p>
                     </div>
-                    <div class="participation-start meta__field">
-                    <p>
-                        <strong>Tilmelding åbner:</strong> <?php echo date("j F Y", $settings->participation_opening_date); ?>
-                    </p>
-                </div>
-                <div class="latest-participation-date meta__field">
-                    <p>
-                        <strong>Seneste tilmeldings frist:</strong> <?php echo date("j F Y", $settings->latest_participation_date); ?>
-                    </p>
-                </div>
-                </div>
-                <?php 
-                    if ( ! strtotime("today") > $event->latest_participation_date ) {
-                        ?>
-                            <div class="row">
-                                <div class="col-6">
-                                    <button class="btn btn-success modal-button" data-bs-toggle="modal" data-bs-target="#lanEventParticipantsModal">Deltagerliste</button>
-                                    <?php 
-                                        if( $participated ) {
-                                            ?>
-                                                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#lanUnparticipateModal">Afmeld</button>
-                                                <!-- <a href="events/?action=unparticipate&event=<?php echo $event->id; ?>" class="btn btn-success">Afmeld</a> -->
-                                            <?php
-                                        } else if( !$participated && $member ) {
-                                            ?>
-                                                <a href="events/?action=participate&event=<?php echo $event->slug; ?>" class="btn btn-success">Deltag</a>
-                                            <?php
-                                        }
-                                    ?>
+                    <?php 
+                        if ( ! strtotime("today") > $event->latest_participation_date ) {
+                            ?>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button class="btn btn-success modal-button" data-bs-toggle="modal" data-bs-target="#lanEventParticipantsModal">Deltagerliste</button>
+                                        <?php 
+                                            if( $participated ) {
+                                                ?>
+                                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#lanUnparticipateModal">Afmeld</button>
+                                                    <!-- <a href="events/?action=unparticipate&event=<?php echo $event->id; ?>" class="btn btn-success">Afmeld</a> -->
+                                                <?php
+                                            } else if( !$participated && $member ) {
+                                                ?>
+                                                    <a href="events/?action=participate&event=<?php echo $event->slug; ?>" class="btn btn-success">Deltag</a>
+                                                <?php
+                                            }
+                                        ?>
+                                    </div>
                                 </div>
-                            </div>
-                        <?php
-                    }
-                ?>
-            </div>
-            <div class="col-lg-5 col-xl-5">
-                <?php 
-                    if ( strtotime('today') > $event->latest_participation_date ) {
-                        ?>
-                            <div class="alert alert-info">
-                                <p class="lead display-6 fw-bold">Der er lukket for tilmelding</p>
-                            </div>
-                        <?php
-                    }
-                ?>
+                            <?php
+                        }
+                    ?>
+                </div>
+                <div class="col-lg-5 col-xl-5">
+                    <?php 
+                        if ( strtotime('today') > $event->latest_participation_date ) {
+                            ?>
+                                <div class="alert alert-info">
+                                    <p class="lead display-6 fw-bold">Der er lukket for tilmelding</p>
+                                </div>
+                            <?php
+                        }
+                    ?>
+                </div>
             </div>
         </div>
     </div>
