@@ -56,6 +56,13 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <button class="btn btn-success modal-button" data-bs-toggle="modal" data-bs-target="#lanEventParticipantsModal">Deltagerliste</button>
+                                        <?php
+                                            if ( $participated ) {
+                                                ?>
+                                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#lanUnparticipateModal">Afmeld</button>
+                                                <?php
+                                            }
+                                        ?>
                                     </div>
                                 </div>
                             <?php
