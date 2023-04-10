@@ -65,7 +65,7 @@
                 <?php 
                     if ( strtotime('today') > $event->latest_participation_date ) {
                         ?>
-                            <div class="col-lg-4 col-xl-4">
+                            <div class="col-lg-4 col-xl-4 mt-3 mt-lg-0 mt-xl-0 mt-xxl-0">
                                 <div class="alert alert-info">
                                     <p class="lead text-center mb-0 fw-bold">Der er lukket for tilmelding</p>
                                 </div>
