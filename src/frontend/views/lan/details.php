@@ -30,7 +30,7 @@
                 </div>
                 </div>
                 <?php 
-                    if ( ! $event->latest_participation_date > time() ) {
+                    if ( strtotime("today") > $event->latest_participation_date ) {
                         ?>
                             <div class="row">
                                 <div class="col-6">
