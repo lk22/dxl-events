@@ -148,6 +148,7 @@
     margin-left: 0;
     width: auto;
     justify-content: flex-start;
+    flex-wrap: wrap;
     background: #eeeeee;
     padding: 20px;
     gap: 0;
@@ -159,7 +160,7 @@
 }
   .filter-group .btn {
     margin-bottom: 10px;
-    width: 100%;
+    width: auto;
     border-bottom: 0;
     text-decoration: none;
     font-weight: bold;
