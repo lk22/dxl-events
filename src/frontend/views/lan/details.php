@@ -61,10 +61,6 @@
                                                 ?>
                                                     <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#lanUnparticipateModal">Afmeld</button>
                                                 <?php
-                                            } else {
-                                                ?>
-                                                    <a href="events/?action=participate&event=<?php echo $event->slug; ?>" class="btn btn-success">Deltag</a>
-                                                <?php
                                             }
                                         ?>
                                     </div>
@@ -74,7 +70,7 @@
                     ?>
                 </div>
                 <?php 
-                    if ( strtotime('today') >= $settings->latest_participation_date ) {
+                    if ( strtotime('today') > $settings->latest_participation_date ) {
                         ?>
                             <div class="col-lg-4 col-xl-4 mt-3 mt-lg-0 mt-xl-0 mt-xxl-0">
                                 <div class="alert alert-primary">
