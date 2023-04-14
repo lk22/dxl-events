@@ -156,7 +156,7 @@
                 foreach ( $participants as $participant ) {
                     // $member = $this->memberRepository->select()->where('member_id', $participant->member_id)->get();
                     // TODO: needs to use member repository database handler
-                    $member = $wpdb->get_row("SELECT member_number FROM {$wpdb->prefix}members WEHRE member_id = {$participant->member_id}");
+                    $member = $wpdb->get_row("SELECT member_number FROM {$wpdb->prefix}members WEHRE id = {$participant->member_id}");
                     $sheet->setCellValue('A' . $row, $participant->id);
                     $sheet->setCellValue('B' . $row, $participant->name);
                     $sheet->setCellValue('C' . $row, $participant->gamertag);
