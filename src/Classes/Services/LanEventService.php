@@ -6,6 +6,7 @@
     use DxlEvents\Classes\Repositories\LanParticipantRepository as LanParticipant;
     // use DxlEvents\Classes\Repositories\LanTournamentRepository;
     use DxlEvents\Classes\Repositories\ParticipantRepository;
+    // use DxlMembership\Classes\Repositories\MemberRepository;
 
     use PhpOffice\PhpSpreadsheet\Spreadsheet;
     use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -21,6 +22,7 @@
             public function __construct() 
             {
                 $this->tournamentParticipantRepository = new ParticipantRepository();
+                // $this->memberRepository = new MemberRepository();
             }
 
             public function createEvent(array $event) : bool
@@ -111,6 +113,7 @@
              */
             public function exportParticipants(array $participants, array $tournaments, $event)
             {
+                global $wpdb;
                 $spreadsheet = new Spreadsheet();
                 $sheet = $spreadsheet->getActiveSheet();
                 $sheet->setTitle('LAN Deltagere');
@@ -144,12 +147,16 @@
                 $sheet->setCellValue('C1', 'Gamertag')->getColumnDimension('C')->setAutoSize(true);
                 $sheet->setCellValue("D1", "Betingelser")->getColumnDimension('D')->setAutoSize(true);
                 $sheet->setCellValue("E1", "Medlemmer at sidde sammen med")->getColumnDimension("E")->setAutoSize(true);
+                $sheet->setCellValue("F1", "Medlemsnummer")->getColumnDimension("E")->setAutoSize(true);
                 $sheet->setCellValue("G1", "Morgenmad (Lørdag)")->getColumnDimension("G")->setAutoSize(true);
                 $sheet->setCellValue("H1", "Morgenmad (Søndag)")->getColumnDimension("H")->setAutoSize(true);
 
 
                 $row = 2;
                 foreach ( $participants as $participant ) {
+                    // $member = $this->memberRepository->select()->where('member_id', $participant->member_id)->get();
+                    // TODO: needs to use member repository database handler
+                    $member = $wpdb->get_row("SELECT member_number FROM {$wpdb->prefix}members WEHRE member_id = {$participant->member_id}");
                     $sheet->setCellValue('A' . $row, $participant->id);
                     $sheet->setCellValue('B' . $row, $participant->name);
                     $sheet->setCellValue('C' . $row, $participant->gamertag);
@@ -163,6 +170,8 @@
                     if (count($seat_members) > 0) {
                         $sheet->setCellValue('E' . $row, str_replace("[]", "", implode(", ", $seat_members)));
                     }
+
+                    $sheet->setCellValue('F' . $row, $member->member_number);
 
                     if ( $participant->has_saturday_breakfast ) {
                         $sheet->setCellValue('G' . $row, "bestilt");
