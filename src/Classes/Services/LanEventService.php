@@ -4,9 +4,8 @@
     use DxlEvents\Classes\Repositories\LanRepository as Event;
     use DxlEvents\Classes\Repositories\LanSettingsRepository as Settings;
     use DxlEvents\Classes\Repositories\LanParticipantRepository as LanParticipant;
-    // use DxlEvents\Classes\Repositories\LanTournamentRepository;
     use DxlEvents\Classes\Repositories\ParticipantRepository;
-    // use DxlMembership\Classes\Repositories\MemberRepository;
+    use DxlMembership\Classes\Repositories\MemberRepository;
 
     use PhpOffice\PhpSpreadsheet\Spreadsheet;
     use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -22,7 +21,7 @@
             public function __construct() 
             {
                 $this->tournamentParticipantRepository = new ParticipantRepository();
-                // $this->memberRepository = new MemberRepository();
+                $this->memberRepository = new MemberRepository();
             }
 
             public function createEvent(array $event) : bool
@@ -156,7 +155,8 @@
                 foreach ( $participants as $participant ) {
                     // $member = $this->memberRepository->select()->where('member_id', $participant->member_id)->get();
                     // TODO: needs to use member repository database handler
-                    $member = $wpdb->get_row("SELECT member_number FROM {$wpdb->prefix}members WHERE id = {$participant->member_id}");
+                    // $member = $wpdb->get_row("SELECT member_number FROM {$wpdb->prefix}members WHERE id = {$participant->member_id}");
+                    $member = $this->memberRepository->select(["member_number"])->where('id', $participant->member_id)->get();
                     $sheet->setCellValue('A' . $row, $participant->id);
                     $sheet->setCellValue('B' . $row, $participant->name);
                     $sheet->setCellValue('C' . $row, $participant->gamertag);
