@@ -21,7 +21,7 @@
             public function __construct() 
             {
                 $this->tournamentParticipantRepository = new ParticipantRepository();
-                $this->memberRepository = new MemberRepository();
+                
             }
 
             public function createEvent(array $event) : bool
@@ -116,6 +116,7 @@
                 $spreadsheet = new Spreadsheet();
                 $sheet = $spreadsheet->getActiveSheet();
                 $sheet->setTitle('LAN Deltagere');
+                $memberRepository = new MemberRepository();
                 
                 if ( count($tournaments) > 0) {
                     foreach ( $tournaments as $tournament ) {
@@ -156,7 +157,7 @@
                     // $member = $this->memberRepository->select()->where('member_id', $participant->member_id)->get();
                     // TODO: needs to use member repository database handler
                     // $member = $wpdb->get_row("SELECT member_number FROM {$wpdb->prefix}members WHERE id = {$participant->member_id}");
-                    $member = $this->memberRepository->select(["member_number"])->where('id', $participant->member_id)->get();
+                    $member = $memberRepository->select(["member_number"])->where('id', $participant->member_id)->get();
                     $sheet->setCellValue('A' . $row, $participant->id);
                     $sheet->setCellValue('B' . $row, $participant->name);
                     $sheet->setCellValue('C' . $row, $participant->gamertag);
