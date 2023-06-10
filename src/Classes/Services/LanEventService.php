@@ -11,6 +11,9 @@
     use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
     use PhpOffice\PhpSpreadsheet\Style\Fill;
 
+    // get logger utility
+    use Dxl\Classes\Utilities\LoggerUtility as Logger;
+
     if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
     if( ! class_exists('LanEventService') )
@@ -117,7 +120,7 @@
                 $sheet = $spreadsheet->getActiveSheet();
                 $sheet->setTitle('LAN Deltagere');
                 $memberRepository = new MemberRepository();
-                
+                $logger = new Logger();
                 if ( count($tournaments) > 0) {
                     foreach ( $tournaments as $tournament ) {
                         // clone the sheet
@@ -151,13 +154,11 @@
                 $sheet->setCellValue("G1", "Morgenmad (Lørdag)")->getColumnDimension("G")->setAutoSize(true);
                 $sheet->setCellValue("H1", "Morgenmad (Søndag)")->getColumnDimension("H")->setAutoSize(true);
 
-
                 $row = 2;
                 foreach ( $participants as $participant ) {
-                    // $member = $this->memberRepository->select()->where('member_id', $participant->member_id)->get();
-                    // TODO: needs to use member repository database handler
-                    $member = $wpdb->get_row("SELECT member_number FROM {$wpdb->prefix}members WHERE id = {$participant->member_id}");
-                    // $member = $memberRepository->select()->where('id', $participant->member_id)->get();
+                    // $member = $wpdb->get_row("SELECT member_number FROM {$wpdb->prefix}members WHERE id = {$participant->member_id}");
+                    $member = $memberRepository->select(["member_number"])->where("id", $participant->member_id)->get();
+                    $logger->log("member: " . $member->member_number);
                     $sheet->setCellValue('A' . $row, $participant->id);
                     $sheet->setCellValue('B' . $row, $participant->name);
                     $sheet->setCellValue('C' . $row, $participant->gamertag);

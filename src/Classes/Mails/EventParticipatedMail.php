@@ -45,6 +45,20 @@
             public $companion;
 
             /**
+             * Work chores checked has a participant decided to assign work chores
+             *
+             * @var bool
+             */
+            public $workChoresCheked;
+
+            /**
+             * Work chores
+             *
+             * @var Array
+             */
+            public $workchores;
+
+            /**
              * Constructor
              *
              * @param [type] $participant
@@ -54,13 +68,18 @@
                 $event, 
                 $seatedMembers = [], 
                 $notice, 
-                $companion)
+                $companion,
+                $workChoresChecked,
+                $workchores
+            )
             {
                 $this->participant = $participant;
                 $this->event = $event;
                 $this->seatedMembers = $seatedMembers;
                 $this->notice = $notice;
                 $this->companion = $companion;
+                $this->workChoresChecked = $workChoresChecked;
+                $this->workchores = $workchores;
             }
 
             /**
@@ -103,6 +122,44 @@
                     $template .= (!empty($this->companion["mail"])) ? "<li>" . $this->companion["mail"] . "</li>" : "";
                     $template .= (!empty($this->companion["phone"])) ? "<li>" . $this->companion["phone"] . "</li>" : "";
                     $template .= "</ul>\n";
+                }
+
+                if ( $this->workChoresChecked ) {
+                    $template .= "<p>Du ønsker og tage følgende arbejdsopgaver</p>\n";
+                    if( count($this->workchores["friday"]) ) {
+                        $template .= "<h4>Fredag</h4>\n";
+                        if ( $this->workchores["friday"]["participant-work-friday-trash"] ) {
+                            $template .= "<p>Tømning af affald</p>\n";
+                        }
+
+                        if ( $this->workchores["friday"]["participant-work-friday-fireroute"] ) {
+                            $template .= "<p>Gå brandrunde</p>\n";
+                        }
+                    }
+
+                    if ( count($this->workchores["saturday"]) ) {
+                        $template .= "<h4>Lørdag</h4>\n";
+
+                        if ( $this->workchores["saturday"]["participant-work-saturday-trash"] ) {
+                            $template .= "<p>Tømning af affald</p>\n";
+                        }
+
+                        if ( $this->workchores["saturday"]["participant-work-saturday-fireroute"] ) {
+                            $template .= "<p>Gå brandrunde</p>\n";
+                        }
+                    }
+
+                    if ( count($this->workchores["sunday"]) ) {
+                        $template .= "<h4>Lørdag</h4>\n";
+
+                        if ( $this->workchores["sunday"]["participant-work-sunday-trash"] ) {
+                            $template .= "<p>Tømning af affald</p>\n";
+                        }
+
+                        if ( $this->workchores["sunday"]["participant-work-sunday-fireroute"] ) {
+                            $template .= "<p>Gå brandrunde</p>\n";
+                        }
+                    }
                 }
 
                 if( !empty($this->notice) ) {

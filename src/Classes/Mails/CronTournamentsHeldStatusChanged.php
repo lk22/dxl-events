@@ -12,7 +12,9 @@
         class CronTournamentsHeldStatusChanged extends Mail 
         {
 
-            /** */
+            /**
+             * Event data
+             */
             public $eventsData = [];
 
             /**

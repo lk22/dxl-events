@@ -58,6 +58,45 @@
                         <small>Vi skal bruge din ledsages kontaktoplysninger (Navn, email eller telefonnummer)</small>
                     </div> 
 
+                    <div class="form-check form-switch" id="work-choices-field">
+                        <input type="checkbox" role="switch" name="participant-want-work-choices-field" id="floatingInput participant-work-choices" class="form-check-input">
+                        <label for="floatingInput">Ønsker du at bidrage til arbejdsopgaver henover weekenden?</label>
+                    </div>
+
+                    <div class="form-group participant-work-friday d-none">
+                        <p class="lead">Arbdejds opgaver fredag</p>
+                        <div class="form-check form-switch">
+                            <input type="checkbox" role="switch" name="participant-work-friday-trash" id="floatingInput work-choice-trash" class="form-check-input">
+                            <label for="floatingInput">Tage affaldet (Fredag)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input type="checkbox" role="switch" name="participant-work-friday-fireroute" id="floatingInputwork-choice-trash" class="form-check-input">
+                            <label for="floatingInput">Gå brand rundde (Fredag)</label>
+                        </div>
+                    </div>
+                    <div class="form-group participant-work-saturday d-none">
+                        <p class="lead">Arbdejds opgaver Lørdag</p>
+                        <div class="form-check form-switch">
+                            <input type="checkbox" role="switch" name="participant-work-saturday-trash" id="floatingInputwork-choice-trash" class="form-check-input">
+                            <label for="floatingInput">Tage affaldet (Lørdag)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input type="checkbox" role="switch" name="participant-work-saturday-fireroute" id="floatingInput work-choice-trash" class="form-check-input">
+                            <label for="floatingInput">Gå brand rundde (Lørdag)</label>
+                        </div>
+                    </div>
+                    <div class="form-group participant-work-sunday d-none">
+                        <p class="lead">Arbdejds opgaver Søndag</p>
+                        <div class="form-check form-switch">
+                            <input type="checkbox" role="switch" name="participant-work-sunday-trash" id="floatingInput work-choice-trash" class="form-check-input">
+                            <label for="floatingInput">Tage affaldet (Søndag)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input type="checkbox" role="switch" name="participant-work-sunday-fireroute" id="floatingInput work-choice-trash" class="form-check-input">
+                            <label for="floatingInput">Gå brand rundde (Søndag)</label>
+                        </div>
+                    </div>
+
                     <label>Hvem ønsker du at sidde sammen med</label>
                     <select class="form-select member-select mb-4" id="participant-member-select" multiple aria-label="Vælg medlmmer">
                         <?php 
