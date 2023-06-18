@@ -63,7 +63,7 @@
                         <label for="floatingInput">Ønsker du at bidrage til arbejdsopgaver henover weekenden?</label>
                     </div>
 
-                    <div class="form-group participant-work-friday d-none">
+                    <div class="form-group participant-work-chores d-none">
                         <p class="lead">Arbdejds opgaver fredag</p>
                         <div class="form-check form-switch">
                             <input type="checkbox" role="switch" name="participant-work-friday-trash" id="floatingInput work-choice-trash" class="form-check-input">
@@ -73,8 +73,6 @@
                             <input type="checkbox" role="switch" name="participant-work-friday-fireroute" id="floatingInputwork-choice-trash" class="form-check-input">
                             <label for="floatingInput">Gå brand rundde (Fredag)</label>
                         </div>
-                    </div>
-                    <div class="form-group participant-work-saturday d-none">
                         <p class="lead">Arbdejds opgaver Lørdag</p>
                         <div class="form-check form-switch">
                             <input type="checkbox" role="switch" name="participant-work-saturday-trash" id="floatingInputwork-choice-trash" class="form-check-input">
@@ -84,8 +82,6 @@
                             <input type="checkbox" role="switch" name="participant-work-saturday-fireroute" id="floatingInput work-choice-trash" class="form-check-input">
                             <label for="floatingInput">Gå brand rundde (Lørdag)</label>
                         </div>
-                    </div>
-                    <div class="form-group participant-work-sunday d-none">
                         <p class="lead">Arbdejds opgaver Søndag</p>
                         <div class="form-check form-switch">
                             <input type="checkbox" role="switch" name="participant-work-sunday-trash" id="floatingInput work-choice-trash" class="form-check-input">

@@ -126,37 +126,31 @@
 
                 if ( $this->workChoresChecked ) {
                     $template .= "<p>Du ønsker og tage følgende arbejdsopgaver</p>\n";
-                    if( count($this->workchores["friday"]) ) {
-                        $template .= "<h4>Fredag</h4>\n";
-                        if ( $this->workchores["friday"]["participant-work-friday-trash"] ) {
+                    if ( $this->workchores ) {
+                        $template .= "Fredag: \n";
+                        if ( $this->workchores["participant-work-friday-trash"] ) {
                             $template .= "<p>Tømning af affald</p>\n";
                         }
 
-                        if ( $this->workchores["friday"]["participant-work-friday-fireroute"] ) {
+                        if ( $this->workchores["participant-work-friday-fireroute"] ) {
                             $template .= "<p>Gå brandrunde</p>\n";
                         }
-                    }
 
-                    if ( count($this->workchores["saturday"]) ) {
-                        $template .= "<h4>Lørdag</h4>\n";
-
-                        if ( $this->workchores["saturday"]["participant-work-saturday-trash"] ) {
+                        $template .= "\n<h4>Lørdag: </h4>\n";
+                        if ( $this->workchores["participant-work-saturday-trash"] ) {
                             $template .= "<p>Tømning af affald</p>\n";
                         }
 
-                        if ( $this->workchores["saturday"]["participant-work-saturday-fireroute"] ) {
+                        if ( $this->workchores["participant-work-saturday-fireroute"] ) {
                             $template .= "<p>Gå brandrunde</p>\n";
                         }
-                    }
 
-                    if ( count($this->workchores["sunday"]) ) {
-                        $template .= "<h4>Lørdag</h4>\n";
-
-                        if ( $this->workchores["sunday"]["participant-work-sunday-trash"] ) {
+                        $template .= "\n<h4>Lørdag</h4>\n";
+                        if ( $this->workchores["participant-work-sunday-trash"] ) {
                             $template .= "<p>Tømning af affald</p>\n";
                         }
-
-                        if ( $this->workchores["sunday"]["participant-work-sunday-fireroute"] ) {
+    
+                        if ( $this->workchores["participant-work-sunday-fireroute"] ) {
                             $template .= "<p>Gå brandrunde</p>\n";
                         }
                     }
@@ -166,7 +160,7 @@
                     $template .= "<p>Vi har noteret din bemærkning</p>\n";
                     $template .= "<p>" . $this->notice . "</p>";
                 }
-                $template .= "<p>Vl glæder os til at se dig</p>";
+                $template .= "\n\n<p>Vl glæder os til at se dig</p>";
                 return $template;
             }   
         }
