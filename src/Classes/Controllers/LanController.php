@@ -2,6 +2,7 @@
 namespace DxlEvents\Classes\Controllers;
 
 require_once(ABSPATH . "wp-content/plugins/dxl-core/src/Classes/Core.php");
+require_once(ABSPATH . "wp-content/plugins/dxl-core/src/Classes/Discord/DiscordWebhookService.php");
 use Dxl\Classes\Abstracts\AbstractActionController as Controller;
 use Dxl\Classes\Core;
 
@@ -14,6 +15,8 @@ use DxlEvents\Classes\Repositories\LanParticipantRepository;
 use DxlEvents\Classes\Services\LanEventService as Service;
 
 use DxlEvents\Classes\Factories\TimeplanFactory;
+
+use Dxl\Classes\Discord\DiscordWebhookService;
 
 if( !class_exists('LanController') ) 
 {
@@ -280,6 +283,10 @@ if( !class_exists('LanController') )
                 "response" => "Begivenhed offentliggjort og kan nu deltages"
             ]);
             $logger->log("Published event " . $event->title . " and is now ready to be participated " . __METHOD__);
+            
+            $discord = new DiscordWebhookService(get_option("dxl_discord_webhook"));
+            $discord->send_message("Ny begivenhed er blevet offentliggjort: " . $event->title . " " . get_site_url() . "/begivenhed/" . $event->id);
+            
             wp_die();
         }
 
