@@ -31,7 +31,7 @@ if( !class_exists('GameService') )
          * @param array $gameModes
          * @return boolean
          */
-        public function insertGameModes(array $gameModes = [], $game): bool 
+        public function insertGameModes($game, array $gameModes = []): bool 
         {
             foreach($gameModes as $mode)    
             {
