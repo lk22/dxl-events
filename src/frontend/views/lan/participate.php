@@ -59,37 +59,89 @@
                     </div> 
 
                     <div class="form-check form-switch" id="work-choices-field">
-                        <input type="checkbox" role="switch" name="participant-want-work-choices-field" id="floatingInput participant-work-choices" class="form-check-input">
-                        <label for="floatingInput">Ønsker du at bidrage til arbejdsopgaver henover weekenden?</label>
+                        <input type="checkbox" checked="checked" disabled role="switch" name="participant-want-work-choices-field" id="floatingInput participant-work-choices" class="form-check-input">
+                        <label for="floatingInput">Hvad vil du gerne hjælpe med hen over weekenden?</label>
                     </div>
 
-                    <div class="form-group participant-work-chores d-none">
-                        <p class="lead">Arbdejds opgaver fredag</p>
-                        <div class="form-check form-switch">
-                            <input type="checkbox" role="switch" name="participant-work-friday-trash" id="floatingInput work-choice-trash" class="form-check-input">
-                            <label for="floatingInput">Tage affaldet (Fredag)</label>
+                    <div class="form-group participant-work-chores mt-2">
+                        <p class="lead mb-0 fw-bold mb-2">Arbdejds opgaver fredag</p>
+                        <div class="form-check form-switch mb-2">
+                            <input type="checkbox" role="switch" name="participant-work-friday-setup" class="form-check-input">
+                            <label for="floatingInput">Opsætning (<small><strong>Fra kl: 10:00 el. 15:30</strong></small>)</label>
                         </div>
-                        <div class="form-check form-switch">
-                            <input type="checkbox" role="switch" name="participant-work-friday-fireroute" id="floatingInputwork-choice-trash" class="form-check-input">
-                            <label for="floatingInput">Gå brand rundde (Fredag)</label>
+                        <div class="form-check form-switch mb-2">
+                            <input type="checkbox" role="switch" name="participant-work-friday-fireroute" class="form-check-input">
+                            <label for="floatingInput">Gå brand rundde (<small><strong>Skal gøres kl 18</strong></small>)</label>
                         </div>
-                        <p class="lead">Arbdejds opgaver Lørdag</p>
-                        <div class="form-check form-switch">
-                            <input type="checkbox" role="switch" name="participant-work-saturday-trash" id="floatingInputwork-choice-trash" class="form-check-input">
-                            <label for="floatingInput">Tage affaldet (Lørdag)</label>
+                        <div class="form-check form-switch mb-2">
+                            <input type="checkbox" role="switch" name="participant-work-friday-trash" class="form-check-input">
+                            <label for="floatingInput">Tømning og sortering af affald / pant</label>
                         </div>
-                        <div class="form-check form-switch">
+                        <div class="form-check form-switch mb-2">
+                            <input type="checkbox" role="switch" name="participant-work-friday-smoke-area" class="form-check-input">
+                            <label for="floatingInput">Holde ryge område rent.</label>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                            <input type="checkbox" role="switch" name="participant-work-friday-bathroom" class="form-check-input">
+                            <label for="floatingInput">Holde toiletter rene og er der papir</label>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                            <input type="checkbox" role="switch" name="participant-work-friday-coffee" class="form-check-input">
+                            <label for="floatingInput">Laver frisk kaffe til alle.</label>
+                        </div>
+                        <p class="lead mb-0 fw-bold my-2">Arbdejds opgaver Lørdag</p>
+                        <div class="form-check form-switch mb-2">
                             <input type="checkbox" role="switch" name="participant-work-saturday-fireroute" id="floatingInput work-choice-trash" class="form-check-input">
-                            <label for="floatingInput">Gå brand rundde (Lørdag)</label>
+                            <label for="floatingInput">Gå brand rundde. (<small><strong>Skal gøres kl 18</strong></small>)</label>
                         </div>
-                        <p class="lead">Arbdejds opgaver Søndag</p>
+                        <div class="form-check form-switch mb-2">
+                            <input type="checkbox" role="switch" name="participant-work-saturday-trash" class="form-check-input">
+                            <label for="floatingInput">Tømning og sortering af affald / pant.</label>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                            <input type="checkbox" role="switch" name="participant-work-saturday-cleaning" class="form-check-input">
+                            <label for="floatingInput">Oprydning af borde, hallen og køkkenet.</label>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                            <input type="checkbox" role="switch" name="participant-work-saturday-smoke-area" class="form-check-input">
+                            <label for="floatingInput">Holde ryge område rent.</label>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                            <input type="checkbox" role="switch" name="participant-work-saturday-bathroom" class="form-check-input">
+                            <label for="floatingInput">Holde toiletter rene og er der papir</label>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                            <input type="checkbox" role="switch" name="participant-work-saturday-coffee" class="form-check-input">
+                            <label for="floatingInput">Laver frisk kaffe til alle.</label>
+                        </div>
+                        <p class="lead fw-bold mb-2">Arbdejds opgaver Søndag</p>
                         <div class="form-check form-switch">
                             <input type="checkbox" role="switch" name="participant-work-sunday-trash" id="floatingInput work-choice-trash" class="form-check-input">
-                            <label for="floatingInput">Tage affaldet (Søndag)</label>
+                            <label for="floatingInput">Tømning og sortering af affald / pant.</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input type="checkbox" role="switch" name="participant-work-sunday-cleaning" id="floatingInput work-choice-trash" class="form-check-input">
+                            <label for="floatingInput">Oprydning af borde, hallen og køkkenet.</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input type="checkbox" role="switch" name="participant-work-sunday-bathroom" id="floatingInput work-choice-trash" class="form-check-input">
+                            <label for="floatingInput">Holde ryger område rent.</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input type="checkbox" role="switch" name="participant-work-sunday-trash" id="floatingInput work-choice-trash" class="form-check-input">
+                            <label for="floatingInput">Holde toiletter rene og er der papir.</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input type="checkbox" role="switch" name="participant-work-sunday-trash" id="floatingInput work-choice-trash" class="form-check-input">
+                            <label for="floatingInput">Laver frisk kaffe til alle</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input type="checkbox" role="switch" name="participant-work-sunday-trash" id="floatingInput work-choice-trash" class="form-check-input">
+                            <label for="floatingInput">Nedpakning</label>
                         </div>
                         <div class="form-check form-switch">
                             <input type="checkbox" role="switch" name="participant-work-sunday-fireroute" id="floatingInput work-choice-trash" class="form-check-input">
-                            <label for="floatingInput">Gå brand rundde (Søndag)</label>
+                            <label for="floatingInput">Oprydning af sovehallerne</label>
                         </div>
                     </div>
 
