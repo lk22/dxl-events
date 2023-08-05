@@ -66,11 +66,11 @@
             public function __construct(
                 $participant, 
                 $event, 
-                $seatedMembers = [], 
-                $notice, 
-                $companion,
                 $workChoresChecked,
-                $workchores
+                $workchores,
+                $seatedMembers = [],
+                $companion = [],
+                $notice = ""
             )
             {
                 $this->participant = $participant;
