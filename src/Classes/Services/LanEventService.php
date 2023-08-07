@@ -177,7 +177,13 @@
                     $workchores = preg_replace('/\[\[(\w+)\[\]/' , '$1',  explode(",", $participant->workchores));
 
                     if ( count($workchores) ) {
-                        $sheet->setCellValue('F' . $row, str_replace("[]", "", implode(", ", $workchores)));
+                        // loop through each workchore and add save the label
+                        $chores = [];
+                        foreach( $workchores["items"] as $chore ) {
+                            $chores[] = $chore["label"];
+                        }
+
+                        $sheet->setCellValue('F' . $row, str_replace("[]", "", implode(", ", $chores)));
                     }
 
                     $sheet->setCellValue('G' . $row, $member->member_number);
