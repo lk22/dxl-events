@@ -12,7 +12,7 @@
     use PhpOffice\PhpSpreadsheet\Style\Fill;
 
     // get logger utility
-    use Dxl\Classes\Utilities\LoggerUtility as Logger;
+    use Dxl\Classes\Utilities\Logger;
 
     if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -157,8 +157,8 @@
 
                 $row = 2;
                 foreach ( $participants as $participant ) {
-                    // $member = $wpdb->get_row("SELECT member_number FROM {$wpdb->prefix}members WHERE id = {$participant->member_id}");
-                    $member = $memberRepository->select(["member_number"])->where("id", $participant->member_id)->get();
+                    $member = $wpdb->get_row("SELECT member_number FROM {$wpdb->prefix}members WHERE id = {$participant->member_id}");
+                    // $member = $memberRepository->select(["member_number"])->where("id", $participant->member_id)->get();
                     $logger->log("member: " . $member->member_number);
                     $sheet->setCellValue('A' . $row, $participant->id);
                     $sheet->setCellValue('B' . $row, $participant->name);
