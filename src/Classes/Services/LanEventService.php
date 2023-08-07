@@ -177,7 +177,7 @@
                     $workchores = preg_replace('/\[\[(\w+)\[\]/' , '$1',  explode(",", $participant->workchores));
 
                     if ( count($workchores) ) {
-                        $sheet->setCellValue('F' . $row, str_replace("[]", "", implode(", ", $workchores));
+                        $sheet->setCellValue('F' . $row, str_replace("[]", "", implode(", ", $workchores)));
                     }
 
                     $sheet->setCellValue('G' . $row, $member->member_number);
