@@ -150,9 +150,10 @@
                 $sheet->setCellValue('C1', 'Gamertag')->getColumnDimension('C')->setAutoSize(true);
                 $sheet->setCellValue("D1", "Betingelser")->getColumnDimension('D')->setAutoSize(true);
                 $sheet->setCellValue("E1", "Medlemmer at sidde sammen med")->getColumnDimension("E")->setAutoSize(true);
-                $sheet->setCellValue("F1", "Medlemsnummer")->getColumnDimension("E")->setAutoSize(true);
-                $sheet->setCellValue("G1", "Morgenmad (Lørdag)")->getColumnDimension("G")->setAutoSize(true);
-                $sheet->setCellValue("H1", "Morgenmad (Søndag)")->getColumnDimension("H")->setAutoSize(true);
+                $sheet->setCellValue("F1", "Arbejdsopgaver")->getColumnDimension("F")->setAutoSize(true);
+                $sheet->setCellValue("G1", "Medlemsnummer")->getColumnDimension("G")->setAutoSize(true);
+                $sheet->setCellValue("H1", "Morgenmad (Lørdag)")->getColumnDimension("H")->setAutoSize(true);
+                $sheet->setCellValue("H1", "Morgenmad (Søndag)")->getColumnDimension("I")->setAutoSize(true);
 
                 $row = 2;
                 foreach ( $participants as $participant ) {
@@ -173,14 +174,20 @@
                         $sheet->setCellValue('E' . $row, str_replace("[]", "", implode(", ", $seat_members)));
                     }
 
-                    $sheet->setCellValue('F' . $row, $member->member_number);
+                    $workchores = preg_replace('/\[\[(\w+)\[\]/' , '$1',  explode(",", $participant->workchores));
+
+                    if ( count($workchores) ) {
+                        $sheet->setCellValue('F' . $row, str_replace("[]", "", implode(", ", $workchores));
+                    }
+
+                    $sheet->setCellValue('G' . $row, $member->member_number);
 
                     if ( $participant->has_saturday_breakfast ) {
-                        $sheet->setCellValue('G' . $row, "bestilt");
+                        $sheet->setCellValue('H' . $row, "bestilt");
                     }
 
                     if ( $participant->has_sunday_breakfast ) {
-                        $sheet->setCellValue('H' . $row, "bestilt");
+                        $sheet->setCellValue('I' . $row, "bestilt");
                     }
 
                     $row++;
