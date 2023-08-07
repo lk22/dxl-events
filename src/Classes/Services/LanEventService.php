@@ -179,8 +179,8 @@
                     if ( count($workchores) ) {
                         // loop through each workchore and add save the label
                         $chores = [];
-                        foreach( $workchores["items"] as $chore ) {
-                            $chores[] = $chore["label"];
+                        foreach(json_decode($participant->workchores) as $chore) {
+                            $chores[] = $chore->label;
                         }
 
                         $sheet->setCellValue('F' . $row, str_replace("[]", "", implode(", ", $chores)));
