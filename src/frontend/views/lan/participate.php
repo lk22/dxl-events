@@ -254,6 +254,7 @@
                                 name="participant-work-sunday-clearing-hasll"
                                 class="form-check-input"
                                 data-label="Oprydning sovehaller (Søndag)"
+                                checked="checked"
                             >
                             <label for="floatingInput">Oprydning af sovehallerne</label>
                         </div>
