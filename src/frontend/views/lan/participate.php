@@ -246,7 +246,7 @@
                                 data-label="Nedpakning (Søndag)"
                                 checked="checked"
                             >
-                            <label for="floatingInput">Nedpakning</label> 
+                            <label for="floatingInput">Nedpakning</label>
                         </div>
                         <div class="form-check form-switch mb-2">
                             <input 
