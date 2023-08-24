@@ -34,7 +34,7 @@
 
                     <div class="form-floating mb-3">
                         <input type="text" value="<?php echo $member->address; ?>" class="form-control" name="participant-address" id="floatingInput participant-address" disabled>
-                        <label for="floatingInput">Email</label>
+                        <label for="floatingInput">Adresse</label>
                     </div>
 
                     <div class="form-check form-switch mb-4">
@@ -244,6 +244,7 @@
                                 name="participant-work-sunday-clearing" 
                                 class="form-check-input"
                                 data-label="Nedpakning (Søndag)"
+                                checked="checked"
                             >
                             <label for="floatingInput">Nedpakning</label>
                         </div>
