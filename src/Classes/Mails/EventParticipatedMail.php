@@ -170,10 +170,10 @@
              */
             private function getWorkChores($checked, $workchores): string 
             {
-                if ( $checked && sizeof($workchores) ) {
+                if ( $checked && count($workchores) ) {
                     $partial = "<p>Du ønsker og tage følgende arbejdsopgaver</p>\n\n";
 
-                    if ( sizeof($workchores) ) {
+                    if ( count($workchores) ) {
                         $partial .= "<ul>";
                         foreach( $workchores["items"] as $chore ) {
                             $partial .= "<li>- " . $chore["label"] . "</li>";

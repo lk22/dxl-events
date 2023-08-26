@@ -62,7 +62,7 @@
              *
              * @param [type] $participant
              */
-            public function __construct($participant, $event, $seatedMembers = [], $notice = "", $companion = null, $eventTermsAccepted)
+            public function __construct($participant, $event, $eventTermsAccepted, $seatedMembers = [], $companion = null,  $notice = "")
             {
                 $this->participant = $participant;
                 $this->event = $event;
