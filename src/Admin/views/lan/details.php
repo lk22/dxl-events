@@ -72,7 +72,7 @@
                             ?>
                                 <button class="button-primary" data-bs-toggle="modal" data-bs-target="#updateTimeplanModal">Opdater tidsplan</button>
                             <?php
-                            if ( $timeplanIsDraft ) {
+                            if ( !$timeplanIsDraft ) {
                                 echo "<p>Tidsplanen er ikke offentliggjort</p>";
                             } else {
                                 echo "<p>Tidsplanen er offentliggjort</p>";
