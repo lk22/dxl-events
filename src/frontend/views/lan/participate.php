@@ -73,7 +73,7 @@
                                 class="form-check-input"
                                 data-label="Opsætning (Fredag)"
                             >
-                            <label for="floatingInput">Opsætning (<small><strong>Fra kl: 10:00 el. 15:30</strong></small>)</label>
+                            <label for="floatingInput">Opsætning (<small><strong>Fra kl. 15:30</strong></small>)</label>
                         </div>
                         <div class="form-check form-switch mb-2">
                             <input 
