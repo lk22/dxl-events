@@ -31,7 +31,7 @@
                     </div>
                     </div>
                     <?php 
-                        if ( ! strtotime("today") > $settings->latest_participation_date ) {
+                        if ( ! strtotime("today") <= $settings->latest_participation_date ) {
                             ?>
                                 <div class="row">
                                     <div class="col-6">
