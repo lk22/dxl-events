@@ -10,7 +10,7 @@
     if( $end_at != 0 ) {
         ?>
             <div class="event-end-at">
-                <p class="lead">Start tidspunkt: <span><?php echo date("H:i", $end_at) ?></span></p>
+                <p class="lead">Slut tidspunkt: <span><?php echo date("H:i", $end_at) ?></span></p>
             </div>
         <?php
     }
