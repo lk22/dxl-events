@@ -155,7 +155,26 @@
                 $sheet->setCellValue("H1", "Morgenmad (Lørdag)")->getColumnDimension("H")->setAutoSize(true);
                 $sheet->setCellValue("H1", "Morgenmad (Søndag)")->getColumnDimension("I")->setAutoSize(true);
 
-                $row = 2;
+                $choresFields = [
+                    "F" => "Opsætning (Fredag)",
+                    "G" => "Ryge område (Fredag)",
+                    "H" => "Kaffe (Fredag)",
+                    "I" => "Oprydning (Lørdag)",
+                    "J" => "Ryge område (Lørdag)",
+                    "K" => "Kaffe (Lørdag)",
+                    "L" => "Oprydning (Søndag)",
+                    "M" => "Ryge område (Søndag)",
+                    "N" => "Kaffe (Søndag)",
+                    "O" => "Nedpakning (Søndag)",
+                    "Q" => "Oprydning sovehaller (Søndag)"
+                ];
+
+                // adding chores fields as seperate chore field
+                foreach($choresFields as $key => $value) {
+                    $sheet->setCellValue($key . "2", $value);
+                }
+
+                $row = 3;
                 foreach ( $participants as $participant ) {
                     $member = $wpdb->get_row("SELECT member_number FROM {$wpdb->prefix}members WHERE id = {$participant->member_id}");
                     // $member = $memberRepository->select(["member_number"])->where("id", $participant->member_id)->get();
@@ -168,18 +187,30 @@
                     if ( $participant->event_terms_accepted ) {
                         $sheet->setCellValue('D' . $row, "Accepteret");
                     }
-
+                    
                     $seat_members = preg_replace('/\[\[(\w+)\[\]/' , '$1',  explode(",", $participant->seat_companions));
                     if (count($seat_members) > 0) {
-                      $seats = [];
+                        $seats = [];
                       
-                      foreach($seat_members as $member) {
+                        foreach($seat_members as $member) {
                         $seats[] = $member;
-                      }
-                        $sheet->setCellValue('E' . $row, str_replace(array("[", "]", '"'), "", implode("\n", $seats)));
                     }
+                    $sheet->setCellValue('E' . $row, str_replace(array("[", "]", '"'), "", implode("\n", $seats)));
+                }
+                
+                $workchores = preg_replace('/\[\[(\w+)\[\]/' , '$1',  explode(",", $participant->workchores));
 
-                    $workchores = preg_replace('/\[\[(\w+)\[\]/' , '$1',  explode(",", $participant->workchores));
+                    foreach($choresFields as $key => $value) {
+                        if ( count($workchores) ) {
+                            // loop through each workchore and add save the label
+                            $chores = [];
+                            foreach(json_decode($participant->workchores) as $chore) {
+                                $chores[] = $member->name;
+                            }
+
+                            $sheet->setCellValue($key . $row, str_replace(array("[", "]"), "", implode(",\n", $chores)));
+                        }                        
+                    }
 
                     if ( count($workchores) ) {
                         // loop through each workchore and add save the label
@@ -191,14 +222,14 @@
                         $sheet->setCellValue('F' . $row, str_replace(array("[", "]"), "", implode(",\n", $chores)));
                     }
 
-                    $sheet->setCellValue('G' . $row, $member->member_number);
+                    $sheet->setCellValue('R' . $row, $member->member_number);
 
                     if ( $participant->has_saturday_breakfast ) {
-                        $sheet->setCellValue('H' . $row, "bestilt");
+                        $sheet->setCellValue('S' . $row, "bestilt");
                     }
 
                     if ( $participant->has_sunday_breakfast ) {
-                        $sheet->setCellValue('I' . $row, "bestilt");
+                        $sheet->setCellValue('T' . $row, "bestilt");
                     }
 
                     $row++;
