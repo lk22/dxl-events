@@ -176,7 +176,7 @@
                       foreach($seat_members as $member) {
                         $seats[] = $member;
                       }
-                        $sheet->setCellValue('E' . $row, str_replace(array("[", "]", '"'), "", implode("\n ", $seats)));
+                        $sheet->setCellValue('E' . $row, str_replace(array("[", "]", '"'), "", implode("\n", $seats)));
                     }
 
                     $workchores = preg_replace('/\[\[(\w+)\[\]/' , '$1',  explode(",", $participant->workchores));
@@ -188,7 +188,7 @@
                             $chores[] = $chore->label;
                         }
 
-                        $sheet->setCellValue('F' . $row, str_replace("[]", "", implode(", ", $chores)));
+                        $sheet->setCellValue('F' . $row, str_replace(array("[", "]"), "", implode(",\n", $chores)));
                     }
 
                     $sheet->setCellValue('G' . $row, $member->member_number);
