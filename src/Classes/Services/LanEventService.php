@@ -171,7 +171,12 @@
 
                     $seat_members = preg_replace('/\[\[(\w+)\[\]/' , '$1',  explode(",", $participant->seat_companions));
                     if (count($seat_members) > 0) {
-                        $sheet->setCellValue('E' . $row, str_replace("[]", "", implode(", ", $seat_members)));
+                      $seats = [];
+                      
+                      foreach($seat_members as $member) {
+                        $seats[] = $member;
+                      }
+                        $sheet->setCellValue('E' . $row, str_replace(array("[", "]", '"'), "", implode("\n ", $seats)));
                     }
 
                     $workchores = preg_replace('/\[\[(\w+)\[\]/' , '$1',  explode(",", $participant->workchores));
