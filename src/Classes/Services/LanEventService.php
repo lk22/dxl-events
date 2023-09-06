@@ -150,10 +150,10 @@
                 $sheet->setCellValue('C1', 'Gamertag')->getColumnDimension('C')->setAutoSize(true);
                 $sheet->setCellValue("D1", "Betingelser")->getColumnDimension('D')->setAutoSize(true);
                 $sheet->setCellValue("E1", "Medlemmer at sidde sammen med")->getColumnDimension("E")->setAutoSize(true);
-                $sheet->setCellValue("F1", "Arbejdsopgaver")->getColumnDimension("F")->setAutoSize(true);
-                $sheet->setCellValue("G1", "Medlemsnummer")->getColumnDimension("G")->setAutoSize(true);
-                $sheet->setCellValue("H1", "Morgenmad (Lørdag)")->getColumnDimension("H")->setAutoSize(true);
-                $sheet->setCellValue("H1", "Morgenmad (Søndag)")->getColumnDimension("I")->setAutoSize(true);
+                $sheet->setCellValue("F1", "Arbejdsopgaver")->getColumnDimension("F")->setWidth(200, "px");
+                $sheet->setCellValue("R1", "Medlemsnummer")->getColumnDimension("G")->setAutoSize(true);
+                $sheet->setCellValue("S1", "Morgenmad (Lørdag)")->getColumnDimension("H")->setAutoSize(true);
+                $sheet->setCellValue("T1", "Morgenmad (Søndag)")->getColumnDimension("I")->setAutoSize(true);
 
                 $choresFields = [
                     "F" => "Opsætning (Fredag)",
@@ -171,7 +171,7 @@
 
                 // adding chores fields as seperate chore field
                 foreach($choresFields as $key => $value) {
-                    $sheet->setCellValue($key . "2", $value);
+                    $sheet->setCellValue($key . "2", $value)->getColumnDimension($key)->setAutoSize(true);
                 }
 
                 $row = 3;
