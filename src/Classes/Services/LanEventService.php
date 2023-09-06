@@ -121,6 +121,57 @@
                 $sheet->setTitle('LAN Deltagere');
                 $memberRepository = new MemberRepository();
                 $logger = new Logger();
+                
+                if ( count($participants) ) {
+                    $workChoresSheet = clone $spreadsheet->getActiveSheet();
+                    $workChoresSheet->setTitle("Arbejdsopgaver");
+                    $spreadsheet->addSheet($workChoresSheet);
+                    
+                    $workChoresSheet->setCellValue('A1', "Navn")->getColumnDimension('A')->setAutoSize(true);
+                    $workChoresSheet->setCellValue('B1', "Gamertag")->getColumnDimension('B')->setAutoSize(true);
+                    $choresFields = [
+                        "C" => "Opsætning (Fredag)",
+                        "D" => "Ryge område (Fredag)",
+                        "E" => "Kaffe (Fredag)",
+                        "F" => "Oprydning (Lørdag)",
+                        "G" => "Ryge område (Lørdag)",
+                        "H" => "Kaffe (Lørdag)",
+                        "I" => "Oprydning (Søndag)",
+                        "J" => "Ryge område (Søndag)",
+                        "K" => "Kaffe (Søndag)",
+                        "L" => "Nedpakning (Søndag)",
+                        "M" => "Oprydning sovehaller (Søndag)"
+                    ];
+                    
+                    foreach($choresFields as $key => $value) {
+                        $workChoresSheet->setCellValue($key . "1", $value)->getColumnDimension($key)->setAutoSize(true);
+                    }
+
+                    $participantRow = 3;
+                    foreach($participants as $participant) {
+                        // $member = $memberRepository->select(["member_number"])->where("id", $participant->member_id)->get();
+                        $workChoresSheet->setCellValue('A' . $participantRow, $participant->name);
+                        $workChoresSheet->setCellValue('B' . $participantRow, $participant->gamertag);
+                        
+                        $workchores = preg_replace('/\[\[(\w+)\[\]/' , '$1',  explode(",", $participant->workchores));
+
+                        $chores = [];
+
+                        // adding chores fields as seperate chore field
+                        foreach($choresFields as $key => $value) {
+                            if ( count($workchores) ) {
+                                foreach(json_decode($participant->workchores) as $chore) {
+                                    if ( $chore->label == $value ) {
+                                        $chores[] = $value;
+                                        $workChoresSheet->setCellValue($key . $participantRow, $value);
+                                    }
+                                }
+                            }
+                        }
+                        $participantRow++;
+                    }
+                }
+                
                 if ( count($tournaments) > 0) {
                     foreach ( $tournaments as $tournament ) {
                         // clone the sheet
@@ -150,29 +201,8 @@
                 $sheet->setCellValue('C1', 'Gamertag')->getColumnDimension('C')->setAutoSize(true);
                 $sheet->setCellValue("D1", "Betingelser")->getColumnDimension('D')->setAutoSize(true);
                 $sheet->setCellValue("E1", "Medlemmer at sidde sammen med")->getColumnDimension("E")->setAutoSize(true);
-                $sheet->setCellValue("F1", "Arbejdsopgaver")->getColumnDimension("F")->setWidth(200, "px");
-                $sheet->setCellValue("Q1", "Medlemsnummer")->getColumnDimension("G")->setAutoSize(true);
-                $sheet->setCellValue("R1", "Morgenmad (Lørdag)")->getColumnDimension("H")->setAutoSize(true);
-                $sheet->setCellValue("S1", "Morgenmad (Søndag)")->getColumnDimension("I")->setAutoSize(true);
-
-                $choresFields = [
-                    "F" => "Opsætning (Fredag)",
-                    "G" => "Ryge område (Fredag)",
-                    "H" => "Kaffe (Fredag)",
-                    "I" => "Oprydning (Lørdag)",
-                    "J" => "Ryge område (Lørdag)",
-                    "K" => "Kaffe (Lørdag)",
-                    "L" => "Oprydning (Søndag)",
-                    "M" => "Ryge område (Søndag)",
-                    "N" => "Kaffe (Søndag)",
-                    "O" => "Nedpakning (Søndag)",
-                    "P" => "Oprydning sovehaller (Søndag)"
-                ];
-
-                // adding chores fields as seperate chore field
-                foreach($choresFields as $key => $value) {
-                    $sheet->setCellValue($key . "2", $value)->getColumnDimension($key)->setAutoSize(true);
-                }
+                $sheet->setCellValue("F1", "Morgenmad (Lørdag)")->getColumnDimension("H")->setAutoSize(true);
+                $sheet->setCellValue("G1", "Morgenmad (Søndag)")->getColumnDimension("I")->setAutoSize(true);
 
                 $row = 3;
                 foreach ( $participants as $participant ) {
@@ -191,40 +221,20 @@
                     $seat_members = preg_replace('/\[\[(\w+)\[\]/' , '$1',  explode(",", $participant->seat_companions));
                     if (count($seat_members) > 0) {
                         $seats = [];
-                      
-                        foreach($seat_members as $member) {
-                        $seats[] = $member;
-                    }
-                    $sheet->setCellValue('E' . $row, str_replace(array("[", "]", '"'), "", implode("\n", $seats)));
-                }
-                
-                $workchores = preg_replace('/\[\[(\w+)\[\]/' , '$1',  explode(",", $participant->workchores));
-
-
                     
-                  	$chores = [];
-                  
-                    foreach($choresFields as $key => $value) {
-                        if ( count($workchores) ) {
-                          foreach(json_decode($participant->workchores) as $chore) {
-                                if ( $chore->label == $value ) {
-                                    $chores[] = "Ja";
-                                    $sheet->setCellValue($key . $row, $participant->name);
-                                }
-                            }
+                        foreach($seat_members as $member) {
+                            $seats[] = $member;
+                        }
 
-                          //$sheet->setCellValue($key . $row, str_replace(array("[", "]"), "", implode(",\n", $chores)));
-                        }                        
+                        $sheet->setCellValue('E' . $row, str_replace(array("[", "]", '"'), "", implode("\n", $seats)));
                     }
-
-                    $sheet->setCellValue('Q' . $row, $member->member_number);
 
                     if ( $participant->has_saturday_breakfast ) {
-                        $sheet->setCellValue('R' . $row, "bestilt");
+                        $sheet->setCellValue('F' . $row, "bestilt");
                     }
 
                     if ( $participant->has_sunday_breakfast ) {
-                        $sheet->setCellValue('S' . $row, "bestilt");
+                        $sheet->setCellValue('G' . $row, "bestilt");
                     }
 
                     $row++;
