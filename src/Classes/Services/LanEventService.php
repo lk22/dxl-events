@@ -205,7 +205,9 @@
                             // loop through each workchore and add save the label
                             $chores = [];
                             foreach(json_decode($participant->workchores) as $chore) {
-                                $chores[] = $member->name;
+                                if ( $chore->label == $value ) {
+                                    $chores[] = $member->name;
+                                }
                             }
 
                             $sheet->setCellValue($key . $row, str_replace(array("[", "]"), "", implode(",\n", $chores)));
