@@ -151,9 +151,9 @@
                 $sheet->setCellValue("D1", "Betingelser")->getColumnDimension('D')->setAutoSize(true);
                 $sheet->setCellValue("E1", "Medlemmer at sidde sammen med")->getColumnDimension("E")->setAutoSize(true);
                 $sheet->setCellValue("F1", "Arbejdsopgaver")->getColumnDimension("F")->setWidth(200, "px");
-                $sheet->setCellValue("R1", "Medlemsnummer")->getColumnDimension("G")->setAutoSize(true);
-                $sheet->setCellValue("S1", "Morgenmad (Lørdag)")->getColumnDimension("H")->setAutoSize(true);
-                $sheet->setCellValue("T1", "Morgenmad (Søndag)")->getColumnDimension("I")->setAutoSize(true);
+                $sheet->setCellValue("Q1", "Medlemsnummer")->getColumnDimension("G")->setAutoSize(true);
+                $sheet->setCellValue("R1", "Morgenmad (Lørdag)")->getColumnDimension("H")->setAutoSize(true);
+                $sheet->setCellValue("S1", "Morgenmad (Søndag)")->getColumnDimension("I")->setAutoSize(true);
 
                 $choresFields = [
                     "F" => "Opsætning (Fredag)",
@@ -166,7 +166,7 @@
                     "M" => "Ryge område (Søndag)",
                     "N" => "Kaffe (Søndag)",
                     "O" => "Nedpakning (Søndag)",
-                    "Q" => "Oprydning sovehaller (Søndag)"
+                    "P" => "Oprydning sovehaller (Søndag)"
                 ];
 
                 // adding chores fields as seperate chore field
@@ -200,38 +200,31 @@
                 
                 $workchores = preg_replace('/\[\[(\w+)\[\]/' , '$1',  explode(",", $participant->workchores));
 
+
+                    
+                  	$chores = [];
+                  
                     foreach($choresFields as $key => $value) {
                         if ( count($workchores) ) {
-                            // loop through each workchore and add save the label
-                            $chores = [];
-                            foreach(json_decode($participant->workchores) as $chore) {
+                          foreach(json_decode($participant->workchores) as $chore) {
                                 if ( $chore->label == $value ) {
-                                    $chores[] = $member->name;
+                                    $chores[] = "Ja";
+                                    $sheet->setCellValue($key . $row, $participant->name);
                                 }
                             }
 
-                            $sheet->setCellValue($key . $row, str_replace(array("[", "]"), "", implode(",\n", $chores)));
+                          //$sheet->setCellValue($key . $row, str_replace(array("[", "]"), "", implode(",\n", $chores)));
                         }                        
                     }
 
-                    if ( count($workchores) ) {
-                        // loop through each workchore and add save the label
-                        $chores = [];
-                        foreach(json_decode($participant->workchores) as $chore) {
-                            $chores[] = $chore->label;
-                        }
-
-                        $sheet->setCellValue('F' . $row, str_replace(array("[", "]"), "", implode(",\n", $chores)));
-                    }
-
-                    $sheet->setCellValue('R' . $row, $member->member_number);
+                    $sheet->setCellValue('Q' . $row, $member->member_number);
 
                     if ( $participant->has_saturday_breakfast ) {
-                        $sheet->setCellValue('S' . $row, "bestilt");
+                        $sheet->setCellValue('R' . $row, "bestilt");
                     }
 
                     if ( $participant->has_sunday_breakfast ) {
-                        $sheet->setCellValue('T' . $row, "bestilt");
+                        $sheet->setCellValue('S' . $row, "bestilt");
                     }
 
                     $row++;
