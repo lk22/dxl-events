@@ -7,19 +7,31 @@
         class LanEventFoodOrderUpdate extends Mail 
         {
             /**
-             * participant
+             * participant data property
              *
              * @var array
              */
             public $participant;
 
             /**
-             * Undocumented variable
+             * List of ordered food
              *
              * @var array
              */
             public $foodOrder;
 
+            /**
+             * Property for companion ordered food
+             *
+             * @var boolean
+             */
+            public $foodOrderedForCompanion;
+
+            /**
+             * Note about the food ordering
+             *
+             * @var string
+             */
             public $note;
 
             /**
@@ -28,9 +40,10 @@
              * @param [type] $event
              * @param [type] $participant
              */
-            public function __construct($foodOrder, $participant, $note) 
+            public function __construct($foodOrder, $foodOrderedForCompanion, $participant, $note) 
             {
                 $this->foodOrder = $foodOrder;
+                $this->foodOrderedForCompanion = $foodOrderedForCompanion;
                 $this->participant = $participant;
                 $this->note = $note;
             }
@@ -54,8 +67,8 @@
              */
             protected function template()
             {
-                $template = "<p>Mad bestilling for deltager: " . $this->participant->name . "</p>";
-                $template .= "<p>Mad tilvalg</p>";
+                $template = "<h2>Mad bestilling for deltager: " . $this->participant->name . "</h2>";
+                $template .= "<h4>Mad tilvalg</h4>";
                 foreach($this->foodOrder as $key => $food) {
                   $translated = "";
                   if( $key == "has_friday_breakfast" ) $translated = "Morgenmad (Fredag, Lørdag)";
@@ -66,8 +79,12 @@
                   $template .= "<p>" . $translated ."</p>";
                 }
 
+                if ( $this->foodOrderedForCompanion ) {
+                    $template .= "<p>Der er bestilt mad til ledsager</p>";
+                }
+
                 if ( ! empty($this->note) ) {
-                    $template .= "<p>Notat af mad bestilling</p>";
+                    $template .= "<h4>Notat af mad bestilling</h4>";
                     $template .= "<p>" . $this->note . "</p>";
                 }
 

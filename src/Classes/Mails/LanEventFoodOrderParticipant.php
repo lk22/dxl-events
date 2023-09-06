@@ -20,17 +20,32 @@
              */
             public $foodOrder;
 
+            /**
+             * Food ordered for companion
+             *
+             * @var boolean
+             */
+            public $foodOrderedForCompanion;
+
+            /**
+             * Specific note about the food order
+             *
+             * @var string
+             */
             public $note;
 
             /**
              * Mail constructor
              *
-             * @param [type] $event
-             * @param [type] $participant
+             * @param array $foodOrder
+             * @param boolean $foodOrderedForCompanion
+             * @param object $participant
+             * @param string $note
              */
-            public function __construct($foodOrder, $participant, $note) 
+            public function __construct($foodOrder, $foodOrderedForCompanion, $participant, $note) 
             {
                 $this->foodOrder = $foodOrder;
+                $this->foodOrderedForCompanion = $foodOrderedForCompanion;
                 $this->participant = $participant;
                 $this->note = $note;
             }
@@ -65,6 +80,10 @@
                   else if( $key == "has_saturday_dinner" ) $translated = "Aftensmad (Lørdag)";
                   else if( $key == "has_sunday_breakfast" ) $translated = "Morgenmad (Søndag)";
                   $template .= "<p>" . $translated ."</p>";
+                }
+
+                if ( $this->foodOrderedForCompanion ) {
+                    $template .= "<p>Vi har noteret mad bestilling til din ledsager</p>";
                 }
 
                 if ( ! empty($this->note) ) {
