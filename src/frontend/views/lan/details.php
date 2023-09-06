@@ -454,8 +454,8 @@
                 </ul>
                 <div class="mb-3">
                     <label for="" class="form-label heading-size-4">
-                        Noget særligt vi skal være opmærksomme på?<br>
-                        <small class="mb-0"><strong>Bestilling af mad til ledsager?</strong></small><br>
+                        <small class="mb-0"><strong>Bestilling af mad til ledsager?</strong></small>
+                        <input type="checkbox" name="food-order-companion" id="food-order-companion"><br>
                         <small><strong>Nogle særlig allergener der skal tages hensyn til?</strong></small>
                     </label>
                     <textarea class="form-control" name="foodOrderNote" id="foodOrderNote" rows="3"></textarea>
