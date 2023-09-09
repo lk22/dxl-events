@@ -15,6 +15,7 @@ use DxlEvents\Classes\Controllers\TournamentController;
 use DxlEvents\Classes\Controllers\TrainingAction;
 use DxlEvents\Classes\Controllers\GameController;
 use DxlEvents\Classes\Controllers\EventController;
+use DxlEvents\Classes\Controllers\Calendar\CalendarController;
 
 use DxlEvents\Classes\Services\EventService;
 
@@ -33,6 +34,7 @@ if( !class_exists('DxlEvent') ){
             $this->tournament = new TournamentController();
             $this->training = new TrainingAction();
             $this->game = new GameController();
+            $this->calendarController = new CalendarController();
             $this->constructFrontend();
             $this->register_cron_tasks();
             add_action( 'admin_menu', [$this, 'registerModuleMenu']);
@@ -75,13 +77,21 @@ if( !class_exists('DxlEvent') ){
 			);
 
             add_submenu_page(
-				'dxl-events',
-				'Spil',
-				'Spil',
-				'manage_options',
-				'dxl-events-games',
-				array($this, 'manage_games')
-			);
+                'dxl-events',
+                'Spil',
+                'Spil',
+                'manage_options',
+                'dxl-events-games',
+                array($this, 'manage_games')
+            );
+            add_submenu_page(
+                'dxl-events',
+                'Kalender',
+                'Kalender',
+                'manage_options',
+                'dxl-events-calendar',
+                array($this, 'manage_calendar')
+            );
         }
 
         public function register_event_widgets()
@@ -189,6 +199,11 @@ if( !class_exists('DxlEvent') ){
         public function manage_games()
         {
             $this->game->manage();
+        }
+
+        public function manage_calendar() 
+        {
+            $this->calendarController->manage();
         }
     }
 }
