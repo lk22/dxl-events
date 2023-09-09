@@ -31,25 +31,55 @@
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <p class="lead fw-bold text-center">
-              <?php echo $currentMonth ?>
-            </p>
+            <h2><?php echo $monthNames[$currentMonth - 1] . ' ' . $currentYear; ?></h2>
           </div>
         </div>
         <div class="container">
           <div class="row">
             <?php 
-              foreach($dates as $date) {
+              foreach($dayNames as $dayName) {
                 ?>
-                  <div class="col-1 py-3">
-                    <div class="date">
-                      <p class="lead fw-bold text-center">
-                        <?php echo $date ?>
-                      </p>
-                    </div>
+                  <div style="width:14%">
+                    <p class="text-left"><?php echo $dayName; ?></p>
                   </div>
                 <?php
               }
+            ?>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <?php 
+            // render days within 7 columns
+            $dayCount = 1;
+            // var_dump($firstDay);
+            // var_dump($daysInMonth);
+            for($i = 0; $i < $daysInMonth + $firstDay; $i++) {
+              if($i < $firstDay) {
+                ?>
+                  <div style="width: 14%" class="py-2">
+                    <p class="text-left"></p>
+                  </div>
+                <?php
+              } else {
+                ?>
+                  <div style="width: 14%" class="py-2">
+                    <p class="text-left"><?php echo $dayCount; ?></p>
+                    <?php 
+                      foreach($events as $event) {
+                        if($event->event_date == "{$currentYear}-{$currentMonth}-{$dayCount}") {
+                          ?>
+                            <p class="text-left"><?php echo $event->event_name; ?></p>
+                          <?php
+                        }
+                      }
+                    ?>
+                  </div>
+                <?php
+                $dayCount++;
+              }
+            }
+            
             ?>
           </div>
         </div>

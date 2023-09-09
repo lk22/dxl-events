@@ -49,28 +49,49 @@ if ( ! class_exists('CalendarController') ) {
     public function getCalendarEvents() {
       global $wpdb;
       
-      $daysPeriod = new \DatePeriod(
-        new \DateTime('first day of this month'),
-        new \DateInterval('P1D'),
-        new \DateTime('first day of next month')
-      );
+      // $daysPeriod = new \DatePeriod(
+      //   new \DateTime('first day of this month'),
+      //   new \DateInterval('P1D'),
+      //   new \DateTime('first day of next month')
+      // );
 
-      // get current month in human readable format
-      $currentMonth = date('F', strtotime('now'));
+      // foreach ($daysPeriod as $day) {
+      //   $days[] = $day->format('Y-m-d');
+      // }
 
-      // give me a list of all dates in current month
-      $dates = [];
-      foreach($daysPeriod as $day) {
-        $dates[] = $day->format('d');
+      // // get current month in human readable format
+      // $currentMonth = date('F', strtotime('now'));
+
+      // // give me a list of all dates in current month
+      // $dates = [];
+      // foreach($daysPeriod as $day) {
+      //   $dates[] = [
+      //     "date" => $day->format('d'),
+      //     "formatted" => $day->format('l')
+      //   ];
+      // }
+
+      $currentMonth = date('m');
+      $currentYear = date("Y"); 
+      $monthNames = [
+        "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+      ];
+
+      $dayNames = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"];
+
+      $firstDay = date("w", mktime(0, 0, 0, $currentMonth, 0, $currentYear));
+      $daysInMonth = date("t", mktime(0, 0, 0, $currentMonth, 1, $currentYear));
+
+      $days = [];
+      for($i = 1; $i <= $daysInMonth; $i++) {
+        $days[] = $i;
       }
 
       $events = $wpdb->get_results(
-        "SELECT * FROM {$wpdb->prefix}calendar_events WHERE event_date BETWEEN '{$daysPeriod->start->format('Y-m-d')}' AND '{$daysPeriod->end->format('Y-m-d')}'"
+        "SELECT * FROM {$wpdb->prefix}calendar_events WHERE event_date BETWEEN '{$currentYear}-{$currentMonth}-01' AND '{$currentYear}-{$currentMonth}-{$daysInMonth}'"
       );
-
       // get me a list of all the days in current month
       require_once ABSPATH . "wp-content/plugins/dxl-events/src/Admin/views/calendar/list.php";
-      
     }
 
     /**
