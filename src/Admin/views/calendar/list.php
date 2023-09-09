@@ -33,7 +33,7 @@
               foreach($dayNames as $dayName) {
                 ?>
                   <div style="width:14%">
-                    <p class="text-left"><?php echo $dayName; ?></p>
+                    <p class="text-left fw-bold"><?php echo $dayName; ?></p>
                   </div>
                 <?php
               }
@@ -43,10 +43,7 @@
         <div class="container">
           <div class="row">
             <?php 
-            // render days within 7 columns
             $dayCount = 1;
-            // var_dump($firstDay);
-            // var_dump($daysInMonth);
             for($i = 0; $i < $daysInMonth + $firstDay; $i++) {
               if($i < $firstDay) {
                 ?>
@@ -64,8 +61,29 @@
                     );
                     if (count($events)) {
                       foreach( $events as $event ) {
+                        $tooltip = "<p>Deadline: {$event->event_deadline}</p><br>";
+                        if ( $event->is_completed ) {
+                          $tooltip .= "<p class='text-success'>Opgave afsluttet</p>";
+                        } else {
+                          $tooltip .= "<p class='text-warning'>Opgave ikke afsluttet</p>";
+                        }
                         ?>
-                          <small class="text-left fw-bold"><?php echo $event->event_name; ?></small><br />
+                          <div
+                            class="row mb-2"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            data-bs-html="true"
+                            data-bs-title="<?php echo $tooltip; ?>"
+                          >
+                            <div class="col-10">
+                              <small class="text-left fw-bold <?php if( $event->is_completed ) { echo "text-decoration-line-through text-muted"; } else {echo "text-success";} ?>"><?php echo $event->event_name; ?></small>
+                            </div>
+                            <div class="col-2">
+                              <a href="<?php echo generate_dxl_subpage_url(['action' => 'details']); ?>" class="view-calendar-event-details text-decoration-none" data-bs-toggle="modal" data-bs-target="#calendarEventDetailsModal" data-event="<?php echo $event->id; ?>">
+                                <span class="dashicons dashicons-edit"></span>
+                              </a>
+                            </div>
+                          </div>
                         <?php
                       }
                     } else {
@@ -79,7 +97,6 @@
                 $dayCount++;
               }
             }
-            
             ?>
           </div>
         </div>

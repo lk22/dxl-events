@@ -49,6 +49,8 @@ jQuery(function($) {
          initializeActions: function() {
             const self = this;
 
+            $('[data-bs-toggle="tooltip"]').tooltip();
+
             self.triggerTournamentEvents();
             self.triggerLanEvents();
             self.triggerGameEvents();

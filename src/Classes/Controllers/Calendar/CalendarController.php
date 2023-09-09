@@ -91,11 +91,7 @@ if ( ! class_exists('CalendarController') ) {
       $daysInMonth = date("t", mktime(0, 0, 0, $currentMonth, 1, $currentYear));
 
       $days = CalendarUtility::getMonthDays($daysInMonth);
-
-      // $events = $wpdb->get_results(
-      //   "SELECT * FROM {$wpdb->prefix}calendar_events WHERE event_date BETWEEN '{$currentYear}-{$currentMonth}-01' AND '{$currentYear}-{$currentMonth}-{$daysInMonth}'"
-      // );
-
+      
       // get me a list of all the days in current month
       require_once ABSPATH . "wp-content/plugins/dxl-events/src/Admin/views/calendar/list.php";
     }
