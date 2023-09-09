@@ -24,6 +24,7 @@ jQuery(function($) {
             this.setTeamMaxSizeButton = this.container.find('.set-team-size-btn')
             this.setHeldStatusButton = this.container.find('.isheld-tournament-btn')
             this.updateTournamnentButton = this.container.find('.update-tournament-btn')
+            this.createCalendarEventButton = this.container.find('.create-calendar-event-button');
             this.eventModals = {
                 deleteLanModal: $('deleteLanModal'),
                 createLanEventModal: $('#createLanModal'),
@@ -37,6 +38,7 @@ jQuery(function($) {
                 createGameTypeModal: $('#createGameTypeModal'),
                 updateTournamentDetailsModal: $('#updateAdminTournamentModal'),
                 updateEventTimeplanModal: $('#createTimeplanModal, #updateTimeplanModal, #confirmPublishTimeplanModal, #deleteTimeplanModal'),
+                createCalendarEventModal: $('#createCalendarEventModal')
             }
             this.initializeActions();
         },
@@ -50,6 +52,7 @@ jQuery(function($) {
             self.triggerTournamentEvents();
             self.triggerLanEvents();
             self.triggerGameEvents();
+            self.triggerCalendarEvents();
         },
 
         /**
@@ -1210,6 +1213,35 @@ jQuery(function($) {
                             }
                         }
                     })
+                })
+            })
+        },
+
+        /**
+         * Calendar event actions
+         */
+        triggerCalendarEvents: function() {
+            const self = this;
+
+            self.eventModals.createCalendarEventModal.find('.create-calendar-event-button').click((e) => {
+                const calendarEventForm = $('#calendarEventForm');
+
+                $.ajax({
+                    method: "POST",
+                    url: self.dxl.request.url,
+                    data: {
+                        action: "dxl_calendar_event_create",
+                        dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                        eventName: calendarEventForm.find('#calendar-event-name').val(),
+                        description: calendarEventForm.find('#calendar-event-description').val(),
+                        eventDate: calendarEventForm.find('#calendar-event-date').val(),
+                        eventDeadline: calendarEventForm.find('#calendar-event-deadline').val(),
+                    },
+                    success: (response) => {
+                        console.log(response);
+                    },
+                    error: (error) => console.log(error),
+                    beforeSend: () => console.log("Creating calendar event")
                 })
             })
         },

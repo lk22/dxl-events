@@ -1,4 +1,4 @@
-<div class="modal modal-lg" role="dialog">
+<div class="modal modal-lg" id="createCalendarEventModal" role="dialog">
   <div class="modal-inner">
     <div class="modal-content">
       <div class="modal-title">Opret ny kalender begivenhed</div>

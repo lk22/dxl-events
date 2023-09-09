@@ -5,15 +5,23 @@ use Dxl\Classes\Abstracts\AbstractActionController as Controller;
 
 use DxlEvents\Classes\Repositories\CalendarEventRepository;
 
+use Dxl\Classes\Utilities\CalendarUtility;
+
 if ( ! defined('ABSPATH') ) exit;
 
 if ( ! class_exists('CalendarController') ) {
   class CalendarController extends Controller {
-    public function __construct() {
-      $this->CalendarEventRepository = new CalendarEventRepository();
+    public function __construct() 
+    {
+      $this->calendarEventRepository = new CalendarEventRepository();
+      $this->registerAdminActions();
     }
 
-    public function registerAdminActions() {}
+    public function registerAdminActions() 
+    {
+      add_action('wp_ajax_dxl_calendar_event_create', [$this, 'createCalendarEventAction']);
+    }
+
     public function registerGuestActions() {}
 
     /**
@@ -21,7 +29,8 @@ if ( ! class_exists('CalendarController') ) {
      *
      * @return void
      */
-    public function manage() {
+    public function manage() 
+    {
       if ($this->hasUriKey('action')) {
         switch($this->getUriKey('action')) {
           case 'list': 
@@ -46,7 +55,8 @@ if ( ! class_exists('CalendarController') ) {
      *
      * @return void
      */
-    public function getCalendarEvents() {
+    public function getCalendarEvents() 
+    {
       global $wpdb;
       
       // $daysPeriod = new \DatePeriod(
@@ -73,23 +83,19 @@ if ( ! class_exists('CalendarController') ) {
 
       $currentMonth = date('m');
       $currentYear = date("Y"); 
-      $monthNames = [
-        "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
-      ];
 
-      $dayNames = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"];
+      $monthNames = CalendarUtility::getMonths();
+      $dayNames = CalendarUtility::getWeekDays();
 
       $firstDay = date("w", mktime(0, 0, 0, $currentMonth, 0, $currentYear));
       $daysInMonth = date("t", mktime(0, 0, 0, $currentMonth, 1, $currentYear));
 
-      $days = [];
-      for($i = 1; $i <= $daysInMonth; $i++) {
-        $days[] = $i;
-      }
+      $days = CalendarUtility::getMonthDays($daysInMonth);
 
-      $events = $wpdb->get_results(
-        "SELECT * FROM {$wpdb->prefix}calendar_events WHERE event_date BETWEEN '{$currentYear}-{$currentMonth}-01' AND '{$currentYear}-{$currentMonth}-{$daysInMonth}'"
-      );
+      // $events = $wpdb->get_results(
+      //   "SELECT * FROM {$wpdb->prefix}calendar_events WHERE event_date BETWEEN '{$currentYear}-{$currentMonth}-01' AND '{$currentYear}-{$currentMonth}-{$daysInMonth}'"
+      // );
+
       // get me a list of all the days in current month
       require_once ABSPATH . "wp-content/plugins/dxl-events/src/Admin/views/calendar/list.php";
     }
@@ -99,8 +105,34 @@ if ( ! class_exists('CalendarController') ) {
      *
      * @return void
      */
-    public function getCalendarEventDetails() {
+    public function getCalendarEventDetails() 
+    {
       require_once ABSPATH . "wp-content/plugins/dxl-events/src/Admin/views/calendar/details.php";
+    }
+
+    /**
+     * Creating calendar event action
+     *
+     * @return void
+     */
+    public function createCalendarEventAction() 
+    {
+      $created = $this->calendarEventRepository->create([
+        "event_name" => $_REQUEST["eventName"],
+        "description" => $_REQUEST["description"],
+        "event_date" => $_REQUEST["eventDate"],
+        "event_deadline" => $_REQUEST["eventDeadline"],
+      ]);
+
+      if ( ! $created ) {
+        wp_send_json_error([
+          "message" => "Noget gik galt, kunne ikke oprette eventet"
+        ]);
+      }
+
+      wp_send_json_success([
+        "message" => "Eventet blev oprettet"
+      ]);
     }
   }
 }

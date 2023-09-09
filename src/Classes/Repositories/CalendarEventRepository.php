@@ -8,7 +8,7 @@ if( ! class_exists('CalendarEventRepository') )
 {
     class CalendarEventRepository extends Repository
     {
-        protected $repository = "tournament_games";
+        protected $repository = "calendar_events";
         protected $defaultOrder = "DESC";
         protected $primaryIdentifier = "id";
     }
