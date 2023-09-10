@@ -64,8 +64,10 @@ if ( ! class_exists('CalendarController') ) {
 
       $isArchived = false;
 
-      if ( isset($_REQUEST["archived"]) ) {
+      if ( isset($_REQUEST["archived"]) && $_REQUEST["archived"] == true ) {
         $isArchived = true;
+      } else {
+        $isArchived = false;
       }
 
       if ( isset($_REQUEST["month"]) && isset($_REQUEST["year"]) ) {

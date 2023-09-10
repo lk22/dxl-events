@@ -31,6 +31,24 @@
               <a href="<?php echo generate_dxl_subpage_url(['action' => 'list', 'month' => $currentMonth - 1, 'year' => $currentYear]); ?>" class="button-primary">Forrige måned</a>
               <a href="<?php echo generate_dxl_subpage_url(['action' => 'list', 'month' => $currentMonth + 1, 'year' => $currentYear]); ?>" class="button-primary">Næste måned</a>
             </div>
+            <!-- 
+              show archived events
+             -->
+             <?php 
+              if ( $isArchived ) {
+                ?>
+                  <div class="show-archived-events mb-4">
+                    <a href="<?php echo generate_dxl_subpage_url(['action' => 'list', 'archived' => 0]); ?>" class="button-primary">Vis aktive opgaver</a>
+                  </div>
+                <?php
+              } else {
+                ?>
+                  <div class="show-archived-events mb-4">
+                    <a href="<?php echo generate_dxl_subpage_url(['action' => 'list', 'archived' => true]); ?>" class="button-primary">Vis arkiverede opgaver</a>
+                  </div>
+                <?php
+              }
+             ?>
           </div>
         </div>
         <div class="container">
