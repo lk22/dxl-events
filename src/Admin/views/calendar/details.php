@@ -11,6 +11,7 @@
       <div class="row">
         <div class="col-12 event-name-column">
           <h2 class="fw-bold event-name"><?php echo $event->event_name; ?></h2>
+
           <?php 
             if ( $event->is_completed ) {
               ?>
@@ -71,6 +72,7 @@
         </div>
         <div class="col-12 mt-4">
           <div class="actions">
+          <span><a class="button-primary" href="<?php echo generate_dxl_subpage_url(['action' => 'list']); ?>">Gå til kalender</a></span>
             <?php 
             if ( ! $event->is_completed ) {
               ?>
