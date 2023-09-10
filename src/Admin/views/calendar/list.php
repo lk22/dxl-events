@@ -4,7 +4,6 @@
    * @package Dxl events
    */
 ?>
-
 <div class="dxl dxl-events">
   <div class="header mb-4">
     <div class="container actions">
@@ -63,9 +62,15 @@
                   <div style="width: 14%" class="py-4">
                     <p class="text-left fw-bold"><?php echo $dayCount; ?></p>
                     <?php 
-                    $events = $wpdb->get_results(
-                      "SELECT * FROM {$wpdb->prefix}calendar_events WHERE event_date = '{$currentYear}-{$currentMonth}-{$dayCount}'"
-                    );
+                    if ( $isArchived ) {
+                      $events = $wpdb->get_results(
+                        "SELECT * FROM {$wpdb->prefix}calendar_events WHERE event_date = '{$currentYear}-{$currentMonth}-{$dayCount}' AND is_archived = 1"
+                      );
+                    } else {
+                      $events = $wpdb->get_results(
+                        "SELECT * FROM {$wpdb->prefix}calendar_events WHERE event_date = '{$currentYear}-{$currentMonth}-{$dayCount}'"
+                      );
+                    }
                     if (count($events)) {
                       foreach( $events as $event ) {
                         $tooltip = "<p>Deadline: {$event->event_deadline}</p><br>";
@@ -131,7 +136,22 @@
                       class="form-control" 
                       name="calendar-event-name" 
                       id="calendar-event-name"
+                      value="Ny opgave"
                       required
+                    >
+                  </div>
+                  <div class="form-group event-year mb-3">
+                    <label for="calendar-event-year">
+                      Årstal for opgave
+                    </label>
+                    <input 
+                      type="number" 
+                      class="form-control" 
+                      name="calendar-event-year" 
+                      id="calendar-event-year"
+                      value="<?php echo date("Y"); ?>"
+                      required
+                      pattern="[0-9]{4}"
                     >
                   </div>
                   <div class="form-group event-date mb-3">
@@ -144,6 +164,7 @@
                       class="form-control" 
                       name="calendar-event-date" 
                       id="calendar-event-date"
+                      value="<?php echo date("Y-m-d"); ?>"
                       required
                     >
                   </div>
@@ -156,6 +177,7 @@
                       class="form-control" 
                       name="calendar-event-deadline" 
                       id="calendar-event-deadline" 
+                      value="<?php echo date("Y-m-d"); ?>"
                       required
                     >
                     <div class="invalid-feedback invalid-deadline-feedback">

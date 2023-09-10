@@ -62,7 +62,13 @@ if ( ! class_exists('CalendarController') ) {
     {
       global $wpdb;
 
-      if ( $_REQUEST["month"] && $_REQUEST["year"] ) {
+      $isArchived = false;
+
+      if ( isset($_REQUEST["archived"]) ) {
+        $isArchived = true;
+      }
+
+      if ( isset($_REQUEST["month"]) && isset($_REQUEST["year"]) ) {
         $currentMonth = $_REQUEST["month"];
         $currentYear = $_REQUEST["year"];
       } else {
@@ -109,6 +115,7 @@ if ( ! class_exists('CalendarController') ) {
         "event_name" => $_REQUEST["eventName"],
         "description" => $_REQUEST["description"],
         "event_date" => $_REQUEST["eventDate"],
+        "event_year" => $_REQUEST["eventYear"],
         "event_deadline" => $_REQUEST["eventDeadline"],
         "created_at" => time()
       ]);
@@ -135,6 +142,7 @@ if ( ! class_exists('CalendarController') ) {
         "event_name" => $_REQUEST["eventName"],
         "description" => $_REQUEST["description"],
         "event_date" => $_REQUEST["eventDate"],
+        "event_year" => $_REQUEST["eventYear"],
         "event_deadline" => $_REQUEST["eventDeadline"],
         "updated_at" => time()
       ], (int) $_REQUEST["eventId"]);

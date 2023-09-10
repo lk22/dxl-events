@@ -35,6 +35,7 @@
           </p>
         </div>
         <div class="col-12 mt-4">
+          <p class="event-year"><strong>Årstal for opgave: </strong><span><?php echo $event->event_year; ?></span></p>
           <p class="event-date my-2"><strong>Begivenheds dato:</strong> <span class="event-date-value"><?php echo $event->event_date; ?></span></p>
           <div class="event-deadline my-2"><strong>Deadline: </strong><span class="event-deadline-value"><?php echo $event->event_deadline; ?></span></div>
           <?php
@@ -118,6 +119,17 @@
               id="calendar-event-name" 
               class="form-control" 
               value="<?php echo $event->event_name ?>"
+              required
+            >
+          </div>
+          <div class="form-group">
+            <label for="eventName">Begivenheds årstal</label>
+            <input 
+              type="text" 
+              name="calendar-event-year" 
+              id="calendar-event-year" 
+              class="form-control" 
+              value="<?php echo $event->event_year ?>"
               required
             >
           </div>
