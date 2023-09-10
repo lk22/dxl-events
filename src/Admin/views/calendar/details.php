@@ -98,6 +98,13 @@
             >
             Slet
           </button>
+          <button 
+              class="button-primary archive-calendar-event-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#archiveCalendarEventModal"
+            >
+            Arkiver opgave
+          </button>
           </div>
         </div>
       </div>
@@ -188,6 +195,25 @@
       <div class="modal-footer">
         <button class="button-primary mx-2" data-bs-dismiss="modal">Annuller</button>
         <button class="button-primary delete-calendar-event-button" data-event="<?php echo $event->id; ?>">Fjern</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal modal-lg fade" id="archiveCalendarEventModal" role="dialog">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Fjern opgave</h2>
+      </div>
+      <div class="modal-body">
+        <p class="lead">
+          Ønsker du at arkivere opgaven? du vil kunne se denne opgave under arkiverede opgaver
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="button-primary mx-2" data-bs-dismiss="modal">Annuller</button>
+        <button class="button-primary archive-calendar-event-button" data-event="<?php echo $event->id; ?>">Arkiver opgave</button>
       </div>
     </div>
   </div>

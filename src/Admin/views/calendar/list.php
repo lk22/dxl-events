@@ -86,7 +86,7 @@
                       );
                     } else {
                       $events = $wpdb->get_results(
-                        "SELECT * FROM {$wpdb->prefix}calendar_events WHERE event_date = '{$currentYear}-{$currentMonth}-{$dayCount}'"
+                        "SELECT * FROM {$wpdb->prefix}calendar_events WHERE event_date = '{$currentYear}-{$currentMonth}-{$dayCount}' AND is_archived = 0"
                       );
                     }
                     if (count($events)) {

@@ -23,6 +23,7 @@ if ( ! class_exists('CalendarController') ) {
       add_action('wp_ajax_dxl_calendar_event_update', [$this, 'updateCalendarEventAction']);
       add_action('wp_ajax_dxl_calendar_event_delete', [$this, 'deleteCalendarEventAction']);
       add_action('wp_ajax_dxl_calendar_event_complete', [$this, 'completeCalendarEventAction']);
+      add_action('wp_ajax_dxl_calendar_event_archive', [$this, 'archiveCalendarEventAction']);
     }
 
     public function registerGuestActions(): void {}

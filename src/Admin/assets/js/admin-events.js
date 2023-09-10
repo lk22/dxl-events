@@ -42,6 +42,7 @@ jQuery(function($) {
                 createCalendarEventModal: $('#createCalendarEventModal'),
                 updateCalendarEventModal: $('#updateCalendarEventModal'),
                 deleteCalendarEventModal: $('#deleteCalendarEventModal'),
+                archiveCalendarEventModal: $('#archiveCalendarEventModal'),
             }
             this.initializeActions();
         },
@@ -1331,6 +1332,31 @@ jQuery(function($) {
                     },
                     error: (error) => console.log(error),
                     beforeSend: () => console.log("Deleting calendar event")
+                })
+            });
+
+            self.eventModals.archiveCalendarEventModal.find('.archive-calendar-event-button').click((e) => {
+                const event = e.target.dataset.event;
+
+                $.ajax({
+                    method: "POST",
+                    url: self.dxl.request.url,
+                    data: {
+                        action: "dxl_calendar_event_archive",
+                        dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                        eventId: event
+                    },
+                    success: (response) => {
+                        console.log(response);
+
+                        if ( response.success ) {
+                            // redirect back to calendar
+                            self.dxl.redirectToAction('events-calendar');
+                        }
+                    },
+                    error: (error) => console.log(error),
+                    beforeSend: () => console.log("Archiving calendar event")
+                    
                 })
             });
 
