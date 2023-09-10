@@ -6,11 +6,11 @@
 ?>
 
 <div class="dxl dxl-events">
-  <div class="header">
+  <div class="header mb-4">
     <div class="container actions">
       <div class="row">
         <div class="col-9">
-          <h3>DXL Kalender</h3>
+          <h2>Opgave Kalender</h2>
         </div>
         <div class="col-3">
           <button class="create-calendar-event-btn button-primary" data-bs-toggle="modal" data-bs-target="#createCalendarEventModal">Opret begivenhed</button>
@@ -25,6 +25,13 @@
         <div class="row">
           <div class="col-12">
             <h2><?php echo $monthNames[$currentMonth - 1] . ' ' . $currentYear; ?></h2>
+            <!-- 
+              navigation links
+             -->
+            <div class="calendar-navigation-links mb-4">
+              <a href="<?php echo generate_dxl_subpage_url(['action' => 'list', 'month' => $currentMonth - 1, 'year' => $currentYear]); ?>" class="button-primary">Forrige måned</a>
+              <a href="<?php echo generate_dxl_subpage_url(['action' => 'list', 'month' => $currentMonth + 1, 'year' => $currentYear]); ?>" class="button-primary">Næste måned</a>
+            </div>
           </div>
         </div>
         <div class="container">
@@ -79,7 +86,7 @@
                               <small class="text-left fw-bold <?php if( $event->is_completed ) { echo "text-decoration-line-through text-muted"; } else {echo "text-success";} ?>"><?php echo $event->event_name; ?></small>
                             </div>
                             <div class="col-2">
-                              <a href="<?php echo generate_dxl_subpage_url(['action' => 'details']); ?>" class="view-calendar-event-details text-decoration-none" data-bs-toggle="modal" data-bs-target="#calendarEventDetailsModal" data-event="<?php echo $event->id; ?>">
+                              <a href="<?php echo generate_dxl_subpage_url(['action' => 'details', 'id' => $event->id]); ?>" class="view-calendar-event-details text-decoration-none">
                                 <span class="dashicons dashicons-edit"></span>
                               </a>
                             </div>
@@ -119,20 +126,41 @@
                     <label for="calendar-event-name">
                       Opgave
                     </label>
-                    <input type="text" class="form-control" name="calendar-event-name" id="calendar-event-name">
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      name="calendar-event-name" 
+                      id="calendar-event-name"
+                      required
+                    >
                   </div>
                   <div class="form-group event-date mb-3">
                     <label for="calendar-event-date">
                       Dato for opgave
                     </label>
                     <!-- render date field without year -->
-                    <input type="date" class="form-control" name="calendar-event-date" id="calendar-event-date">
+                    <input 
+                      type="date" 
+                      class="form-control" 
+                      name="calendar-event-date" 
+                      id="calendar-event-date"
+                      required
+                    >
                   </div>
                   <div class="form-group event-deadline mb-3">
                     <label for="calendar-event-deadline">
                       Deadline for opgave
                     </label>
-                    <input type="date" class="form-control" name="calendar-event-deadline" id="calendar-event-deadline" required>
+                    <input 
+                      type="date" 
+                      class="form-control" 
+                      name="calendar-event-deadline" 
+                      id="calendar-event-deadline" 
+                      required
+                    >
+                    <div class="invalid-feedback invalid-deadline-feedback">
+                      Deadline kan ikke være før opgavens start dato
+                    </div>
                   </div>
                   <div class="form-group event-description">
                     <label for="calendar-event-description">

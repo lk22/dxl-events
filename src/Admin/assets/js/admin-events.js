@@ -25,6 +25,7 @@ jQuery(function($) {
             this.setHeldStatusButton = this.container.find('.isheld-tournament-btn')
             this.updateTournamnentButton = this.container.find('.update-tournament-btn')
             this.createCalendarEventButton = this.container.find('.create-calendar-event-button');
+            this.updateCalendarEventButton = this.container.find('.update-calendar-event-button');
             this.eventModals = {
                 deleteLanModal: $('deleteLanModal'),
                 createLanEventModal: $('#createLanModal'),
@@ -38,7 +39,9 @@ jQuery(function($) {
                 createGameTypeModal: $('#createGameTypeModal'),
                 updateTournamentDetailsModal: $('#updateAdminTournamentModal'),
                 updateEventTimeplanModal: $('#createTimeplanModal, #updateTimeplanModal, #confirmPublishTimeplanModal, #deleteTimeplanModal'),
-                createCalendarEventModal: $('#createCalendarEventModal')
+                createCalendarEventModal: $('#createCalendarEventModal'),
+                updateCalendarEventModal: $('#updateCalendarEventModal'),
+                deleteCalendarEventModal: $('#deleteCalendarEventModal'),
             }
             this.initializeActions();
         },
@@ -1228,6 +1231,24 @@ jQuery(function($) {
             self.eventModals.createCalendarEventModal.find('.create-calendar-event-button').click((e) => {
                 const calendarEventForm = $('#calendarEventForm');
 
+                // validated event date and deadline
+                const eventDate = calendarEventForm.find('#calendar-event-date').val();
+                const eventDeadline = calendarEventForm.find('#calendar-event-deadline').val();
+
+                // format date and deadline to timestamp
+                const formattedEventDate = new Date(eventDate).getTime();
+                const formattedEventDeadline = new Date(eventDeadline).getTime();
+
+                // console.log({formattedEventDate, formattedEventDeadline})
+                // debugger;
+
+                if ( formattedEventDeadline < formattedEventDate ) {
+                    calendarEventForm.find('#calendar-event-deadline').addClass('is-invalid');
+                    calendarEventForm.find('.invalid-deadline-feedback').show();
+                    calendarEventForm.find('#calendar-event-deadline').focus();
+                    return;
+                }
+
                 $.ajax({
                     method: "POST",
                     url: self.dxl.request.url,
@@ -1241,11 +1262,107 @@ jQuery(function($) {
                     },
                     success: (response) => {
                         console.log(response);
+
+                        if ( response.success ) {
+                            self.dxl.closeModal();
+                            self.dxl.redirectToAction('events-calendar');
+                        }
                     },
                     error: (error) => console.log(error),
                     beforeSend: () => console.log("Creating calendar event")
                 })
             })
+
+            self.eventModals.updateCalendarEventModal.find('.update-calendar-event-button').click((e) => {
+                const updateCalendarEventForm = $('#updateCalendarEventForm');
+
+                const eventId = e.target.dataset.event;
+                console.log({eventId})
+
+                $.ajax({
+                    method: "POST",
+                    url: self.dxl.request.url,
+                    data: {
+                        action: "dxl_calendar_event_update",
+                        dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                        eventId: eventId,
+                        eventName: updateCalendarEventForm.find('#calendar-event-name').val(),
+                        description: updateCalendarEventForm.find('#calendar-event-description').val(),
+                        eventDate: updateCalendarEventForm.find('#calendar-event-date').val(),
+                        eventDeadline: updateCalendarEventForm.find('#calendar-event-deadline').val(),
+                    },
+                    success: (response) => {
+                        console.log(response);
+
+                        if ( response.success ) {
+                            $('.event-name').html(updateCalendarEventForm.find('#calendar-event-name').val());
+                            $('.event-description').html(updateCalendarEventForm.find('#calendar-event-description').val());
+                            $('.event-date-value').html(updateCalendarEventForm.find('#calendar-event-date').val());
+                            $('.event-deadline-value').html(updateCalendarEventForm.find('#calendar-event-deadline').val());
+                            // close modal
+                            self.dxl.closeModal();
+                        }
+                    },
+                    error: (error) => console.log(error),
+                    beforeSend: () => console.log("Updating calendar event")
+                })
+            });
+
+            self.eventModals.deleteCalendarEventModal.find('.delete-calendar-event-button').click((e) => {
+                const eventId = e.target.dataset.event;
+
+                $.ajax({
+                    method: "POST",
+                    url: self.dxl.request.url,
+                    data: {
+                        action: "dxl_calendar_event_delete",
+                        dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                        eventId: eventId
+                    },
+                    success: (response) => {
+                        console.log(response);
+
+                        if ( response.success ) {
+                            // redirect back to calendar
+                            self.dxl.redirectToAction('events-calendar');
+                        }
+                    },
+                    error: (error) => console.log(error),
+                    beforeSend: () => console.log("Deleting calendar event")
+                })
+            });
+
+            self.container.find('.complete-calendar-event-btn').click((e) => {
+                const event = e.target.dataset.event;
+
+                $.ajax({
+                    method: "POST",
+                    url: self.dxl.request.url,
+                    data: {
+                        action: "dxl_calendar_event_complete",
+                        dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                        eventId: event
+                    },
+                    success: (response) => {
+                        console.log(response);
+
+                        if ( response.success ) {
+                            $('.event-name-column').append('<span class="completed-status">Denne opgave er udført</span>');
+                            $(e.target).hide();
+                        }
+                    },
+                    error: (error) => {
+                        console.log(error);
+                        $(e.target).html('Færdiggør opgave');
+                        $(e.target).prop('disabled', false);
+                    },
+                    beforeSend: () => {
+                        console.log("Completing calendar event");
+                        $(e.target).html('Afslutter opgave <span class="dashicons dashicons-cloud"></span>');
+                        $(e.target).prop('disabled', true);
+                    }
+                })
+            });
         },
 
         /**
