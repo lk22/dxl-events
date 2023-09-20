@@ -133,14 +133,17 @@
                         "C" => "Opsætning (Fredag)",
                         "D" => "Ryge område (Fredag)",
                         "E" => "Kaffe (Fredag)",
-                        "F" => "Oprydning (Lørdag)",
-                        "G" => "Ryge område (Lørdag)",
-                        "H" => "Kaffe (Lørdag)",
-                        "I" => "Oprydning (Søndag)",
-                        "J" => "Ryge område (Søndag)",
-                        "K" => "Kaffe (Søndag)",
-                        "L" => "Nedpakning (Søndag)",
-                        "M" => "Oprydning sovehaller (Søndag)"
+                        "F" => "Toiletter (Fredag)",
+                        "G" => "Oprydning (Lørdag)",
+                        "H" => "Ryge område (Lørdag)",
+                        "I" => "Kaffe (Lørdag)",
+                        "J" => "Toiletter (Lørdag)",
+                        "K" => "Oprydning (Søndag)",
+                        "L" => "Ryge område (Søndag)",
+                        "M" => "Kaffe (Søndag)",
+                        "N" => "Toiletter (Søndag)",
+                        "O" => "Nedpakning (Søndag)",
+                        "P" => "Oprydning sovehaller (Søndag)"
                     ];
                     
                     foreach($choresFields as $key => $value) {
