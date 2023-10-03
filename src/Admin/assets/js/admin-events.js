@@ -1234,14 +1234,15 @@ jQuery(function($) {
 
                 // validated event date and deadline
                 const eventDate = calendarEventForm.find('#calendar-event-date').val();
+                const eventEndDate = calendarEventForm.find('#calendar-event-end-date').val();
                 const eventDeadline = calendarEventForm.find('#calendar-event-deadline').val();
+                const associate = calendarEventForm.find('#associate-member').val();
+                const priority = calendarEventForm.find('#priority').val();
 
                 // format date and deadline to timestamp
                 const formattedEventDate = new Date(eventDate).getTime();
+                const formattedEventEndDate = new Date(eventEndDate).getTime();
                 const formattedEventDeadline = new Date(eventDeadline).getTime();
-
-                // console.log({formattedEventDate, formattedEventDeadline})
-                // debugger;
 
                 if ( formattedEventDeadline < formattedEventDate ) {
                     calendarEventForm.find('#calendar-event-deadline').addClass('is-invalid');
@@ -1260,7 +1261,11 @@ jQuery(function($) {
                         description: calendarEventForm.find('#calendar-event-description').val(),
                         eventYear: calendarEventForm.find('#calendar-event-year').val(),
                         eventDate: calendarEventForm.find('#calendar-event-date').val(),
+                        eventEndDate: calendarEventForm.find('#calendar-event-end-date').val(),
                         eventDeadline: calendarEventForm.find('#calendar-event-deadline').val(),
+                        priority: priority,
+                        eventEndDate: eventEndDate,
+                        associate: associate
                     },
                     success: (response) => {
                         console.log(response);

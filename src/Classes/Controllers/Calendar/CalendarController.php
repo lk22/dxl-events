@@ -24,6 +24,7 @@ if ( ! class_exists('CalendarController') ) {
       add_action('wp_ajax_dxl_calendar_event_delete', [$this, 'deleteCalendarEventAction']);
       add_action('wp_ajax_dxl_calendar_event_complete', [$this, 'completeCalendarEventAction']);
       add_action('wp_ajax_dxl_calendar_event_archive', [$this, 'archiveCalendarEventAction']);
+      add_action('wp_ajax_dxl_event_associate_members', [$this, 'getAssociateMembersAction']);
     }
 
     public function registerGuestActions(): void {}
@@ -64,6 +65,18 @@ if ( ! class_exists('CalendarController') ) {
       global $wpdb;
 
       $isArchived = false;
+
+
+      // query for all the board members
+      $associates = $wpdb->get_results(
+        "SELECT 
+          ID as id,
+          post_title as name,
+          post_name as slug 
+        FROM dxl_posts 
+        WHERE post_type = 'dxl_board_members'"
+      );
+
 
       if ( isset($_REQUEST["archived"]) && $_REQUEST["archived"] == true ) {
         $isArchived = true;
@@ -114,18 +127,25 @@ if ( ! class_exists('CalendarController') ) {
      */
     public function createCalendarEventAction(): void
     {
-      $created = $this->calendarEventRepository->create([
-        "event_name" => $_REQUEST["eventName"],
-        "description" => $_REQUEST["description"],
-        "event_date" => $_REQUEST["eventDate"],
-        "event_year" => $_REQUEST["eventYear"],
-        "event_deadline" => $_REQUEST["eventDeadline"],
-        "created_at" => time()
-      ]);
+      $data = $_REQUEST;
+      
+      $eventDate = new \DateTime($data["eventDate"]);
+      $eventEndDate = new \DateTime($data["eventEndDate"]);
 
-      if ( ! $created ) {
-        wp_send_json_error([
-          "message" => "Noget gik galt, kunne ikke oprette eventet"
+      $interval = new \DateInterval('P1D');
+      $daterange = new \DatePeriod($eventDate, $interval ,$eventEndDate->modify('+1 day')); // +1 day to include end date
+
+      foreach ($daterange as $date) {
+        $this->calendarEventRepository->create([
+          "event_name" => $data["eventName"],
+          "description" => $data["description"],
+          "event_date" => $date->format("Y-m-d"),
+          "event_end_date" => $date->format("Y-m-d"),
+          "event_year" => $date->format("Y"),
+          "event_deadline" => $data["eventDeadline"],
+          "associate" => $data["associate"],
+          "priority" => $data["priority"],
+          "created_at" => time()
         ]);
       }
 
