@@ -128,14 +128,15 @@ if ( ! class_exists('CalendarController') ) {
     public function createCalendarEventAction(): void
     {
       $data = $_REQUEST;
-      
-      $eventDate = new \DateTime($data["eventDate"]);
-      $eventEndDate = new \DateTime($data["eventEndDate"]);
+    
+      $interval = CalendarUtility::getIntervalPeriod(
+        $data["eventDate"],
+        $data["eventEndDate"],
+        "P1D",
+        "+1 day"
+      );
 
-      $interval = new \DateInterval('P1D');
-      $daterange = new \DatePeriod($eventDate, $interval ,$eventEndDate->modify('+1 day')); // +1 day to include end date
-
-      foreach ($daterange as $date) {
+      foreach ($interval as $date) {
         $this->calendarEventRepository->create([
           "event_name" => $data["eventName"],
           "description" => $data["description"],
