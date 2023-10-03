@@ -278,7 +278,7 @@
             </div>
             <div class="modal-body">
                 <div class="event-participants-lists">
-                    <?php 
+                    <?php  
                         foreach($participants as $participant) {
                             ?>
                                 <div class="participant my-4">
