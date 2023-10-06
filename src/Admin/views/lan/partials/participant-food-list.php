@@ -4,10 +4,7 @@
       <table class="table table-responsive">
           <thead>
               <th>Navn:</th>
-              <th>Morgenmad (Fredag)</th>
               <th>Morgenmad (Lørdag)</th>
-              <th>Frokost (Lørdag)</th>
-              <th>Aftensmad (Lørdag)</th>
               <th>Morgenmad (Søndag)</th>
           </thead>
           <tbody>
