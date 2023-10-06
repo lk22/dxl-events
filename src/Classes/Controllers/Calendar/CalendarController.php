@@ -66,7 +66,6 @@ if ( ! class_exists('CalendarController') ) {
 
       $isArchived = false;
 
-
       // query for all the board members
       $associates = $wpdb->get_results(
         "SELECT 
