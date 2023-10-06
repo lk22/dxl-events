@@ -152,7 +152,7 @@
                         $workChoresSheet->setCellValue($key . "1", $value)->getColumnDimension($key)->setAutoSize(true);
                     }
 
-                    $participantRow = 3;
+                    $participantRow = 2;
                     foreach($participants as $participant) {
                         // $member = $memberRepository->select(["member_number"])->where("id", $participant->member_id)->get();
                         $workChoresSheet->setCellValue('A' . $participantRow, $participant->name);
