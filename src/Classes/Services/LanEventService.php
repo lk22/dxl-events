@@ -146,7 +146,7 @@
                         "P" => "Toiletter (Søndag)",
                         "Q" => "Nedpakning (Søndag)",
                         "R" => "Oprydning sovehaller (Søndag)"
-                    ]; 
+                    ];
                     
                     foreach($choresFields as $key => $value) {
                         $workChoresSheet->setCellValue($key . "1", $value)->getColumnDimension($key)->setAutoSize(true);

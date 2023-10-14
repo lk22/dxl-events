@@ -92,11 +92,18 @@
                     if (count($events)) {
                       foreach( $events as $event ) {
                         $tooltip = "<p>Deadline: {$event->event_deadline}</p><br>";
+                        if ( $event->priority == 1 ) {
+                          $tooltip .= "<p>Prioritet: Høj</p>";
+                        } else {
+                          $tooltip .= "<p>Prioritet: Lav</p>";
+                        }
                         if ( $event->is_completed ) {
                           $tooltip .= "<p class='text-success'>Opgave afsluttet</p>";
                         } else {
                           $tooltip .= "<p class='text-warning'>Opgave ikke afsluttet</p>";
                         }
+
+                        $priorityClass = ($event->priority == 1) ? "text-danger" : "text-success";
                         ?>
                           <div
                             class="row mb-2"
@@ -106,7 +113,7 @@
                             data-bs-title="<?php echo $tooltip; ?>"
                           >
                             <div class="col-10">
-                              <small class="text-left fw-bold <?php if( $event->is_completed ) { echo "text-decoration-line-through text-muted"; } else {echo "text-success";} ?>"><?php echo $event->event_name; ?></small>
+                              <small class="text-left fw-bold <?php if( $event->is_completed ) { echo "text-decoration-line-through text-muted"; }?> <?php echo $priorityClass; ?>"><?php echo $event->event_name; ?></small>
                             </div>
                             <div class="col-2">
                               <a href="<?php echo generate_dxl_subpage_url(['action' => 'details', 'id' => $event->id]); ?>" class="view-calendar-event-details text-decoration-none">
@@ -158,33 +165,51 @@
                       required
                     >
                   </div>
-                  <div class="form-group event-year mb-3">
-                    <label for="calendar-event-year">
-                      Årstal for opgave
+                  <div class="form-group event-recurring mb-3">
+                    <label for="calendar-event-recurring">
+                      Gentagende opgave
                     </label>
                     <input 
-                      type="number" 
+                      type="checkbox" 
                       class="form-control" 
-                      name="calendar-event-year" 
-                      id="calendar-event-year"
-                      value="<?php echo date("Y"); ?>"
-                      required
-                      pattern="[0-9]{4}"
+                      name="calendar-event-recurring" 
+                      id="calendar-event-recurring"
+                      value="1"
                     >
                   </div>
-                  <div class="form-group event-date mb-3">
-                    <label for="calendar-event-date">
-                      Dato for opgave
-                    </label>
-                    <!-- render date field without year -->
-                    <input 
-                      type="date" 
-                      class="form-control" 
-                      name="calendar-event-date" 
-                      id="calendar-event-date"
-                      value="<?php echo date("Y-m-d"); ?>"
-                      required
-                    >
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="form-group event-date mb-3">
+                        <label for="calendar-event-date">
+                          Dato for opgave
+                        </label>
+                        <!-- render date field without year -->
+                        <input 
+                          type="date" 
+                          class="form-control" 
+                          name="calendar-event-date" 
+                          id="calendar-event-date"
+                          value="<?php echo date("Y-m-d"); ?>"
+                          required
+                        >
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group event-date mb-3">
+                        <label for="calendar-event-date">
+                          Slut dato for opgave
+                        </label>
+                        <!-- render date field without year -->
+                        <input 
+                          type="date" 
+                          class="form-control" 
+                          name="calendar-event-end-date" 
+                          id="calendar-event-end-date"
+                          value="<?php echo date("Y-m-d"); ?>"
+                          required
+                        >
+                      </div>
+                    </div>
                   </div>
                   <div class="form-group event-deadline mb-3">
                     <label for="calendar-event-deadline">
@@ -201,6 +226,29 @@
                     <div class="invalid-feedback invalid-deadline-feedback">
                       Deadline kan ikke være før opgavens start dato
                     </div>
+                  </div>
+                  <div class="form-group associate-member mb-3 w-full">
+                    <label for="associate-member">Udføres af:</label>
+                    <select name="associate-members" id="associate-member" class="form-control">
+                      <?php 
+                        foreach ( $associates as $associate ) {
+                          ?>
+                            <option value="<?php echo $associate->id; ?>"><?php echo $associate->name; ?></option>
+                          <?php
+                        }
+                      ?>
+                    </select>
+                  </div>
+                  <div class="form-group priority-field mb-3 w-full">
+                    <label for="priority">Vælg prioritet
+                       <small>
+                        (Høj prioritet, Middel prioritet, Lav prioritet)
+                       </small>
+                    </label>
+                    <select name="event-priority" id="priority" class="form-control">
+                        <option value="1">Høj priotet</option>
+                        <option value="3">Lav prioritet</option>
+                    </select>
                   </div>
                   <div class="form-group event-description">
                     <label for="calendar-event-description">
