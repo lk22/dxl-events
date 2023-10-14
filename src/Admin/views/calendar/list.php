@@ -165,18 +165,16 @@
                       required
                     >
                   </div>
-                  <div class="form-group event-year mb-3">
-                    <label for="calendar-event-year">
-                      Årstal for opgave
+                  <div class="form-group event-recurring mb-3">
+                    <label for="calendar-event-recurring">
+                      Gentagende opgave
                     </label>
                     <input 
-                      type="number" 
+                      type="checkbox" 
                       class="form-control" 
-                      name="calendar-event-year" 
-                      id="calendar-event-year"
-                      value="<?php echo date("Y"); ?>"
-                      required
-                      pattern="[0-9]{4}"  
+                      name="calendar-event-recurring" 
+                      id="calendar-event-recurring"
+                      value="1"
                     >
                   </div>
                   <div class="row">

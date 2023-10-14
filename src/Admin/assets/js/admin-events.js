@@ -1257,9 +1257,9 @@ jQuery(function($) {
                     data: {
                         action: "dxl_calendar_event_create",
                         dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                        isRecurring: calendarEventForm.find('#calendar-event-recurring').is(':checked') ? true : false,
                         eventName: calendarEventForm.find('#calendar-event-name').val(),
                         description: calendarEventForm.find('#calendar-event-description').val(),
-                        eventYear: calendarEventForm.find('#calendar-event-year').val(),
                         eventDate: calendarEventForm.find('#calendar-event-date').val(),
                         eventEndDate: calendarEventForm.find('#calendar-event-end-date').val(),
                         eventDeadline: calendarEventForm.find('#calendar-event-deadline').val(),

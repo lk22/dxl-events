@@ -7,6 +7,8 @@ use DxlEvents\Classes\Repositories\CalendarEventRepository;
 
 use Dxl\Classes\Utilities\CalendarUtility;
 
+use DateTime;
+
 if ( ! defined('ABSPATH') ) exit;
 
 if ( ! class_exists('CalendarController') ) {
@@ -76,7 +78,6 @@ if ( ! class_exists('CalendarController') ) {
         WHERE post_type = 'dxl_board_members'"
       );
 
-
       if ( isset($_REQUEST["archived"]) && $_REQUEST["archived"] == true ) {
         $isArchived = true;
       } else {
@@ -84,14 +85,28 @@ if ( ! class_exists('CalendarController') ) {
       }
 
       if ( isset($_REQUEST["month"]) && isset($_REQUEST["year"]) ) {
-        $currentMonth = $_REQUEST["month"];
-        $currentYear = $_REQUEST["year"];
+
+        if ( $_REQUEST["month"] > 12) {
+          $currentMonth = 1;
+          $currentYear = $_REQUEST["year"] + 1;
+        } else if ( $_REQUEST["month"] < 1 ) {
+          $currentMonth = 12;
+          $currentYear = $_REQUEST["year"] - 1;
+        } else {
+          $currentMonth = $_REQUEST["month"];
+          $currentYear = $_REQUEST["year"];
+        }
+
+        // $currentMonth = $_REQUEST["month"];
+        // $currentYear = $_REQUEST["year"];
       } else {
         $currentMonth = date('m');
         $currentYear = date("Y"); 
+        $nextYear = $currentYear + 1;
       }
 
-      $monthNames = CalendarUtility::getMonths();
+
+      $monthNames = CalendarUtility::getMonths($currentYear);
       $dayNames = CalendarUtility::getWeekDays();
 
       $firstDay = date("w", mktime(0, 0, 0, $currentMonth, 0, $currentYear));
@@ -126,32 +141,65 @@ if ( ! class_exists('CalendarController') ) {
      */
     public function createCalendarEventAction(): void
     {
-      $data = $_REQUEST;
-    
-      $interval = CalendarUtility::getIntervalPeriod(
-        $data["eventDate"],
-        $data["eventEndDate"],
-        "P1D",
-        "+1 day"
-      );
+        $data = $_REQUEST;
 
-      foreach ($interval as $date) {
-        $this->calendarEventRepository->create([
-          "event_name" => $data["eventName"],
-          "description" => $data["description"],
-          "event_date" => $date->format("Y-m-d"),
-          "event_end_date" => $date->format("Y-m-d"),
-          "event_year" => $date->format("Y"),
-          "event_deadline" => $data["eventDeadline"],
-          "associate" => $data["associate"],
-          "priority" => $data["priority"],
-          "created_at" => time()
+        $interval = CalendarUtility::getIntervalPeriod(
+          $data["eventDate"],
+          $data["eventEndDate"],
+          "P1D",
+          "+1 day"
+        );
+
+        foreach ($interval as $date) {
+          $this->calendarEventRepository->create([
+            "event_name" => $data["eventName"],
+            "description" => $data["description"],
+            "event_date" => $date->format("Y-m-d"),
+            "event_end_date" => $date->format("Y-m-d"),
+            "event_year" => $date->format("Y"),
+            "event_deadline" => $data["eventDeadline"],
+            "associate" => $data["associate"],
+            "priority" => $data["priority"],
+            "created_at" => time()
+          ]);
+        }
+
+        // if the event is recurring then create multiple event for the same interval period yearly
+        if ( isset($data["isRecurring"]) && $data["isRecurring"] == "true" ) {
+
+          $nextYearStartDate = new \DateTime($data["eventDate"]);
+          $nextYearEndDate = new \DateTime($data["eventEndDate"]);
+
+          $nextYearStartDate->modify('+1 year');
+          $nextYearEndDate->modify('+1 year');
+          
+          // wp_die();
+          $interval = CalendarUtility::getIntervalPeriod(
+            $nextYearStartDate->format("d-m-Y"),
+            $nextYearEndDate->format("d-m-Y"),
+            "P1D",
+            "+1 day"
+          );
+
+          foreach ($interval as $date) {
+            $this->calendarEventRepository->create([
+              "event_name" => $data["eventName"],
+              "description" => $data["description"],
+              "event_date" => $date->format("Y-m-d"),
+              "event_end_date" => $date->format("Y-m-d"),
+              "event_year" => $date->format("Y"),
+              "event_deadline" => $data["eventDeadline"],
+              "associate" => $data["associate"],
+              "priority" => $data["priority"],
+              "created_at" => time()
+            ]);
+          }
+        }
+
+
+        wp_send_json_success([
+          "message" => "Opgaven blev oprettet"
         ]);
-      }
-
-      wp_send_json_success([
-        "message" => "Opgaven blev oprettet"
-      ]);
     }
 
     /**
@@ -161,24 +209,24 @@ if ( ! class_exists('CalendarController') ) {
      */
     public function updateCalendarEventAction(): void 
     {
-      $updated = $this->calendarEventRepository->update([
-        "event_name" => $_REQUEST["eventName"],
-        "description" => $_REQUEST["description"],
-        "event_date" => $_REQUEST["eventDate"],
-        "event_year" => $_REQUEST["eventYear"],
-        "event_deadline" => $_REQUEST["eventDeadline"],
-        "updated_at" => time()
-      ], (int) $_REQUEST["eventId"]);
+        $updated = $this->calendarEventRepository->update([
+          "event_name" => $_REQUEST["eventName"],
+          "description" => $_REQUEST["description"],
+          "event_date" => $_REQUEST["eventDate"],
+          "event_year" => $_REQUEST["eventYear"],
+          "event_deadline" => $_REQUEST["eventDeadline"],
+          "updated_at" => time()
+        ], (int) $_REQUEST["eventId"]);
 
-      if ( ! $updated ) {
-        wp_send_json_error([
-          "message" => "Noget gik galt, kunne ikke opdatere eventet"
+        if ( ! $updated ) {
+          wp_send_json_error([
+            "message" => "Noget gik galt, kunne ikke opdatere eventet"
+          ]);
+        }
+
+        wp_send_json_success([
+          "message" => "Opgaven er opdateret"
         ]);
-      }
-
-      wp_send_json_success([
-        "message" => "Opgaven er opdateret"
-      ]);
     }
 
     /**
