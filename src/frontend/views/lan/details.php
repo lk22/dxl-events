@@ -278,11 +278,11 @@
             </div>
             <div class="modal-body">
                 <div class="event-participants-lists">
-                    <?php 
+                    <?php  
                         foreach($participants as $participant) {
                             ?>
                                 <div class="participant my-4">
-                                    <div class="participant-name lead fw-normal">
+                                    <div class="participant-name lead fw-bold">
                                         <?php echo $participant->name ?? ""; ?>
                                     </div>
                                     <div class="participant-email lead fw-normal">

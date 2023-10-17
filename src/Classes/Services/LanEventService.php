@@ -152,7 +152,7 @@
                         $workChoresSheet->setCellValue($key . "1", $value)->getColumnDimension($key)->setAutoSize(true);
                     }
 
-                    $participantRow = 3;
+                    $participantRow = 2;
                     foreach($participants as $participant) {
                         // $member = $memberRepository->select(["member_number"])->where("id", $participant->member_id)->get();
                         $workChoresSheet->setCellValue('A' . $participantRow, $participant->name);
@@ -209,7 +209,7 @@
                 $sheet->setCellValue("F1", "Morgenmad (Lørdag)")->getColumnDimension("H")->setAutoSize(true);
                 $sheet->setCellValue("G1", "Morgenmad (Søndag)")->getColumnDimension("I")->setAutoSize(true);
 
-                $row = 3;
+                $row = 2;
                 foreach ( $participants as $participant ) {
                     $member = $wpdb->get_row("SELECT member_number FROM {$wpdb->prefix}members WHERE id = {$participant->member_id}");
                     // $member = $memberRepository->select(["member_number"])->where("id", $participant->member_id)->get();
