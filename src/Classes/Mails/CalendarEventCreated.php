@@ -50,7 +50,7 @@
               return $template;
             }
 
-            /**
+            /** 
              * get event priority
              *
              * @param int $priority
