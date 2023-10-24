@@ -8,6 +8,7 @@ use DxlEvents\Classes\Repositories\CalendarEventRepository;
 use Dxl\Classes\Utilities\CalendarUtility;
 
 use DxlEvents\Classes\Mails\CalendarEventCreated;
+use DxlEvents\Classes\Mails\CalendarMemberInformed;
 
 use DateTime;
 
@@ -197,9 +198,16 @@ if ( ! class_exists('CalendarController') ) {
           }
         }
 
-        $associationBoardInformed = (new CalendarEventCreated($data))
+        $boardMemberEmail = get_field('boardmember_email_field', (int) $data["associate"]); // get email value for the board member email acf field
+
+        $associationInfoInformed = (new CalendarEventCreated($data))
           ->setReciever('info@danishxboxleague.dk')
           ->setSubject('Ny opgave oprettet')
+          ->send();
+
+        $associationBoardMemberInformed = (new CalendarMemberInformed($data))
+          ->setReciever($boardMemberEmail)
+          ->setSubject('Kære medlem, du har fået en ny opgave')
           ->send();
 
         wp_send_json_success([
