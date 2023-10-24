@@ -7,6 +7,9 @@ use DxlEvents\Classes\Repositories\CalendarEventRepository;
 
 use Dxl\Classes\Utilities\CalendarUtility;
 
+use DxlEvents\Classes\Mails\CalendarEventCreated;
+use DxlEvents\Classes\Mails\CalendarMemberInformed;
+
 use DateTime;
 
 if ( ! defined('ABSPATH') ) exit;
@@ -105,7 +108,6 @@ if ( ! class_exists('CalendarController') ) {
         $nextYear = $currentYear + 1;
       }
 
-
       $monthNames = CalendarUtility::getMonths($currentYear);
       $dayNames = CalendarUtility::getWeekDays();
 
@@ -196,6 +198,17 @@ if ( ! class_exists('CalendarController') ) {
           }
         }
 
+        $boardMemberEmail = get_field('boardmember_email_field', (int) $data["associate"]); // get email value for the board member email acf field
+
+        $associationInfoInformed = (new CalendarEventCreated($data))
+          ->setReciever('info@danishxboxleague.dk')
+          ->setSubject('Ny opgave oprettet')
+          ->send();
+
+        $associationBoardMemberInformed = (new CalendarMemberInformed($data))
+          ->setReciever($boardMemberEmail)
+          ->setSubject('Kære medlem, du har fået en ny opgave')
+          ->send();
 
         wp_send_json_success([
           "message" => "Opgaven blev oprettet"
