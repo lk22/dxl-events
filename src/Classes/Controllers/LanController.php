@@ -10,6 +10,7 @@ use Dxl\Classes\Core;
 use DxlEvents\Classes\Repositories\LanRepository as Lan;
 use DxlEvents\Classes\Repositories\TournamentRepository;
 use DxlEvents\Classes\Repositories\LanParticipantRepository;
+use DxlEvents\Classes\Repositories\EventWorkChoresRepository;
 
 // services
 use DxlEvents\Classes\Services\LanEventService as Service;
@@ -17,8 +18,6 @@ use DxlEvents\Classes\Services\LanEventService as Service;
 use DxlEvents\Classes\Factories\TimeplanFactory;
 
 use Dxl\Classes\Discord\DiscordWebhookService;
-
-use DxlEvents\Classes\Utilities\WorkChoresUtility;
 
 if( !class_exists('LanController') ) 
 {
@@ -54,6 +53,13 @@ if( !class_exists('LanController') )
         protected $lanParticipantRepository;
 
         /**
+         * Event work chore repository
+         *
+         * @var DxlEvents\Classes\Repositories\eventWorkChoreRepository
+         */
+        protected $eventWorkChoreRepository;
+
+        /**
          * Event service 
          *
          * @var DxlEvents\Classes\Services\EventService
@@ -69,6 +75,7 @@ if( !class_exists('LanController') )
             $this->lanRepository = new Lan();
             $this->tournamentRepository = new TournamentRepository();
             $this->lanParticipantRepository = new LanParticipantRepository();
+            $this->eventWorkChoreRepository = new EventWorkChoresRepository();
             $this->dxl = new Core();
             $this->eventService = new Service();
             $this->registerAdminActions();
@@ -116,7 +123,14 @@ if( !class_exists('LanController') )
             $newEvent = $this->get('event');
             $newEvent = $_REQUEST["event"];
 
-            $defaultWorkChores = WorkChoresUtility::getInstance()->initalizeDefaultWorkChores();
+            $defaultWorkChores = $this->eventService->initializeDefaultWorkChores();
+
+            // $this->dxl->response('event', [
+            //     "error" => true,
+            //     "response" => $defaultWorkChores
+            // ]);
+
+            // wp_die();
 
             $event = $this->lanRepository->create([
                 "title" => $newEvent["title"],
@@ -147,10 +161,11 @@ if( !class_exists('LanController') )
                 "latest_participation_date" => 0, // timestamp
                 "participation_opening_date" => 0, // timestampe
             ]);
+            
 
             $this->eventWorkChoreRepository->create([
-                "event_id" => $event->id,
-                "chores" => $defaultWorkChores
+                "event_id" => $event,
+                "chores" => json_encode($defaultWorkChores)
             ]);
 
             if( !$event ) {
