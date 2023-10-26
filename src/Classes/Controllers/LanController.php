@@ -18,6 +18,8 @@ use DxlEvents\Classes\Factories\TimeplanFactory;
 
 use Dxl\Classes\Discord\DiscordWebhookService;
 
+use DxlEvents\Classes\Utilities\WorkChoresUtility;
+
 if( !class_exists('LanController') ) 
 {
     class LanController extends Controller
@@ -113,9 +115,8 @@ if( !class_exists('LanController') )
 
             $newEvent = $this->get('event');
             $newEvent = $_REQUEST["event"];
-            // echo json_encode($_REQUEST["event"]["description"]); wp_die();
 
-            // $created = $this->eventService->createEvent($newEvent);
+            $defaultWorkChores = WorkChoresUtility::getInstance()->initalizeDefaultWorkChores();
 
             $event = $this->lanRepository->create([
                 "title" => $newEvent["title"],
@@ -145,6 +146,11 @@ if( !class_exists('LanController') )
                 "end_at" => 0, // timestamp
                 "latest_participation_date" => 0, // timestamp
                 "participation_opening_date" => 0, // timestampe
+            ]);
+
+            $this->eventWorkChoreRepository->create([
+                "event_id" => $event->id,
+                "chores" => $defaultWorkChores
             ]);
 
             if( !$event ) {
