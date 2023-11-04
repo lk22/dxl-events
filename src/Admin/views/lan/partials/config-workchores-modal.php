@@ -19,13 +19,13 @@
                 if ( isset($fridayChores) ) {
                   foreach( $fridayChores as $c => $chore ) {
                     ?> 
-                      <div class="form-group mb-3 <?php echo $c ?>">
+                      <div class="form-group mb-3 <?php echo $chore->key ?>">
                         <input 
                         type="text" 
                         class="form-control" 
                         id="<?php echo $c ?>" 
-                        name="<?php echo $c ?>" 
-                        value="<?php echo $chore->label ?>"
+                        name="<?php echo $chore->key ?>" 
+                        value="<?php echo $chore->name ?>"
                         style="font-size:12px"
                         >
                       </div>
@@ -40,13 +40,13 @@
                   if ( isset($saturdayChores) ) {
                     foreach( $saturdayChores as $c => $chore ) {
                       ?> 
-                        <div class="form-group mb-3 <?php echo $c ?>">
+                        <div class="form-group mb-3 <?php echo $chore->key ?>">
                           <input 
                             type="text" 
                             class="form-control" 
-                            id="<?php echo $c ?>" 
-                            name="<?php echo $c ?>" 
-                            value="<?php echo $chore->label ?>"
+                            id="<?php echo $chore->key ?>" 
+                            name="<?php echo $chore->key ?>" 
+                            value="<?php echo $chore->name ?>"
                             style="font-size:12px"
                           >
                         </div>
@@ -61,13 +61,13 @@
                   if ( isset($sundayChores) ) {
                     foreach( $sundayChores as $c => $chore ) {
                       ?> 
-                        <div class="form-group mb-3 <?php echo $c ?>">
+                        <div class="form-group mb-3 <?php echo $chore->key ?>">
                           <input 
                             type="text" 
                             class="form-control" 
-                            id="<?php echo $c ?>" 
-                            name="<?php echo $c ?>" 
-                            value="<?php echo $chore->label ?>"
+                            id="<?php echo $chore->key ?>" 
+                            name="<?php echo $chore->key ?>" 
+                            value="<?php echo $chore->name ?>"
                             style="font-size:12px"
                           >
                         </div>

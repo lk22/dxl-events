@@ -959,26 +959,60 @@ jQuery(function($) {
                     const fridayChores = workchoresForm.find('.friday-workchores input');
                     const saturdayChores = workchoresForm.find('.saturday-workchores input');
                     const sundayChores = workchoresForm.find('.sunday-workchores input');
-                    console.log({fridayChores, saturdayChores, sundayChores})
+                    
                     const data = {
                         action: "dxl_event_update_workchores",
                         dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
                         event: {
                             id: workchoresForm.find('input[name="event"]').val(),
-                            friday: [],
-                            saturday: [],
-                            sunday: []
+                            fields: {
+                                friday: [],
+                                saturday: [],
+                                sunday: []
+                            }
                         }
                     }
 
                     fridayChores.each((index, chore) => {
-                        const value = $(chore).val();
-                        $($chore).attr('name', self.sluggify(value));
-                        data.event.friday.push({
-                            name: value,
-                            key: self.sluggify(value)
+                        $(chore).attr('name', self.sluggify($(chore).val()));
+                        data.event.fields.friday.push({
+                            name: $(chore).val(),
+                            key: self.sluggify($(chore).val())
                         })
                     });
+
+                    saturdayChores.each((index, chore) => {
+                        $(chore).attr('name', self.sluggify($(chore).val()));
+                        data.event.fields.saturday.push({
+                            name: $(chore).val(),
+                            key: self.sluggify($(chore).val())
+                        })
+                    })
+
+                    sundayChores.each((index, chore) => {
+                        $(chore).attr('name', self.sluggify($(chore).val()));
+                        data.event.fields.sunday.push({
+                            name: $(chore).val(),
+                            key: self.sluggify($(chore).val())
+                        })
+                    })
+
+                    $.ajax({
+                        method: "POST",
+                        url: self.dxl.request.url,
+                        data: data,
+                        success: (response) => {
+                            console.log(response);
+                        },
+                        beforeSend: () => {
+                            console.log("updating workchores");
+                        },
+                        error: (error) => {
+                            console.log(error)
+                        }
+                    })
+
+                    console.log(data.event);
                 })
             },
 
@@ -987,14 +1021,13 @@ jQuery(function($) {
                 return value
                     .toLowerCase()
                     .trim()
-                    .replace(/[â-z0-9\-]/g, '')
+                    .replace(/[^a-z0-9\-]/g, '') // remove non-alphanumeric characters except hyphen
                     .replace(/\s+/g, '-');
             },
             
-            
-            /**
-             * trigger all event game actions
-            */
+        /**
+         * trigger all event game actions
+        */
         triggerGameEvents: function() {
             const self = this;
 

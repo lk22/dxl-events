@@ -105,9 +105,9 @@
             }
 
             public function initializeDefaultWorkChores() {
+            
                 return [
-                    "workchores" => [
-                      "friday" => [
+                  "friday" => [
                         "fields" => [
                           "participant-work-friday-setup" => [
                             "label" => "Opsætning (Fredag)"
@@ -176,7 +176,6 @@
                           ]
                         ]  
                       ]
-                    ]
                   ];
             }
 

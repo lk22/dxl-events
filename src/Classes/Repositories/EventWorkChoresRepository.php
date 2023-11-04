@@ -10,7 +10,7 @@ if( ! class_exists('EventWorkChoresRepository') )
     {
         protected $repository = "events_workchores";
         protected $defaultOrder = "DESC";
-        protected $primaryIdentifier = "id";
+        protected $primaryIdentifier = "event_id";
     }
 }
 
