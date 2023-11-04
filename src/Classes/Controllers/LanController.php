@@ -460,6 +460,10 @@ if( !class_exists('LanController') )
             $settings = $this->lanRepository->settings()->find($this->getUriKey('id'));
             $tournaments = $this->tournamentRepository->select()->where('lan_id', $event->id)->get() ?? [];
             $participants = $this->lanParticipantRepository->findByEvent($event->id);
+            $workchores = $this->eventWorkChoreRepository->select(['chores'])->where('event_id', $event->id)->get();
+            $fridayChores = json_decode($workchores[0]->chores)->workchores->friday->fields;
+            $saturdayChores = json_decode($workchores[0]->chores)->workchores->saturday->fields;
+            $sundayChores = json_decode($workchores[0]->chores)->workchores->sunday->fields;
             $participantsWithFood = $this->lanParticipantRepository->select()->where('event_id', $event->id)->whereAnd('food_ordered', 1)->get();
             $timeplan = $this->lanRepository->timeplan()->select()->where('event_id', $event->id)->get();
             $timeplanIsDraft = $timeplan->is_draft ?? 0;

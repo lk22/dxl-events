@@ -26,6 +26,7 @@ jQuery(function($) {
             this.updateTournamnentButton = this.container.find('.update-tournament-btn')
             this.createCalendarEventButton = this.container.find('.create-calendar-event-button');
             this.updateCalendarEventButton = this.container.find('.update-calendar-event-button');
+            this.configWorkChoresButton = this.container.find('.config-work-chores-btn');
             this.eventModals = {
                 deleteLanModal: $('deleteLanModal'),
                 createLanEventModal: $('#createLanModal'),
@@ -43,6 +44,7 @@ jQuery(function($) {
                 updateCalendarEventModal: $('#updateCalendarEventModal'),
                 deleteCalendarEventModal: $('#deleteCalendarEventModal'),
                 archiveCalendarEventModal: $('#archiveCalendarEventModal'),
+                configWorkChoresModal: $('#configWorkChoresModal')
             }
             this.initializeActions();
         },
@@ -948,7 +950,46 @@ jQuery(function($) {
                         self.dxl.request.url
                     )
                 })
+
+                // handler for Updating workchores for event 
+                self.eventModals.configWorkChoresModal.find('.config-work-chores-btn').click((e) => {
+                    e.preventDefault();
+                    const workchoresForm = $('.config-workchores-form');
+
+                    const fridayChores = workchoresForm.find('.friday-workchores input');
+                    const saturdayChores = workchoresForm.find('.saturday-workchores input');
+                    const sundayChores = workchoresForm.find('.sunday-workchores input');
+                    console.log({fridayChores, saturdayChores, sundayChores})
+                    const data = {
+                        action: "dxl_event_update_workchores",
+                        dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                        event: {
+                            id: workchoresForm.find('input[name="event"]').val(),
+                            friday: [],
+                            saturday: [],
+                            sunday: []
+                        }
+                    }
+
+                    fridayChores.each((index, chore) => {
+                        const value = $(chore).val();
+                        $($chore).attr('name', self.sluggify(value));
+                        data.event.friday.push({
+                            name: value,
+                            key: self.sluggify(value)
+                        })
+                    });
+                })
             },
+
+            sluggify: function(value) {
+                // sluggify value and return the sluggified value
+                return value
+                    .toLowerCase()
+                    .trim()
+                    .replace(/[â-z0-9\-]/g, '')
+                    .replace(/\s+/g, '-');
+            }
             
             
             /**
