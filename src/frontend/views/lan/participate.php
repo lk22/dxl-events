@@ -65,200 +65,71 @@
 
                     <div class="form-group participant-work-chores mt-2">
                         <p class="lead mb-0 fw-bold mb-2">Arbdejds opgaver fredag</p>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-friday-setup" 
-                                class="form-check-input"
-                                data-label="Opsætning (Fredag)"
-                            >
-                            <label for="floatingInput">Opsætning (<small><strong>Fra kl. 15:30</strong></small>)</label>
-                        </div>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-friday-fireroute" 
-                                class="form-check-input"
-                                data-label="Brand rundde (Fredag)"
-                            >
-                            <label for="floatingInput">Gå brand rundde (<small><strong>Skal gøres kl 18</strong></small>)</label>
-                        </div>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-friday-trash" 
-                                class="form-check-input"
-                                data-label="Affald - pant (Fredag)"
-                            >
-                            <label for="floatingInput">Tømning og sortering af affald / pant</label>
-                        </div>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-friday-smoke-area" 
-                                class="form-check-input"
-                                data-label="Ryge område (Fredag)"
-                            >
-                            <label for="floatingInput">Holde ryge område rent.</label>
-                        </div>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-friday-bathroom" 
-                                class="form-check-input"
-                                data-label="Toiletter (Fredag)"
-                            >
-                            <label for="floatingInput">Holde toiletter rene og er der papir</label>
-                        </div>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-friday-coffee" 
-                                class="form-check-input"
-                                data-label="Kaffe (Fredag)"
-                            >
-                            <label for="floatingInput">Laver frisk kaffe til alle.</label>
-                        </div>
+
+                        <?php 
+                            // rendering all defined chores on friday
+                            if ( $fridayChores ) {
+                                foreach( $fridayChores as $c => $chore ) {
+                                    ?>
+                                        <div class="form-check form-switch mb-2 <?php echo $chore->key ?>">
+                                            <input 
+                                                type="checkbox"
+                                                role="switch"
+                                                name="<?php echo $chore->key ?>"
+                                                class="form-check-input"
+                                                data-label="<?php echo $chore->name ?>"
+                                            >
+                                            <label for="floatingInput">
+                                                <?php echo $chore->name ?>
+                                            </label>
+                                        </div>
+                                    <?php
+                                }
+                            }
+                        ?>
                         <p class="lead mb-0 fw-bold mb-2">Arbdejds opgaver Lørdag</p>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-saturday-fireroute"
-                                class="form-check-input"
-                                data-label="Brand rundde (Lørdag)"
-                            >
-                            <label for="floatingInput">Gå brand rundde. (<small><strong>Skal gøres kl 18</strong></small>)</label>
-                        </div>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-saturday-trash" 
-                                class="form-check-input"
-                                data-label="Affald - pant (Lørdag)"
-                            >
-                            <label for="floatingInput">Tømning og sortering af affald / pant.</label>
-                        </div>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-saturday-cleaning" 
-                                class="form-check-input"
-                                data-label="Oprydning (Lørdag)"
-                            >
-                            <label for="floatingInput">Oprydning af borde, hallen og køkkenet.</label>
-                        </div>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-saturday-smoke-area" 
-                                class="form-check-input"
-                                data-label="Ryge område (Lørdag)"
-                            >
-                            <label for="floatingInput">Holde ryge område rent.</label>
-                        </div>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-saturday-bathroom" 
-                                class="form-check-input"
-                                data-label="Toiletter (Lørdag)"
-                            >
-                            <label for="floatingInput">Holde toiletter rene og er der papir</label>
-                        </div>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-saturday-coffee" 
-                                class="form-check-input"
-                                data-label="Kaffe (Lørdag)"
-                            >
-                            <label for="floatingInput">Laver frisk kaffe til alle.</label>
-                        </div>
+                        <?php 
+                            if ( $saturdayChores ) {
+                                foreach( $saturdayChores as $c => $chore ) {
+                                    ?>
+                                        <div class="form-check form-switch mb-2 <?php echo $chore->key ?>">
+                                            <input 
+                                                type="checkbox"
+                                                role="switch"
+                                                name="<?php echo $chore->key ?>"
+                                                class="form-check-input"
+                                                data-label="<?php echo $chore->name ?>"
+                                            >
+                                            <label for="floatingInput">
+                                                <?php echo $chore->name ?>
+                                            </label>
+                                        </div>
+                                    <?php
+                                }
+                            }
+                        ?>
                         <p class="lead fw-bold mb-2">Arbdejds opgaver Søndag</p>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-sunday-trash" 
-                                class="form-check-input"
-                                data-label="Affald - pant (Søndag)"
-                            >
-                            <label for="floatingInput">Tømning og sortering af affald / pant.</label>
-                        </div>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-sunday-cleaning" 
-                                class="form-check-input"
-                                data-label="Oprydning (Søndag)"
-                            >
-                            <label for="floatingInput">Oprydning af borde, hallen og køkkenet.</label>
-                        </div>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-sunday-smoke-area" 
-                                class="form-check-input"
-                                data-label="Ryge område (Søndag)"
-                            >
-                            <label for="floatingInput">Holde ryger område rent.</label>
-                        </div>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-sunday-bathroom" 
-                                class="form-check-input"
-                                data-label="Toiletter (Søndag)"
-                            >
-                            <label for="floatingInput">Holde toiletter rene og er der papir.</label>
-                        </div>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-sunday-coffee" 
-                                class="form-check-input"
-                                data-label="Kaffe (Søndag)"
-                            >
-                            <label for="floatingInput">Laver frisk kaffe til alle</label>
-                        </div>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-sunday-clearing" 
-                                class="form-check-input"
-                                data-label="Nedpakning (Søndag)"
-                                checked="checked"
-                            >
-                            <label for="floatingInput">Nedpakning</label>
-                        </div>
-                        <div class="form-check form-switch mb-2">
-                            <input 
-                                type="checkbox" 
-                                role="switch" 
-                                name="participant-work-sunday-clearing-hasll"
-                                class="form-check-input"
-                                data-label="Oprydning sovehaller (Søndag)"
-                                checked="checked"
-                            >
-                            <label for="floatingInput">Oprydning af sovehallerne</label>
-                        </div>
+
+                        <?php
+                            if ( $sundayChores ) {
+                                foreach ( $sundayChores as $c => $chore ) {
+                                    ?>
+                                        <div class="form-check form-switch mb-2 <?php echo $chore->key ?>">
+                                            <input 
+                                                type="checkbox"
+                                                role="switch"
+                                                name="<?php echo $chore->key ?>"
+                                                class="form-check-input"
+                                                data-label="<?php echo $chore->name ?>"
+                                            >
+                                            <label for="floatingInput">
+                                                <?php echo $chore->name ?>
+                                            </label>
+                                        </div>
+                                    <?php
+                                }
+                            }
+                        ?>
                     </div>
 
                     <label>Hvem ønsker du at sidde sammen med</label>

@@ -438,9 +438,9 @@ if( !class_exists('LanController') )
                         $this->details();
                         break;
 
-                        case 'participate':
+                    case 'participate':
                         $this->participate();
-                        break;
+                    break;
                 }
             } else {
                 $this->list();
