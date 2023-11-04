@@ -285,6 +285,12 @@ if( !class_exists('EventController'))
             // get the entries for each day
             $timeplanFriday = ($timeplanContent) ? $timeplanContent->friday : [];
 
+            $workchores = (new EventWorkChoresRepository())->select(["chores"])->where('event_id', $event->id)->get();
+            
+            $fridayChores = json_decode($workchores[0]->chores)->friday;
+            $saturdayChores = json_decode($workchores[0]->chores)->saturday;
+            $sundayChores = json_decode($workchores[0]->chores)->sunday;
+
             // if the participant is not empty, we need to get the food preferences
             if ($participant) {
                 if ( ! $participant->has_saturday_breakfast == "1" && ! $participant->has_sunday_breakfast == "1" ) {

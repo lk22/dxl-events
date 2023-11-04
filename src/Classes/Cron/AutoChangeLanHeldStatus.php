@@ -60,7 +60,6 @@ if ( ! class_exists('AutoChangeLanHeldStatus') )
                     }
                 }
                 $mail = (new CronLanEventHeldStatusChanged($eventsData))->setReciever("knudsenudvikling@gmail.com")->send();
-
              } else {
                 $this->logger->logCronReport("Found no events to update");
                 return false;
