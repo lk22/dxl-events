@@ -989,7 +989,7 @@ jQuery(function($) {
                     .trim()
                     .replace(/[â-z0-9\-]/g, '')
                     .replace(/\s+/g, '-');
-            }
+            },
             
             
             /**
