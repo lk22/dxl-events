@@ -677,7 +677,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="button-primary update-participant-workchores"></button>
+                <button class="button-primary update-participant-workchores">Opdater</button>
                 <button class="close-modal btn btn-success" data-bs-dismiss="modal">Luk</button>
             </div>
         </div>
