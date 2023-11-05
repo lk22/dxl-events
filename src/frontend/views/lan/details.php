@@ -587,7 +587,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                Dine arbejdsopgaver
+                <h3>Dine arbejdsopgaver</h3>
             </div>
             <div class="modal-body">
                 <div class="current-workchores mb-4">
@@ -606,6 +606,8 @@
                 </div>
                 <p class="lead">Ønsker du at opdatere dine arbejdsopgave valg, klik de forskellige arbejdsopgaver af nedenfor.</p>
                 <form action="#" class="updateParticipantWorkChores">
+                    <input type="hidden" name="event" value="<?php echo $event->id; ?>">
+                    <input type="hidden" name="participant" value="<?php echo $participant->id; ?>">
                     <div class="form-group participant-work-chores">
                     <p class="lead mb-0 fw-bold mb-2">Arbdejds opgaver fredag</p>
                         <?php 
@@ -675,6 +677,7 @@
                 </form>
             </div>
             <div class="modal-footer">
+                <button class="button-primary update-participant-workchores"></button>
                 <button class="close-modal btn btn-success" data-bs-dismiss="modal">Luk</button>
             </div>
         </div>
