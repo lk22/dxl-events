@@ -6,6 +6,7 @@
     use DxlEvents\Classes\Repositories\LanParticipantRepository as LanParticipant;
     use DxlEvents\Classes\Repositories\ParticipantRepository;
     use DxlMembership\Classes\Repositories\MemberRepository;
+    use DxlMembership\Classes\Repositories\EventWorkChoresRepository;
 
     use PhpOffice\PhpSpreadsheet\Spreadsheet;
     use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -104,6 +105,81 @@
                 return $configured ? true : false;
             }
 
+            public function initializeDefaultWorkChores() {
+            
+                return [
+                  "friday" => [
+                        "fields" => [
+                          "participant-work-friday-setup" => [
+                            "label" => "Opsætning (Fredag)"
+                          ], 
+                          "participant-work-friday-fireroute" => [
+                            "label" => "Brand rundde (Fredag)"
+                          ],
+                          "participant-work-friday-trash" => [
+                            "label" => "Affald - pant (Fredag)"
+                          ],
+                          "participant-work-friday-smoke-area" => [
+                            "label" => "Ryge område (Fredag)"
+                          ],
+                          "participant-work-friday-bathroom" => [
+                            "label" => "Toiletter (Fredag)"
+                          ],
+                          "participant-work-friday-coffee" => [
+                            "label" => "Kaffe (Fredag)"
+                          ],
+                        ],
+                      ],
+                      "saturday" => [
+                        "fields" => [
+                          "participant-work-saturday-fireroute" => [
+                            "label" => "Brand rundde (Lørdag)"
+                          ],
+                          "participant-work-saturday-trash" => [
+                            "label"=> "Affald - pant (Lørdag)"
+                          ],
+                          "participant-work-saturday-cleaning" => [
+                            "label" => "Oprydning (Lørdag)"
+                          ],
+                          "participant-work-saturday-smoke-area" => [
+                            "label" => "Ryge område (Lørdag)"
+                          ],
+                          "participant-work-saturday-bathroom" => [
+                            "label" => "Toiletter (Lørdag)"
+                          ],
+                          "participant-work-saturday-coffee" => [
+                            "label" => "Kaffe (Lørdag)"
+                          ]
+                        ]
+                      ],
+                      "sunday" => [
+                        "fields" => [
+                          "participant-work-sunday-trash" => [
+                            "label" => "Affald - pant (Søndag)"
+                          ],
+                          "participant-work-sunday-cleaning" => [
+                            "label" => "Oprydning (Søndag)"
+                          ],
+                          "participant-work-sunday-smoke-area" => [
+                            "label" => "Ryge område (Søndag)"
+                          ],
+                          "participant-work-sunday-bathroom" => [
+                            "label" => "Toiletter (Søndag)"
+                          ],
+                          "participant-work-sunday-coffee" => [
+                            "label" => "Kaffe (Søndag)"
+                          ],
+                          "participant-work-sunday-clearing" => [
+                            "label" => "Afrigning (Søndag)"
+                          ],
+                          "participant-work-sunday-clearing-hall" => [
+                            "label" => "Oprydning sovehaller (Søndag)"
+                          ]
+                        ]  
+                      ]
+                  ];
+            }
+
             /**
              * Exporting participants to excel
              * exporting tournaments participants in seperate sheets
@@ -129,25 +205,24 @@
                     
                     $workChoresSheet->setCellValue('A1', "Navn")->getColumnDimension('A')->setAutoSize(true);
                     $workChoresSheet->setCellValue('B1', "Gamertag")->getColumnDimension('B')->setAutoSize(true);
-                    $choresFields = [
-                        "C" => "Opsætning (Fredag)",
-                        "D" => "Ryge område (Fredag)",
-                        "E" => "Kaffe (Fredag)",
-                        "F" => "Toiletter (Fredag)",
-                      	"G" => "Brand rundde (Fredag)",
-                        "H" => "Oprydning (Lørdag)",
-                        "I" => "Ryge område (Lørdag)",
-                        "J" => "Kaffe (Lørdag)",
-                        "K" => "Toiletter (Lørdag)",
-                      	"L" => "Brand rundde (Lørdag)",
-                        "M" => "Oprydning (Søndag)",
-                        "N" => "Ryge område (Søndag)",
-                        "O" => "Kaffe (Søndag)",
-                        "P" => "Toiletter (Søndag)",
-                        "Q" => "Nedpakning (Søndag)",
-                        "R" => "Oprydning sovehaller (Søndag)"
-                    ];
-                    
+
+                    $workChoreSheetColumns = ["C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "Q", "R"];
+                    $workchores = (new EventWorkChoresRepository())->select(["chores"])->where('event_id', $event->id)->get();
+                    $mergedChores = array_merge(
+                      json_decode($workchores->chores)->friday,
+                      json_decode($workchores->chores)->saturday,
+                      json_decode($workchores->chores)->sunday
+                    );
+
+                    $choresFields = [];
+                    foreach( $mergedChores as $index => $chore ) {
+                      if ( isset($workChoreSheetColumns[$index]) ) {
+                        $column = $workChoreSheetColumns[$index];
+                        $workChoresSheet->getColumnDimension($column)->setAutoSize(true);
+                        $choresFields[$column] = $chore->label;
+                      }
+                    }
+
                     foreach($choresFields as $key => $value) {
                         $workChoresSheet->setCellValue($key . "1", $value)->getColumnDimension($key)->setAutoSize(true);
                     }

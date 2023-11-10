@@ -1,3 +1,7 @@
+<?php 
+    // var_dump(json_decode($workchores[0]->chores)->workchores->friday->fields);
+    // die();
+?>
 <div class="dxl dxl-events events-container">
     <div class="header">
         <div class="logo">
@@ -79,6 +83,18 @@
                             }
                         }
                     ?>
+
+                    <!-- Workchores section -->
+                    <br>
+                    <hr>
+                    <button 
+                        class="button-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#configWorkChoresModal"
+                    >
+                        Administrer arbejdsopgaver
+                    </button>
+                    <!-- Workchores section end -->
         
                     <!-- list of participants and attached tournaments -->
                     <div class="accordion accordion-flush mt-4" id="eventAccordion">
@@ -136,3 +152,4 @@
 <?php require dirname(__FILE__) . "/partials/config-event-modal.php"; ?>
 <?php require dirname(__FILE__) . "/partials/update-event-modal.php"; ?>
 <?php require dirname(__FILE__) . "/partials/delete-event-modal.php"; ?>
+<?php require dirname(__FILE__) . "/partials/config-workchores-modal.php"; ?>

@@ -26,6 +26,7 @@ jQuery(function($) {
             this.updateTournamnentButton = this.container.find('.update-tournament-btn')
             this.createCalendarEventButton = this.container.find('.create-calendar-event-button');
             this.updateCalendarEventButton = this.container.find('.update-calendar-event-button');
+            this.configWorkChoresButton = this.container.find('.config-work-chores-btn');
             this.eventModals = {
                 deleteLanModal: $('deleteLanModal'),
                 createLanEventModal: $('#createLanModal'),
@@ -43,6 +44,7 @@ jQuery(function($) {
                 updateCalendarEventModal: $('#updateCalendarEventModal'),
                 deleteCalendarEventModal: $('#deleteCalendarEventModal'),
                 archiveCalendarEventModal: $('#archiveCalendarEventModal'),
+                configWorkChoresModal: $('#configWorkChoresModal')
             }
             this.initializeActions();
         },
@@ -948,12 +950,102 @@ jQuery(function($) {
                         self.dxl.request.url
                     )
                 })
+
+                /**
+                 * Configuring work chores for LAN event
+                 * @author Leo knudsen
+                 */
+                self.eventModals.configWorkChoresModal.find('.config-work-chores-btn').click((e) => {
+                    e.preventDefault();
+                    const workchoresForm = $('.config-workchores-form');
+
+                    const fridayChores = workchoresForm.find('.friday-workchores input');
+                    const saturdayChores = workchoresForm.find('.saturday-workchores input');
+                    const sundayChores = workchoresForm.find('.sunday-workchores input');
+                    
+                    const data = {
+                        action: "dxl_event_update_workchores",
+                        dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                        event: {
+                            id: workchoresForm.find('input[name="event"]').val(),
+                            fields: {
+                                friday: [],
+                                saturday: [],
+                                sunday: []
+                            }
+                        }
+                    }
+
+                    fridayChores.each((index, chore) => {
+                        $(chore).attr('name', self.sluggify($(chore).val()));
+                        data.event.fields.friday.push({
+                            name: $(chore).val(),
+                            key: self.sluggify($(chore).val())
+                        })
+                    });
+
+                    saturdayChores.each((index, chore) => {
+                        $(chore).attr('name', self.sluggify($(chore).val()));
+                        data.event.fields.saturday.push({
+                            name: $(chore).val(),
+                            key: self.sluggify($(chore).val())
+                        })
+                    })
+
+                    sundayChores.each((index, chore) => {
+                        $(chore).attr('name', self.sluggify($(chore).val()));
+                        data.event.fields.sunday.push({
+                            name: $(chore).val(),
+                            key: self.sluggify($(chore).val())
+                        })
+                    })
+
+                    $.ajax({
+                        method: "POST",
+                        url: self.dxl.request.url,
+                        data: data,
+                        success: (response) => {
+                            console.log(response);
+                            $('.config-work-chores-btn').prop('disabled', false).html('Opdater');
+                            $.toast({
+                                title: "Success",
+                                text: "Arbejdsopgaver er opdateret",
+                                icon: "success",
+                                position: "bottom-right"
+                            })
+                        },
+                        beforeSend: () => {
+                            console.log("updating workchores");
+                            $('.config-work-chores-btn').prop('disabled', true).html('Opdaterer');
+                        },
+                        error: (error) => {
+                            console.log(error)
+                            $('.config-work-chores-btn').prop('disabled', false).html('Opdater');
+                            $.toast({
+                                title: "Fejl",
+                                text: "Noget gik galt, kunne ikke opdatere arbejdsopgaver",
+                                icon: "error",
+                                position: "bottom-right"
+                            })
+                        }
+                    })
+
+                    console.log(data.event);
+                })
+            },
+
+            sluggify: function(value) {
+                // sluggify value and return the sluggified value
+                return value
+                    .toLowerCase()
+                    .trim()
+                    .replace(/[^a-z0-9\-]/g, '') // remove non-alphanumeric characters except hyphen
+                    .replace(/\s+/g, '-');
             },
             
-            
-            /**
-             * trigger all event game actions
-            */
+        /**
+         * trigger all event game actions
+        */
         triggerGameEvents: function() {
             const self = this;
 

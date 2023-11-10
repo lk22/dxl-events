@@ -222,12 +222,25 @@
                             </button>
                         <?php
                     }
+
+                    if ( $participated && json_encode($participant->workchores) ) {
+                        ?>
+                            <br>
+                            <button 
+                                class="btn btn-primary mt-3"
+                                data-bs-toggle="modal"
+                                data-bs-target="#lanWorkChoresModal"
+                            >
+                                <i class="fas fa-calendar-alt"></i> Se arbejdsopgaver
+                            </button>
+                        <?php
+                    }
                 ?>
             </div>
             </div>
             <div class="col-12 col-xl-5 p-4 rounded rounded-md">
                 <?php 
-                    foreach( $tournaments as $t => $tournament) {
+                    foreach( $tournaments as $t => $tournament ) {
                         ?>
                             <div class="col-12 p-4 rounded rounded-2xl tournament">
                                 <div class="tournament__title fw-bold text-success text-uppercase">
@@ -560,11 +573,111 @@
                       </div>
                     </div>
                   </div>
-                  
                 </div>
-                
             </div>
             <div class="modal-footer">
+                <button class="close-modal btn btn-success" data-bs-dismiss="modal">Luk</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal component for showing participant work chores -->
+<div class="modal modal-xl fade fadeInUp" id="lanWorkChoresModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Dine arbejdsopgaver</h3>
+            </div>
+            <div class="modal-body">
+                <div class="current-workchores mb-4">
+                    <p class="lead">Se dine nuværende arbejdsopgaver</p>
+                    <?php
+                        if ( $participant->workchores ) {
+                            foreach ( json_decode($participant->workchores) as $c => $chore) {
+                                ?>
+                                    <div class="workchore-item">
+                                        <p class="mb-0 fw-bold"> - <?php echo $chore->label; ?></p>
+                                    </div>
+                                <?php
+                            } 
+                        }
+                    ?>
+                </div>
+                <p class="lead">Ønsker du at opdatere dine arbejdsopgave valg, klik de forskellige arbejdsopgaver af nedenfor.</p>
+                <form action="#" class="updateParticipantWorkChores">
+                    <input type="hidden" name="event" value="<?php echo $event->id; ?>">
+                    <input type="hidden" name="participant" value="<?php echo $participant->id; ?>">
+                    <div class="form-group participant-work-chores">
+                    <p class="lead mb-0 fw-bold mb-2">Arbdejds opgaver fredag</p>
+                        <?php 
+                            // rendering all defined chores on friday
+                            if ( $fridayChores ) {
+                                foreach( $fridayChores as $c => $chore ) {
+                                    ?>
+                                        <div class="form-check form-switch mb-2 <?php echo $chore->key ?>">
+                                            <input 
+                                                type="checkbox"
+                                                role="switch"
+                                                name="<?php echo $chore->key ?>"
+                                                class="form-check-input"
+                                                data-label="<?php echo $chore->name ?>"
+                                            >
+                                            <label for="floatingInput">
+                                                <?php echo $chore->name ?>
+                                            </label>
+                                        </div>
+                                    <?php
+                                }
+                            }
+                        ?>
+                        <p class="lead mb-0 fw-bold mb-2">Arbdejds opgaver Lørdag</p>
+                        <?php 
+                            if ( $saturdayChores ) {
+                                foreach( $saturdayChores as $c => $chore ) {
+                                    ?>
+                                        <div class="form-check form-switch mb-2 <?php echo $chore->key ?>">
+                                            <input 
+                                                type="checkbox"
+                                                role="switch"
+                                                name="<?php echo $chore->key ?>"
+                                                class="form-check-input"
+                                                data-label="<?php echo $chore->name ?>"
+                                            >
+                                            <label for="floatingInput">
+                                                <?php echo $chore->name ?>
+                                            </label>
+                                        </div>
+                                    <?php
+                                }
+                            }
+                        ?>
+                        <p class="lead fw-bold mb-2">Arbdejds opgaver Søndag</p>
+                        <?php
+                            if ( $sundayChores ) {
+                                foreach ( $sundayChores as $c => $chore ) {
+                                    ?>
+                                        <div class="form-check form-switch mb-2 <?php echo $chore->key ?>">
+                                            <input 
+                                                type="checkbox"
+                                                role="switch"
+                                                name="<?php echo $chore->key ?>"
+                                                class="form-check-input"
+                                                data-label="<?php echo $chore->name ?>"
+                                            >
+                                            <label for="floatingInput">
+                                                <?php echo $chore->name ?>
+                                            </label>
+                                        </div>
+                                    <?php
+                                }
+                            }
+                        ?>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="button-primary update-participant-workchores">Opdater</button>
                 <button class="close-modal btn btn-success" data-bs-dismiss="modal">Luk</button>
             </div>
         </div>

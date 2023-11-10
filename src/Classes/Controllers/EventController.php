@@ -12,6 +12,7 @@ use DxlEvents\Classes\Repositories\LanRepository;
 use DxlEvents\Classes\Repositories\TrainingRepository;
 use DxlEvents\Classes\Repositories\ParticipantRepository;
 use DxlEvents\Classes\Repositories\LanParticipantRepository;
+use DxlEvents\Classes\Repositories\EventWorkChoresRepository;
 use DxlMembership\Classes\Repositories\MemberRepository;
 
 if( !class_exists('EventController')) 
@@ -284,6 +285,12 @@ if( !class_exists('EventController'))
             // get the entries for each day
             $timeplanFriday = ($timeplanContent) ? $timeplanContent->friday : [];
 
+            $workchores = (new EventWorkChoresRepository())->select(["chores"])->where('event_id', $event->id)->get();
+            
+            $fridayChores = json_decode($workchores[0]->chores)->friday;
+            $saturdayChores = json_decode($workchores[0]->chores)->saturday;
+            $sundayChores = json_decode($workchores[0]->chores)->sunday;
+
             // if the participant is not empty, we need to get the food preferences
             if ($participant) {
                 if ( ! $participant->has_saturday_breakfast == "1" && ! $participant->has_sunday_breakfast == "1" ) {
@@ -358,6 +365,7 @@ if( !class_exists('EventController'))
                 ->select()
                 ->where('user_id', $current_user->ID)
                 ->getRow();
+
             $members = $this->memberRepository->select()->where('is_payed', 1)->get();
 
             $tournaments = $this->tournamentRepository
@@ -365,6 +373,12 @@ if( !class_exists('EventController'))
                 ->where('has_lan', 1)
                 ->whereAnd('lan_id', $details->id)
                 ->get();
+
+            $workchores = (new EventWorkChoresRepository())->select(["chores"])->where('event_id', $details->id)->get();
+            
+            $fridayChores = json_decode($workchores[0]->chores)->friday;
+            $saturdayChores = json_decode($workchores[0]->chores)->saturday;
+            $sundayChores = json_decode($workchores[0]->chores)->sunday;
 
             require_once ABSPATH . "wp-content/plugins/dxl-events/src/frontend/views/lan/participate.php";
         }

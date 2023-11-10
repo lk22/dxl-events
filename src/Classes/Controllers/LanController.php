@@ -10,6 +10,7 @@ use Dxl\Classes\Core;
 use DxlEvents\Classes\Repositories\LanRepository as Lan;
 use DxlEvents\Classes\Repositories\TournamentRepository;
 use DxlEvents\Classes\Repositories\LanParticipantRepository;
+use DxlEvents\Classes\Repositories\EventWorkChoresRepository;
 
 // services
 use DxlEvents\Classes\Services\LanEventService as Service;
@@ -52,6 +53,13 @@ if( !class_exists('LanController') )
         protected $lanParticipantRepository;
 
         /**
+         * Event work chore repository
+         *
+         * @var DxlEvents\Classes\Repositories\eventWorkChoreRepository
+         */
+        protected $eventWorkChoreRepository;
+
+        /**
          * Event service 
          *
          * @var DxlEvents\Classes\Services\EventService
@@ -67,6 +75,7 @@ if( !class_exists('LanController') )
             $this->lanRepository = new Lan();
             $this->tournamentRepository = new TournamentRepository();
             $this->lanParticipantRepository = new LanParticipantRepository();
+            $this->eventWorkChoreRepository = new EventWorkChoresRepository();
             $this->dxl = new Core();
             $this->eventService = new Service();
             $this->registerAdminActions();
@@ -88,6 +97,7 @@ if( !class_exists('LanController') )
             add_action("wp_ajax_dxl_event_unpublish", [$this, 'ajaxUnpublishEvent']);
             add_action("wp_ajax_dxl_event_export_participants", [$this, 'ajaxExportParticipants']);
             add_action("wp_ajax_dxl_event_create_update_timeplanner", [$this, 'ajaxCreateTimeplanner']);
+            add_action("wp_ajax_dxl_event_update_workchores", [$this, 'ajaxUpdateWorkChores']);
         }
 
         /**
@@ -113,9 +123,15 @@ if( !class_exists('LanController') )
 
             $newEvent = $this->get('event');
             $newEvent = $_REQUEST["event"];
-            // echo json_encode($_REQUEST["event"]["description"]); wp_die();
 
-            // $created = $this->eventService->createEvent($newEvent);
+            $defaultWorkChores = $this->eventService->initializeDefaultWorkChores();
+
+            // $this->dxl->response('event', [
+            //     "error" => true,
+            //     "response" => $defaultWorkChores
+            // ]);
+
+            // wp_die();
 
             $event = $this->lanRepository->create([
                 "title" => $newEvent["title"],
@@ -145,6 +161,12 @@ if( !class_exists('LanController') )
                 "end_at" => 0, // timestamp
                 "latest_participation_date" => 0, // timestamp
                 "participation_opening_date" => 0, // timestampe
+            ]);
+            
+
+            $this->eventWorkChoreRepository->create([
+                "event_id" => $event,
+                "chores" => json_encode($defaultWorkChores)
             ]);
 
             if( !$event ) {
@@ -367,6 +389,39 @@ if( !class_exists('LanController') )
         }
 
         /**
+         * Updating work chores for event
+         *
+         * @return void
+         */
+        public function ajaxUpdateWorkChores(): void 
+        {
+            $logger = $this->dxl->getUtility("Logger");
+            $logger->log("triggering action: " . __METHOD__);
+
+            $event = $this->lanRepository->find($_REQUEST["event"]["id"]);
+
+            $workChoresUpdated = $this->eventWorkChoreRepository->update([
+                "chores" => json_encode($_REQUEST["event"]["fields"])
+            ], $event->id);
+
+            if ( ! $workChoresUpdated == 1 ) {
+                //$logger->log("Failed to update work chores on event " . $event->name . " " . __METHOD__);
+                echo $this->dxl->response('event', [
+                    "error" => true,
+                    "response" => "Noget gik galt, der fandtes ingen arbejdsopgaver at opdatere"
+                ]);
+                wp_die();
+            }
+
+            echo $this->dxl->response('event', [
+                "error" => false,
+                "response" => "Arbejdsopgaver opdateret"
+            ]);
+
+            wp_die();
+        }
+
+        /**
          * rendering LAN managing views
          *
          * @return void
@@ -383,9 +438,9 @@ if( !class_exists('LanController') )
                         $this->details();
                         break;
 
-                        case 'participate':
+                    case 'participate':
                         $this->participate();
-                        break;
+                    break;
                 }
             } else {
                 $this->list();
@@ -439,11 +494,18 @@ if( !class_exists('LanController') )
             $settings = $this->lanRepository->settings()->find($this->getUriKey('id'));
             $tournaments = $this->tournamentRepository->select()->where('lan_id', $event->id)->get() ?? [];
             $participants = $this->lanParticipantRepository->findByEvent($event->id);
+            $workchores = $this->eventWorkChoreRepository->select(['chores'])->where('event_id', $event->id)->get();
+            $fridayChores = json_decode($workchores[0]->chores)->friday;
+            $saturdayChores = json_decode($workchores[0]->chores)->saturday;
+            $sundayChores = json_decode($workchores[0]->chores)->sunday;
             $participantsWithFood = $this->lanParticipantRepository->select()->where('event_id', $event->id)->whereAnd('food_ordered', 1)->get();
             $timeplan = $this->lanRepository->timeplan()->select()->where('event_id', $event->id)->get();
             $timeplanIsDraft = $timeplan->is_draft ?? 0;
             $timeplan = ($timeplan) ? json_decode($timeplan[0]->content) : [];
             $tournamentData = [];
+
+            // var_dump(json_decode($workchores[0]->chores));
+            // wp_die();
             
             foreach($tournaments as $t => $tournament) {
                 $tournamentData[$t] = [
