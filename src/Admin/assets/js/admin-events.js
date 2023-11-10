@@ -951,7 +951,10 @@ jQuery(function($) {
                     )
                 })
 
-                // handler for Updating workchores for event 
+                /**
+                 * Configuring work chores for LAN event
+                 * @author Leo knudsen
+                 */
                 self.eventModals.configWorkChoresModal.find('.config-work-chores-btn').click((e) => {
                     e.preventDefault();
                     const workchoresForm = $('.config-workchores-form');
@@ -1003,12 +1006,27 @@ jQuery(function($) {
                         data: data,
                         success: (response) => {
                             console.log(response);
+                            $('.config-work-chores-btn').prop('disabled', false).html('Opdater');
+                            $.toast({
+                                title: "Success",
+                                text: "Arbejdsopgaver er opdateret",
+                                icon: "success",
+                                position: "bottom-right"
+                            })
                         },
                         beforeSend: () => {
                             console.log("updating workchores");
+                            $('.config-work-chores-btn').prop('disabled', true).html('Opdaterer');
                         },
                         error: (error) => {
                             console.log(error)
+                            $('.config-work-chores-btn').prop('disabled', false).html('Opdater');
+                            $.toast({
+                                title: "Fejl",
+                                text: "Noget gik galt, kunne ikke opdatere arbejdsopgaver",
+                                icon: "error",
+                                position: "bottom-right"
+                            })
                         }
                     })
 
