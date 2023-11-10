@@ -1,7 +1,3 @@
-<?php 
-    // var_dump(json_decode($workchores[0]->chores)->workchores->friday->fields);
-    // die();
-?>
 <div class="dxl dxl-events events-container">
     <div class="header">
         <div class="logo">

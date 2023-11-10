@@ -291,6 +291,7 @@ if( !class_exists('EventController'))
             $saturdayChores = json_decode($workchores[0]->chores)->saturday;
             $sundayChores = json_decode($workchores[0]->chores)->sunday;
 
+
             // if the participant is not empty, we need to get the food preferences
             if ($participant) {
                 if ( ! $participant->has_saturday_breakfast == "1" && ! $participant->has_sunday_breakfast == "1" ) {
