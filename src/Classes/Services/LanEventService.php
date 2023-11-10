@@ -6,7 +6,7 @@
     use DxlEvents\Classes\Repositories\LanParticipantRepository as LanParticipant;
     use DxlEvents\Classes\Repositories\ParticipantRepository;
     use DxlMembership\Classes\Repositories\MemberRepository;
-    use DxlMembership\Classes\Repositories\EventWorkChoresRepository;
+    use DxlEvents\Classes\Repositories\EventWorkChoresRepository;
 
     use PhpOffice\PhpSpreadsheet\Spreadsheet;
     use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -25,7 +25,7 @@
             public function __construct() 
             {
                 $this->tournamentParticipantRepository = new ParticipantRepository();
-                
+                $this->eventWorkChoresRepository = new EventWorkChoresRepository();
             }
 
             public function createEvent(array $event) : bool
@@ -207,11 +207,11 @@
                     $workChoresSheet->setCellValue('B1', "Gamertag")->getColumnDimension('B')->setAutoSize(true);
 
                     $workChoreSheetColumns = ["C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "Q", "R"];
-                    $workchores = (new EventWorkChoresRepository())->select(["chores"])->where('event_id', $event->id)->get();
+                    $workchores = $this->eventWorkChoresRepository->select(["chores"])->where('event_id', $event)->get();
                     $mergedChores = array_merge(
-                      json_decode($workchores->chores)->friday,
-                      json_decode($workchores->chores)->saturday,
-                      json_decode($workchores->chores)->sunday
+                      json_decode($workchores[0]->chores)->friday,
+                      json_decode($workchores[0]->chores)->saturday,
+                      json_decode($workchores[0]->chores)->sunday
                     );
 
                     $choresFields = [];
@@ -219,7 +219,7 @@
                       if ( isset($workChoreSheetColumns[$index]) ) {
                         $column = $workChoreSheetColumns[$index];
                         $workChoresSheet->getColumnDimension($column)->setAutoSize(true);
-                        $choresFields[$column] = $chore->label;
+                        $choresFields[$column] = $chore->name;
                       }
                     }
 
