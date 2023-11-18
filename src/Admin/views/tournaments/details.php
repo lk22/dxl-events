@@ -52,7 +52,7 @@
     <div class="content mt-4">
         <div class="tournament-details details flex">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="alert alert-success rounded is-held-status" style="<?php echo ($tournament->is_held) ? "display:block" : "display:none" ?>">
                         <?php 
                             if ( $tournament->is_held ) {
@@ -69,7 +69,7 @@
                     <h4>Slut tidspunkt</h4>
                     <p class="lead"><?php echo date("H:i", $tournament->endtime); ?></p>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-6">
 
                     <p class="lead fw-bold">Extra turnerings informationer</p>
                     <p class="lead fw-bold">Beskrivelse</p>
@@ -100,6 +100,7 @@
                                         }
                                         ?>
                                     </select>
+                                    <div class="dashicons dashicons-edit buk-create-game-btn" style="cursor: pointer;"></div>
                                     <div class="divider"></div>
                                     <div>
                                         <select class="hidden" name="game-mode" id="game-mode"></select>

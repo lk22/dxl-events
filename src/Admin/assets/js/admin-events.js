@@ -328,6 +328,32 @@ jQuery(function($) {
             });
 
             /**
+             * bulk create new game for an tournament ressource
+             */
+            self.container.find('.buk-create-game-btn').click((e) => {
+
+                const tournament = self.container.find('.attachGameForm .attachGameButton').data('tournament');
+
+                let html = "<input type='hidden' name='tournament' value='" + tournament + "'>";
+                html += "<div class='form-group mb-3'>";
+                html += "<label class='d-block' for='game-name'>Spil navn</label>";
+                html += '<input type="text" class="form-control" name="create-game-field" placeholder="Indtast spil navn" required>';
+                html += "</div>";
+                html += "<div class='form-group mb-3'>";
+                html += "<label class='d-block' for='game-name'>Spil mode</label>";
+                html += '<input type="text" class="form-control" name="create-game-mode-field" placeholder="Indtast spil mode" required>';
+                html += "</div>";
+                html += "<div class='form-group mb-3'>";
+                html += "<label class='d-block' for='game-name'>Spil type</label>";
+                html += '<input type="text" class="form-control" name="create-game-type-field" placeholder="Indtast spil type" required>';
+                html += "</div>";
+                html += "<div class='form-group mb-3'>";
+                html += "<input type='submit' value='tilknyt spil' class='button-primary'>";
+                html += "</div>";
+                self.container.find('.attachGameForm').html(html);
+            });
+
+            /**
              * when selecting a game, fetch game modes attached to the chosen game
              */
             self.container.find('#game-field').change((e) => {
