@@ -79,7 +79,6 @@
                     <button class="button-primary update-description-btn modal-button" data-bs-toggle="modal" data-bs-target="#tournamentDescriptionModal">Opdater</button>
                     <div class="divider"></div>
                     <?php 
-                        // show game field
                         if( count($games) ) {
                             ?>
                                 <form action="#" class="attachGameForm">
@@ -105,12 +104,71 @@
                                     <div>
                                         <select class="hidden" name="game-mode" id="game-mode"></select>
                                     </div>
-                                    <small>Valgt spilletilstand: <strong><?php echo $attachedGameMode->name ?? "Kunne ikke finde spille tilstand" ?></strong></small>
+                                    <small>
+                                        Valgt spilletilstand: 
+                                        <strong>
+                                            <?php echo $attachedGameMode->name ?? "Kunne ikke finde spille tilstand" ?>
+                                        </strong>
+                                    </small>
                                     <div class="divider"></div>
                                     <div>
-                                        <button class="attachGameButton button-primary" data-tournament="<?php echo $tournament->id; ?>">Opdater</button>
+                                        <button 
+                                            class="attachGameButton button-primary" 
+                                            data-tournament="<?php echo $tournament->id; ?>"
+                                        >
+                                            Opdater
+                                        </button>
                                     </div>
                                     <div class="divider"></div>
+                                </form>
+
+                                <!-- 
+                                    form to attach new game to tournament
+                                 -->
+                                <form action="#" class="attachCreatedGameForm">
+                                    <div class="form-group mb-3">
+                                        <p class="lead">Spil navn:</p>
+                                        <input 
+                                            type="text" 
+                                            name="game-field" 
+                                            class="form-control" 
+                                            placeholder="Indtast spil navn" 
+                                            required
+                                        >
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <p class="lead">Spil mode:</p>
+                                        <input 
+                                            type="text" 
+                                            name="create-game-mode-field" 
+                                            class="form-control" 
+                                            placeholder="Indtast spil mode" 
+                                            required
+                                        >
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <p class="lead">Spil type:</p>
+                                        <input 
+                                            type="text" 
+                                            name="create-game-type-field" 
+                                            class="form-control" 
+                                            placeholder="Indtast spil type" 
+                                            required
+                                        >
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input 
+                                            type='submit' 
+                                            value='tilknyt spil' 
+                                            class='button-primary attachGameButton'
+                                            data-tournament="<?php echo $tournament->id; ?>"
+                                        >
+                                        <button 
+                                            class='button-primary cancel-bulk-create'
+                                        >
+                                            Fortryd
+                                        </button>
+                                    </div>
                                 </form>
                             <?php
                         } else {

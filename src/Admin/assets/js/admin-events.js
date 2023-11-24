@@ -57,6 +57,8 @@ jQuery(function($) {
 
             $('[data-bs-toggle="tooltip"]').tooltip();
 
+            $('.attachCreatedGameForm').hide();
+
             self.triggerTournamentEvents();
             self.triggerLanEvents();
             self.triggerGameEvents();
@@ -68,6 +70,8 @@ jQuery(function($) {
          */
         triggerTournamentEvents: function() {
             const self = this;
+
+            
 
             /**
              * Creating new tournament ressource from form
@@ -331,27 +335,14 @@ jQuery(function($) {
              * bulk create new game for an tournament ressource
              */
             self.container.find('.buk-create-game-btn').click((e) => {
-
-                const tournament = self.container.find('.attachGameForm .attachGameButton').data('tournament');
-
-                let html = "<input type='hidden' name='tournament' value='" + tournament + "'>";
-                html += "<div class='form-group mb-3'>";
-                html += "<label class='d-block' for='game-name'>Spil navn</label>";
-                html += '<input type="text" class="form-control" name="create-game-field" placeholder="Indtast spil navn" required>';
-                html += "</div>";
-                html += "<div class='form-group mb-3'>";
-                html += "<label class='d-block' for='game-name'>Spil mode</label>";
-                html += '<input type="text" class="form-control" name="create-game-mode-field" placeholder="Indtast spil mode" required>';
-                html += "</div>";
-                html += "<div class='form-group mb-3'>";
-                html += "<label class='d-block' for='game-name'>Spil type</label>";
-                html += '<input type="text" class="form-control" name="create-game-type-field" placeholder="Indtast spil type" required>';
-                html += "</div>";
-                html += "<div class='form-group mb-3'>";
-                html += "<input type='submit' value='tilknyt spil' class='button-primary'>";
-                html += "</div>";
-                self.container.find('.attachGameForm').html(html);
+                $('.attachGameForm').hide();
+                $('.attachCreatedGameForm').show();
             });
+
+            self.container.find('.cancel-bulk-create').click((e) => {
+                $('.attachCreatedGameForm').hide();
+                $('.attachGameForm').show();
+            })
 
             /**
              * when selecting a game, fetch game modes attached to the chosen game
@@ -396,21 +387,51 @@ jQuery(function($) {
                 const gameMode = $('#game-mode').val();
                 const tournament = $('.attachGameButton').data('tournament');
 
+                // validate name, type and mode
+                const gamename = $('input[name="game-field"]').val();
+                const gameModeName = $('input[name="create-game-mode-field"]').val();
+                const gameType = $('input[name="create-game-type-field"]').val();
+
+                const data = {
+                    action: "dxl_admin_tournament_update",
+                    dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
+                    event: {
+                        action: "attach-game",
+                        id: tournament,
+                        game: {}
+                    }
+                }
+
+                // build the data game object
+                if ( game ) {
+                    data.event.game.id = game;
+                }
+
+                if ( gameMode ) {
+                    data.event.game.mode = gameMode;
+                }
+
+                if ( gamename ) {
+                    data.event.game.name = gamename;
+                }
+
+                if ( gameModeName ) {
+                    data.event.game.mode = gameModeName;
+                }
+
+                if ( gameType ) {
+                    data.event.game.type = gameType;
+                }
+
+                // clear input fields
+                $('.aattachCreatedGameForm').find('input').each((index, input) => {
+                    $(input).val("");
+                });
+
                 $.ajax({
                     method: "POST", 
                     url: self.dxl.request.url, 
-                    data: {
-                        action: 'dxl_admin_tournament_update',
-                        dxl_core_nonce: dxl_core_vars.dxl_core_nonce,
-                        event:{
-                            action: "attach-game",
-                            id: tournament,
-                            game: {
-                                id: game,
-                                mode: gameMode
-                            }
-                        }
-                    },
+                    data: data,
                     beforeSend: () => {
                         $.toast({
                             title: "Opdeterer",
@@ -421,7 +442,17 @@ jQuery(function($) {
                     },
                     success: (response) => {
                         console.log(response);
-                        location.reload();
+
+                        $.toast({
+                            title: "Spillet er tilknyttet",
+                            text: "Spillet er nu tilknyttet turneringen",
+                            icon: "success",
+                            position: "bottom-right"
+                        })
+
+                        // toggle the forms
+                        $('.attachCreatedGameForm').hide();
+                        $('.attachGameForm').show();
                     },
                     error: (error) => {
                         console.log(error)
