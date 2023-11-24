@@ -71,8 +71,6 @@ jQuery(function($) {
         triggerTournamentEvents: function() {
             const self = this;
 
-            
-
             /**
              * Creating new tournament ressource from form
              */

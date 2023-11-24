@@ -20,34 +20,35 @@
              *
              * @var DxlEvents\Classes\Repositories\TournamentSettingRepository
              */
-            public $tournamentSettingRepository;
+            protected $tournamentSettingRepository;
 
             /**
              * Game Repository
              *
              * @var DxlEvents\Classes\Repositories\GameRepository
              */
-            public $gameRepository;
+            protected $gameRepository;
 
             /**
              * Game Mode Repository
              *
              * @var DxlEvents\Classes\Repositories\GameModeRepository
              */
-            public $gameModeRepository;
+            protected $gameModeRepository;
             
             /**
              * Game Type Repository
              *
              * @var DxlEvents\Classes\Repositories\GameTypeRepository
              */
-            public $gameTypeRepository;
+            protected $gameTypeRepository;
 
             /**
              * Tournament publish action constructor
              */
             public function __construct()
             {
+                $this->request = $this->getRequestData();
                 $this->tournamentSettingRepository = new TournamentSetting();
                 $this->gameRepository = new GameRepository();
                 $this->gameModeRepository = new GameModeRepository();
@@ -57,54 +58,63 @@
             /**
              * Trigger publish action
              */
-            public function call(): void
+            public function call()
             {
                 $logger = Logger::getInstance();
-                $game = $_REQUEST["event"]["game"];
-                $event = (int) $_REQUEST["event"]["id"];
+                try {
+                    $game = $this->findOrCreateGame($this->request["event"]["game"]);
+                    $attached = $this->attachGameToEvent($game, $this->request["event"]["id"]);
+                    return $attached;
+                    return wp_send_json_success(["message" => "Game successfully attached",]);
+                } catch (\Exception $e) {
+                    return wp_send_json_error(["message" => $e->getMessage()]);
+                }
+            }
 
-                // make sure the game type exists
+            private function getRequestData()
+            {
+                return $_REQUEST;
+            }
 
-                if ( false == $this->findExistingGame($game["name"]) ) {
-                    $currentGameType = $this->findOrCreateGameType($game["type"]);
-
+            private function findOrCreateGame($gameData) 
+            {
+                $gameName = $gameData["name"] ?? "";
+                
+                if ( isset($gameName) && false == $this->findExistingGame($gameName) ) {
+                    return $gameData;
+                    $currentGameType = $this->findOrCreateGameType($gameData["type"]);
+                    $existingGameMode = $this->findOrCreateGameMode($gameData["mode"], $gameData["id"]);
                     if ( false == $currentGameType ) {
-                        return wp_send_json_error([
-                            "message" => "Failed to create game type",
-                            "data" => $_REQUEST["event"]
-                        ]);
-                        $logger->log(__METHOD__ . " - " . __CLASS__ . " Failed to create game type for " . $game["name"]); 
+                        throw new \Exception("Failed to create game type for " . $gameData["name"]);
                     }
 
                     if ( false == $existingGameMode ) {
-                        return wp_send_json_error([
-                            "message" => "Failed to create game mode",
-                            "data" => $_REQUEST["event"]
-                        ]);
+                        throw new \Exception("Failed to create game mode for " . $gameData["name"]);
                     }
-
-                    $created = $this->gameRepository->create([
-                        "name" => $game["name"],
+                    return $this->gameRepository->create([
+                        "name" => $gameData["name"],
                         "game_type" => $currentGameType
                     ]);
                 }
 
-                $attached = $this->tournamentSettingRepository->update([
-                    "game_mode" => $game["mode"],
-                    "game_id" => (int) $game["id"]
-                ], $event);
+                $existing = $this->gameRepository
+                    ->select()
+                    ->where("name", "'$gameName'")
+                    ->getRow();
+                return $existing;
+            }
 
+            private function attachGameToEvent($game, $eventId)
+            {
+                return [
+                    "game" => $game];
+                $attached = $this->tournamentSettingsRepository->update([
+                    "game_mode" => $this->request->game["mode"],
+                    "game_id" => (int) $game
+                ], $eventId);
                 if ( ! $attached ) {
-                    return wp_send_json_error([
-                        "message" => "Failed to attach game to event",
-                        "data" => $_REQUEST["event"]
-                    ]);
-                    $logger->log(__METHOD__ . " Failed to attach game to event"); 
+                    throw new \Exception("Failed to attach game to event");
                 }
-
-                return wp_send_json_success([
-                    "message" => "Game successfully attached",
-                ]);
             }
 
             /**
@@ -129,7 +139,7 @@
              * @param [type] $game
              * @return void
              */
-            private function findOrCreateGameMode(string $mode, int|string $game): int|bool {
+            private function findOrCreateGameMode(string $mode, string $game) {
                 $existingGameMode = $this->gameModeRepository
                     ->select()
                     ->where("name", "'$mode'")
@@ -140,7 +150,8 @@
                 }
 
                 $created = $this->gameModeRepository->create([
-                    "name" => $mode
+                    "name" => $mode,
+                    "game_id" => $game
                 ]);
 
                 return ($created) ? $created->insert_id : false;
@@ -152,7 +163,7 @@
              * @param [type] $type
              * @return void
              */
-            private function findOrCreateGameType(string $type): int|bool {
+            private function findOrCreateGameType(string $type) {
                 $existingGameType = $this->gameTypeRepository
                     ->select()
                     ->where("name", "'$type'")
