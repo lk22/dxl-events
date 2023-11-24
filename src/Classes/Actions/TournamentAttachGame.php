@@ -20,39 +20,49 @@
              *
              * @var DxlEvents\Classes\Repositories\TournamentSettingRepository
              */
-            protected $tournamentSettingRepository;
+            private $tournamentSettingRepository;
 
             /**
              * Game Repository
              *
              * @var DxlEvents\Classes\Repositories\GameRepository
              */
-            protected $gameRepository;
-
+            private $gameRepository;
+            
             /**
              * Game Mode Repository
              *
              * @var DxlEvents\Classes\Repositories\GameModeRepository
              */
-            protected $gameModeRepository;
+            private $gameModeRepository;
             
             /**
              * Game Type Repository
              *
              * @var DxlEvents\Classes\Repositories\GameTypeRepository
              */
-            protected $gameTypeRepository;
-
+            private $gameTypeRepository;
+            
             /**
              * Tournament publish action constructor
              */
             public function __construct()
             {
-                $this->request = $this->getRequestData();
+                $this->request = $this->get_request();
                 $this->tournamentSettingRepository = new TournamentSetting();
                 $this->gameRepository = new GameRepository();
                 $this->gameModeRepository = new GameModeRepository();
                 $this->gameTypeRepository = new GameTypeRepository();
+            }
+
+            /**
+             * Get Request Data
+             *
+             * @return void
+             */
+            private function get_request()
+            {
+                return $_REQUEST;
             }
 
             /**
@@ -63,52 +73,53 @@
                 $logger = Logger::getInstance();
                 try {
                     $game = $this->findOrCreateGame($this->request["event"]["game"]);
-                    $attached = $this->attachGameToEvent($game, $this->request["event"]["id"]);
-                    return $attached;
+                    $this->attachGameToEvent($game, $this->request["event"]["id"]);
                     return wp_send_json_success(["message" => "Game successfully attached",]);
                 } catch (\Exception $e) {
                     return wp_send_json_error(["message" => $e->getMessage()]);
                 }
             }
 
-            private function getRequestData()
-            {
-                return $_REQUEST;
-            }
-
+            /**
+             * Find or create a new game resource
+             *
+             * @param [type] $gameData
+             * @return void
+             */
             private function findOrCreateGame($gameData) 
             {
                 $gameName = $gameData["name"] ?? "";
+
+                return $gameData;
                 
                 if ( isset($gameName) && false == $this->findExistingGame($gameName) ) {
-                    return $gameData;
                     $currentGameType = $this->findOrCreateGameType($gameData["type"]);
                     $existingGameMode = $this->findOrCreateGameMode($gameData["mode"], $gameData["id"]);
-                    if ( false == $currentGameType ) {
-                        throw new \Exception("Failed to create game type for " . $gameData["name"]);
-                    }
-
-                    if ( false == $existingGameMode ) {
-                        throw new \Exception("Failed to create game mode for " . $gameData["name"]);
-                    }
+                    if ( false == $currentGameType ) throw new \Exception("Failed to create game type for " . $gameData["name"]);
+                    if ( false == $existingGameMode ) throw new \Exception("Failed to create game mode for " . $gameData["name"]);
+                    
                     return $this->gameRepository->create([
                         "name" => $gameData["name"],
                         "game_type" => $currentGameType
                     ]);
                 }
 
-                $existing = $this->gameRepository
+                return $this->gameRepository
                     ->select()
                     ->where("name", "'$gameName'")
                     ->getRow();
-                return $existing;
             }
 
+            /**
+             * Attache game to tournament
+             *
+             * @param [type] $game
+             * @param [type] $eventId
+             * @return void
+             */
             private function attachGameToEvent($game, $eventId)
             {
-                return [
-                    "game" => $game];
-                $attached = $this->tournamentSettingsRepository->update([
+                $attached = $this->tournamentSettingRepository->update([
                     "game_mode" => $this->request->game["mode"],
                     "game_id" => (int) $game
                 ], $eventId);
@@ -140,6 +151,7 @@
              * @return void
              */
             private function findOrCreateGameMode(string $mode, string $game) {
+                return $game;
                 $existingGameMode = $this->gameModeRepository
                     ->select()
                     ->where("name", "'$mode'")
