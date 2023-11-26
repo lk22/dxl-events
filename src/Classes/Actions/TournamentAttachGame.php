@@ -93,19 +93,17 @@
 
                 if ( isset($gameName) && isset($gameData["type"]) && ! $this->findExistingGame($gameName) ) {
                     $currentGameType = $this->findOrCreateGameType($gameData["type"]);
-
                     if ( $currentGameType === false ) throw new \Exception("Failed to create game type for " . $gameData["name"]);
 
                     $newGame = $this->gameRepository->create([
                         "name" => $gameData["name"],
                         "game_type" => $currentGameType,
                     ]);
-
+                    
                     if ( ! $newGame ) throw new \Exception("Something went wrong, Failed to create game " . $gameData["name"]);
-
                     $existingGameMode = $this->findOrCreateGameMode($gameData["mode"], $newGame->insert_id);
+                    
                     if ( ! $existingGameMode ) throw new \Exception("Failed to create game mode for " . $gameData["name"]);
-
                     return ["game" => $newGame->insert_id, "mode" => $existingGameMode];
                 }
 
@@ -113,7 +111,6 @@
                 $existingGameMode = $this->gameModeRepository->select()->where('game_id', $existingGame->id)->getRow();
 
                 return ["game" => $existingGame->id, "mode" => $existingGameMode->id];
-                
             }
 
             /**
