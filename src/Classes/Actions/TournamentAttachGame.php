@@ -74,7 +74,8 @@
                 try {
                     $game = $this->findOrCreateGame($this->request["event"]["game"]);
                     $this->attachGameToEvent($game, $this->request["event"]["id"]);
-                    return wp_send_json_success(["message" => "Game successfully attached",]);
+
+                    return wp_send_json_success(["message" => "Game successfully attached", "game" => $game]);
                 } catch (\Exception $e) {
                     return wp_send_json_error(["message" => $e->getMessage()]);
                 }
@@ -86,28 +87,33 @@
              * @param [type] $gameData
              * @return void
              */
-            private function findOrCreateGame($gameData) 
+            private function findOrCreateGame($gameData)
             {
                 $gameName = $gameData["name"] ?? "";
 
-                return $gameData;
-                
-                if ( isset($gameName) && false == $this->findExistingGame($gameName) ) {
+                if ( isset($gameName) && isset($gameData["type"]) && ! $this->findExistingGame($gameName) ) {
                     $currentGameType = $this->findOrCreateGameType($gameData["type"]);
-                    $existingGameMode = $this->findOrCreateGameMode($gameData["mode"], $gameData["id"]);
-                    if ( false == $currentGameType ) throw new \Exception("Failed to create game type for " . $gameData["name"]);
-                    if ( false == $existingGameMode ) throw new \Exception("Failed to create game mode for " . $gameData["name"]);
-                    
-                    return $this->gameRepository->create([
+
+                    if ( $currentGameType === false ) throw new \Exception("Failed to create game type for " . $gameData["name"]);
+
+                    $newGame = $this->gameRepository->create([
                         "name" => $gameData["name"],
-                        "game_type" => $currentGameType
+                        "game_type" => $currentGameType,
                     ]);
+
+                    if ( ! $newGame ) throw new \Exception("Something went wrong, Failed to create game " . $gameData["name"]);
+
+                    $existingGameMode = $this->findOrCreateGameMode($gameData["mode"], $newGame->insert_id);
+                    if ( ! $existingGameMode ) throw new \Exception("Failed to create game mode for " . $gameData["name"]);
+
+                    return ["game" => $newGame->insert_id, "mode" => $existingGameMode];
                 }
 
-                return $this->gameRepository
-                    ->select()
-                    ->where("name", "'$gameName'")
-                    ->getRow();
+                $existingGame = $this->gameRepository->select()->where('id', $gameData["id"])->getRow();
+                $existingGameMode = $this->gameModeRepository->select()->where('game_id', $existingGame->id)->getRow();
+
+                return ["game" => $existingGame->id, "mode" => $existingGameMode->id];
+                
             }
 
             /**
@@ -120,9 +126,10 @@
             private function attachGameToEvent($game, $eventId)
             {
                 $attached = $this->tournamentSettingRepository->update([
-                    "game_mode" => $this->request->game["mode"],
-                    "game_id" => (int) $game
+                    "game_mode" => (int) $game["mode"],
+                    "game_id" => (int) $game["game"]
                 ], $eventId);
+
                 if ( ! $attached ) {
                     throw new \Exception("Failed to attach game to event");
                 }
@@ -151,10 +158,10 @@
              * @return void
              */
             private function findOrCreateGameMode(string $mode, string $game) {
-                return $game;
                 $existingGameMode = $this->gameModeRepository
                     ->select()
                     ->where("name", "'$mode'")
+                    ->whereAnd("game_id", $game)
                     ->getRow();
 
                 if ( $existingGameMode > 0 ) {
@@ -182,7 +189,7 @@
                     ->getRow();
 
                 // if game type exists, return the game type identifier
-                if ( $existingGameType > 0 ) {
+                if ( count($existingGameType) > 0 ) {
                     return $existingGameType->id;
                 }
 
