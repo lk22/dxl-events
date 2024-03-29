@@ -339,7 +339,7 @@
                                     <h3><?php echo $tournament->title; ?></h3>
                                 </div>
                                 <div class="participants-count">
-                                    <p><?php echo $tournament->participants_count; ?> deltagere</p>
+                                    <p><?php echo $tournament->participants_count; ?> deltagere</p> 
                                 </div>
                                 <div class="action">
                                     <button
