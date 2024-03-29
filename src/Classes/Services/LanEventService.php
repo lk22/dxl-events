@@ -6,7 +6,6 @@
     use DxlEvents\Classes\Repositories\LanParticipantRepository as LanParticipant;
     use DxlEvents\Classes\Repositories\ParticipantRepository;
     use DxlMembership\Classes\Repositories\MemberRepository;
-    use DxlEvents\Classes\Repositories\EventWorkChoresRepository;
 
     use PhpOffice\PhpSpreadsheet\Spreadsheet;
     use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -25,7 +24,7 @@
             public function __construct() 
             {
                 $this->tournamentParticipantRepository = new ParticipantRepository();
-                $this->eventWorkChoresRepository = new EventWorkChoresRepository();
+                
             }
 
             public function createEvent(array $event) : bool
@@ -105,81 +104,6 @@
                 return $configured ? true : false;
             }
 
-            public function initializeDefaultWorkChores() {
-            
-                return [
-                  "friday" => [
-                        "fields" => [
-                          "participant-work-friday-setup" => [
-                            "label" => "Opsætning (Fredag)"
-                          ], 
-                          "participant-work-friday-fireroute" => [
-                            "label" => "Brand rundde (Fredag)"
-                          ],
-                          "participant-work-friday-trash" => [
-                            "label" => "Affald - pant (Fredag)"
-                          ],
-                          "participant-work-friday-smoke-area" => [
-                            "label" => "Ryge område (Fredag)"
-                          ],
-                          "participant-work-friday-bathroom" => [
-                            "label" => "Toiletter (Fredag)"
-                          ],
-                          "participant-work-friday-coffee" => [
-                            "label" => "Kaffe (Fredag)"
-                          ],
-                        ],
-                      ],
-                      "saturday" => [
-                        "fields" => [
-                          "participant-work-saturday-fireroute" => [
-                            "label" => "Brand rundde (Lørdag)"
-                          ],
-                          "participant-work-saturday-trash" => [
-                            "label"=> "Affald - pant (Lørdag)"
-                          ],
-                          "participant-work-saturday-cleaning" => [
-                            "label" => "Oprydning (Lørdag)"
-                          ],
-                          "participant-work-saturday-smoke-area" => [
-                            "label" => "Ryge område (Lørdag)"
-                          ],
-                          "participant-work-saturday-bathroom" => [
-                            "label" => "Toiletter (Lørdag)"
-                          ],
-                          "participant-work-saturday-coffee" => [
-                            "label" => "Kaffe (Lørdag)"
-                          ]
-                        ]
-                      ],
-                      "sunday" => [
-                        "fields" => [
-                          "participant-work-sunday-trash" => [
-                            "label" => "Affald - pant (Søndag)"
-                          ],
-                          "participant-work-sunday-cleaning" => [
-                            "label" => "Oprydning (Søndag)"
-                          ],
-                          "participant-work-sunday-smoke-area" => [
-                            "label" => "Ryge område (Søndag)"
-                          ],
-                          "participant-work-sunday-bathroom" => [
-                            "label" => "Toiletter (Søndag)"
-                          ],
-                          "participant-work-sunday-coffee" => [
-                            "label" => "Kaffe (Søndag)"
-                          ],
-                          "participant-work-sunday-clearing" => [
-                            "label" => "Afrigning (Søndag)"
-                          ],
-                          "participant-work-sunday-clearing-hall" => [
-                            "label" => "Oprydning sovehaller (Søndag)"
-                          ]
-                        ]  
-                      ]
-                  ];
-            }
-
             /**
              * Exporting participants to excel
              * exporting tournaments participants in seperate sheets
@@ -191,37 +115,42 @@
              */
             public function exportParticipants(array $participants, array $tournaments, $event)
             {
-                global $wpdb;
+				global $wpdb;
                 $spreadsheet = new Spreadsheet();
                 $sheet = $spreadsheet->getActiveSheet();
                 $sheet->setTitle('LAN Deltagere');
                 $memberRepository = new MemberRepository();
                 $logger = new Logger();
-                
+
                 if ( count($participants) ) {
                     $workChoresSheet = clone $spreadsheet->getActiveSheet();
                     $workChoresSheet->setTitle("Arbejdsopgaver");
                     $spreadsheet->addSheet($workChoresSheet);
-                    
+
                     $workChoresSheet->setCellValue('A1', "Navn")->getColumnDimension('A')->setAutoSize(true);
                     $workChoresSheet->setCellValue('B1', "Gamertag")->getColumnDimension('B')->setAutoSize(true);
-
-                    $workChoreSheetColumns = ["C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "Q", "R"];
-                    $workchores = $this->eventWorkChoresRepository->select(["chores"])->where('event_id', $event)->get();
-                    $mergedChores = array_merge(
-                      json_decode($workchores[0]->chores)->friday,
-                      json_decode($workchores[0]->chores)->saturday,
-                      json_decode($workchores[0]->chores)->sunday
-                    );
-
-                    $choresFields = [];
-                    foreach( $mergedChores as $index => $chore ) {
-                      if ( isset($workChoreSheetColumns[$index]) ) {
-                        $column = $workChoreSheetColumns[$index];
-                        $workChoresSheet->getColumnDimension($column)->setAutoSize(true);
-                        $choresFields[$column] = $chore->name;
-                      }
-                    }
+                    $choresFields = [
+                        "C" => "Opsætning (Fredag)",
+                        "D" => "Brand rundde(Fredag)",
+                        "E" => "Affald - pant (Fredag)",
+                        "F" => "Ryge område (Fredag)",
+                      	"G" => "Toiletter (Fredag)",
+                      	"H" => "Kaffe (Fredag)",
+                      	"I" => "Brand rundde (Lørdag)",
+                        "J" => "Affald - pant (Lørdag)",
+                        "K" => "Oprydning (Lørdag)",
+                      	"L" => "Ryge område (Lørdag)",
+                      	"M" => "Toiletter (Lørdag)",
+                        "N" => "Kaffe (Lørdag)",
+                      	"O" => "Brand rundde (Søndag)",
+                      	"P" => "Affald - pant (Lørdag)",
+                        "Q" => "Oprydning (Søndag)",
+                        "R" => "Ryge område (Søndag)",
+                      	"S" => "Toiletter (Søndag)",
+                        "T" => "Kaffe (Søndag)",
+                        "U" => "Nedpakning (Søndag)",
+                        "V" => "Oprydning sovehaller (Søndag)"
+                    ]; 
 
                     foreach($choresFields as $key => $value) {
                         $workChoresSheet->setCellValue($key . "1", $value)->getColumnDimension($key)->setAutoSize(true);
@@ -229,48 +158,45 @@
 
                     $participantRow = 2;
                     foreach($participants as $participant) {
-                        // $member = $memberRepository->select(["member_number"])->where("id", $participant->member_id)->get();
+
                         $workChoresSheet->setCellValue('A' . $participantRow, $participant->name);
                         $workChoresSheet->setCellValue('B' . $participantRow, $participant->gamertag);
-                        
+
                         $workchores = preg_replace('/\[\[(\w+)\[\]/' , '$1',  explode(",", $participant->workchores));
 
                         $chores = [];
 
-
-
                         // adding chores fields as seperate chore field
                         foreach($choresFields as $key => $value) {
-                            if ( count($workchores) ) {
-                              // check if the chore is in the workchores
-                              if ( in_array($value, $workchores)
-                                foreach(json_decode($participant->workchores) as $chore) {
-                                    if ( $chore->label == $value ) {
-                                        $chores[] = $value;
-                                        $workChoresSheet->setCellValue($key . $participantRow, $value);
-                                    }
-                                }
-                            }
-                        }
-                        $participantRow++;
-                    }
+                          $decodedWorkchores = json_decode($participant->workchores);
+                          if (is_countable($decodedWorkchores)) {
+                              foreach($decodedWorkchores as $chore) {
+                                  if ($chore->label == $value) {
+                                      $chores[] = $value;
+                                      $workChoresSheet->setCellValue($key . $participantRow, $value);
+                                  }
+                              }
+                          }
+                      }
+                      $participantRow++;
+                	}
                 }
-                
+
                 if ( count($tournaments) > 0) {
                     foreach ( $tournaments as $tournament ) {
                         // clone the sheet
                         $tournamentSheet = clone $spreadsheet->getActiveSheet();
                         $tournamentSheet->setTitle($tournament->title);
                         $spreadsheet->addSheet($tournamentSheet);
-                        
+
                         $tournamentSheet->setCellValue('A1', 'navn')->getColumnDimension('A')->setAutoSize(true);
                         $tournamentSheet->setCellValue('B1', 'gamertag')->getColumnDimension('B')->setAutoSize(true);
-                        
+
                         $tournamentParticipants = $this->tournamentParticipantRepository
                             ->select()
                             ->where('event_id', $tournament->id)
                             ->get();
-                        
+
                         $tRow = 2;
                         foreach( $tournamentParticipants as $participant ) {
                             $tournamentSheet->setCellValue('A' . $tRow, $participant->name);
@@ -285,8 +211,9 @@
                 $sheet->setCellValue('C1', 'Gamertag')->getColumnDimension('C')->setAutoSize(true);
                 $sheet->setCellValue("D1", "Betingelser")->getColumnDimension('D')->setAutoSize(true);
                 $sheet->setCellValue("E1", "Medlemmer at sidde sammen med")->getColumnDimension("E")->setAutoSize(true);
-                $sheet->setCellValue("F1", "Morgenmad (Lørdag)")->getColumnDimension("H")->setAutoSize(true);
-                $sheet->setCellValue("G1", "Morgenmad (Søndag)")->getColumnDimension("I")->setAutoSize(true);
+                $sheet->setCellValue("F1", "Morgenmad (Lørdag)")->getColumnDimension("F")->setAutoSize(true);
+                $sheet->setCellValue("G1", "Morgenmad (Søndag)")->getColumnDimension("G")->setAutoSize(true);
+                $sheet->setCellValue("H1", 'Kaffe (Hele Weekenden)')->getColumnDimension("H")->setAutoSize(true);
 
                 $row = 2;
                 foreach ( $participants as $participant ) {
@@ -301,11 +228,11 @@
                     if ( $participant->event_terms_accepted ) {
                         $sheet->setCellValue('D' . $row, "Accepteret");
                     }
-                    
+
                     $seat_members = preg_replace('/\[\[(\w+)\[\]/' , '$1',  explode(",", $participant->seat_companions));
                     if (count($seat_members) > 0) {
                         $seats = [];
-                    
+
                         foreach($seat_members as $member) {
                             $seats[] = $member;
                         }
@@ -319,6 +246,10 @@
 
                     if ( $participant->has_sunday_breakfast ) {
                         $sheet->setCellValue('G' . $row, "bestilt");
+                    }
+
+                      if ( $participant->has_coffee_weekend ) {
+                          $sheet->setCellValue("H" . $row, "bestilt");
                     }
 
                     $row++;
