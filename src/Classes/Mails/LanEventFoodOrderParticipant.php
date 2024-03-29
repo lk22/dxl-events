@@ -79,7 +79,6 @@
                   else if( $key == "has_saturday_lunch" ) $translated = "Frokost (Lørdag)";
                   else if( $key == "has_saturday_dinner" ) $translated = "Aftensmad (Lørdag)";
                   else if( $key == "has_sunday_breakfast" ) $translated = "Morgenmad (Søndag)";
-                  else if( $key == "has_coffee_weekend" ) $translated = "Kaffe (Hele Weekenden)";
                   $template .= "<p>" . $translated ."</p>";
                 }
 
